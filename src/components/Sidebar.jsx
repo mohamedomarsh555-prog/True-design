@@ -1,19 +1,19 @@
 import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { courses, programs } from '../data';
+import { useI18n } from '../i18n';
 
 export default function Sidebar() {
   const navigate = useNavigate();
   const location = useLocation();
+  const { t } = useI18n();
   const [coursesOpen, setCoursesOpen] = useState(true);
   const [programsOpen, setProgramsOpen] = useState(true);
 
-  const isCourseActive = (id) => location.pathname.startsWith(`/courses/${id}`);
-  const isProgramActive = (id) => location.pathname.startsWith(`/programs/${id}`);
+  const isCoursesListActive = location.pathname === '/courses';
+  const isProgramsListActive = location.pathname === '/programs';
 
   return (
     <div className="sidebar">
-      {/* Logo */}
       <div className="sidebar-logo" style={{ cursor: 'pointer' }} onClick={() => navigate('/')}>
         <div className="logo-icon">
           <svg width="20" height="20" viewBox="0 0 20 20">
@@ -23,76 +23,88 @@ export default function Sidebar() {
         <span className="logo-text">CPTIT TRUE</span>
       </div>
 
-      {/* Dashboard */}
       <div className="nav-section">
         <div
           className={`nav-item ${location.pathname === '/' ? 'active' : ''}`}
           onClick={() => navigate('/')}
         >
           <i className="ti ti-layout-dashboard" />
-          Dashboard
+          {t('dashboard')}
         </div>
       </div>
 
       <div className="nav-divider" />
-      <div className="nav-label">Academic</div>
+      <div className="nav-label">{t('academic')}</div>
 
-      {/* Courses */}
       <div
         className={`nav-item ${location.pathname.startsWith('/courses') ? 'active' : ''}`}
-        onClick={() => setCoursesOpen(o => !o)}
+        onClick={() => {
+          setCoursesOpen(true);
+          navigate('/courses');
+        }}
       >
         <i className="ti ti-book" />
-        Courses
-        <i className={`ti ti-chevron-down nav-chevron ${coursesOpen ? 'open' : ''}`} />
+        {t('courses')}
+        <i
+          className={`ti ti-chevron-down nav-chevron ${coursesOpen ? 'open' : ''}`}
+          onClick={(event) => {
+            event.stopPropagation();
+            setCoursesOpen(o => !o);
+          }}
+        />
       </div>
       <div className={`sub-list ${coursesOpen ? 'open' : ''}`}>
-        {courses.map(c => (
-          <div
-            key={c.id}
-            className={`sub-item ${isCourseActive(c.id) ? 'active' : ''}`}
-            onClick={() => navigate(`/courses/${c.id}`)}
-          >
-            <div className="ci-dot course-dot" />
-            {c.code} – {c.name.split(' ').slice(0, 2).join(' ')}
-          </div>
-        ))}
+        <div
+          className={`sub-item ${isCoursesListActive ? 'active' : ''}`}
+          onClick={() => navigate('/courses')}
+        >
+          <div className="ci-dot course-dot" />
+          {t('allCourses')}
+        </div>
       </div>
 
-      {/* Programs */}
       <div
         className={`nav-item ${location.pathname.startsWith('/programs') ? 'active' : ''}`}
-        onClick={() => setProgramsOpen(o => !o)}
+        onClick={() => {
+          setProgramsOpen(true);
+          navigate('/programs');
+        }}
       >
         <i className="ti ti-award" />
-        Programs
-        <i className={`ti ti-chevron-down nav-chevron ${programsOpen ? 'open' : ''}`} />
+        {t('programs')}
+        <i
+          className={`ti ti-chevron-down nav-chevron ${programsOpen ? 'open' : ''}`}
+          onClick={(event) => {
+            event.stopPropagation();
+            setProgramsOpen(o => !o);
+          }}
+        />
       </div>
       <div className={`sub-list ${programsOpen ? 'open' : ''}`}>
-        {programs.map(p => (
-          <div
-            key={p.id}
-            className={`sub-item ${isProgramActive(p.id) ? 'active' : ''}`}
-            onClick={() => navigate(`/programs/${p.id}`)}
-          >
-            <div className="ci-dot program-dot" />
-            {p.code} – {p.name}
-          </div>
-        ))}
+        <div
+          className={`sub-item ${isProgramsListActive ? 'active' : ''}`}
+          onClick={() => navigate('/programs')}
+        >
+          <div className="ci-dot program-dot" />
+          {t('allPrograms')}
+        </div>
       </div>
 
       <div className="nav-divider" />
 
-      {/* Others */}
-      <div className="nav-item">
-        <i className="ti ti-clipboard-list" />
-        Self Study
-        <i className="ti ti-chevron-down nav-chevron" />
+      <div
+        className={`nav-item ${location.pathname.startsWith('/clo-plo-management') ? 'active' : ''}`}
+        onClick={() => navigate('/clo-plo-management')}
+      >
+        <i className="ti ti-sitemap" />
+        {t('cloPloManagement')}
       </div>
-      <div className="nav-item">
-        <i className="ti ti-folders" />
-        Document Cycle
-        <i className="ti ti-chevron-down nav-chevron" />
+      <div
+        className={`nav-item ${location.pathname.startsWith('/institutional-accreditation') ? 'active' : ''}`}
+        onClick={() => navigate('/institutional-accreditation')}
+      >
+        <i className="ti ti-certificate" />
+        {t('institutionalAccreditation')}
       </div>
     </div>
   );

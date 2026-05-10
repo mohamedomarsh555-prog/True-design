@@ -1,70 +1,79 @@
-import { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Topbar from '../components/Topbar';
 import ReportCard from '../components/ReportCard';
 import HistoryScreen from '../components/HistoryScreen';
 import { programs, programReportTypes } from '../data';
+import { useI18n } from '../i18n';
 
 export default function ProgramPage() {
-  const { programId } = useParams();
+  const { programId, reportId } = useParams();
+  const navigate = useNavigate();
+  const { t, text } = useI18n();
   const program = programs.find(p => p.id === programId);
-  const [activeReport, setActiveReport] = useState(null);
+  const activeReport = reportId
+    ? programReportTypes.find(r => r.id === reportId)
+    : null;
 
   if (!program) {
     return (
       <>
-        <Topbar breadcrumbs={['Programs', 'Not found']} />
-        <div className="page-content"><p>Program not found.</p></div>
+        <Topbar breadcrumbs={[t('programs'), t('notFound')]} />
+        <div className="page-content"><p>{t('notFound')}</p></div>
       </>
     );
   }
 
-  const mainReports       = programReportTypes.filter(r => r.category === 'main');
+  if (reportId && !activeReport) {
+    return (
+      <>
+        <Topbar breadcrumbs={[t('programs'), program.code, t('notFound')]} />
+        <div className="page-content"><p>{t('reportNotFound')}</p></div>
+      </>
+    );
+  }
+
+  const mainReports = programReportTypes.filter(r => r.category === 'main');
   const additionalReports = programReportTypes.filter(r => r.category === 'additional');
 
   const breadcrumbs = activeReport
-    ? ['Programs', program.code, activeReport.title]
-    : ['Programs', program.code, 'Report Types'];
+    ? [t('programs'), program.code, text(activeReport, 'title')]
+    : [t('programs'), program.code, t('reportTypes')];
 
   return (
     <>
       <Topbar breadcrumbs={breadcrumbs} />
       <div className="page-content">
-
         {!activeReport ? (
           <>
-            {/* Hero */}
             <div className="hero-card program-hero">
               <div>
                 <div className="hero-badge">
                   <i className="ti ti-award" /> {program.code}
                 </div>
-                <div className="hero-title">{program.name}</div>
-                <div className="hero-sub">Academic Year {program.year} · Active</div>
+                <div className="hero-title">{text(program, 'name')}</div>
+                <div className="hero-sub">{t('academicYear')} {program.year} · {t('active')}</div>
               </div>
               <div className="hero-stats">
-                <div className="stat-chip"><div className="num">3</div><div className="lbl">Reports</div></div>
-                <div className="stat-chip"><div className="num">1</div><div className="lbl">Pending</div></div>
-                <div className="stat-chip"><div className="num">2</div><div className="lbl">Not Started</div></div>
+                <div className="stat-chip"><div className="num">3</div><div className="lbl">{t('reports')}</div></div>
+                <div className="stat-chip"><div className="num">1</div><div className="lbl">{t('status.pending')}</div></div>
+                <div className="stat-chip"><div className="num">2</div><div className="lbl">{t('status.notStarted')}</div></div>
               </div>
             </div>
 
-            {/* Main Reports */}
             <div className="report-section">
-              <div className="sec-label">Main Reports</div>
+              <div className="sec-label">{t('mainReports')}</div>
               <div className="cards-grid-3">
                 {mainReports.map(r => (
-                  <ReportCard key={r.id} report={r} onClick={() => setActiveReport(r)} />
+                  <ReportCard key={r.id} report={r} onClick={() => navigate(`/programs/${program.id}/reports/${r.id}`)} />
                 ))}
               </div>
             </div>
 
-            {/* Additional Forms */}
             <div className="report-section">
-              <div className="sec-label">Additional Forms</div>
+              <div className="sec-label">{t('additionalForms')}</div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
                 {additionalReports.map(r => (
-                  <ReportCard key={r.id} report={r} onClick={() => setActiveReport(r)} horizontal />
+                  <ReportCard key={r.id} report={r} onClick={() => navigate(`/programs/${program.id}/reports/${r.id}`)} horizontal />
                 ))}
               </div>
             </div>
@@ -72,9 +81,10 @@ export default function ProgramPage() {
         ) : (
           <HistoryScreen
             entityCode={program.code}
-            reportTitle={activeReport.title}
+            reportId={activeReport.id}
+            reportTitle={text(activeReport, 'title')}
             type="program"
-            onBack={() => setActiveReport(null)}
+            onBack={() => navigate(`/programs/${program.id}`)}
           />
         )}
       </div>
