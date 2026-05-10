@@ -9,6 +9,8 @@ export default function AllCoursesReportPage() {
   const { t, text, statusFromClass } = useI18n();
   const report = courseReportTypes.find(r => r.id === reportId);
 
+
+  // Gouda
   if (!report) {
     return (
       <>
