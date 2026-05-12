@@ -4,6 +4,7 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import Topbar from '../../components/Topbar';
 import { useI18n } from '../../i18n';
 import { projects, milestones, tasks, risks } from '../../data/projectData';
+import { strategicInitiatives } from '../../data/strategicData';
 
 const tabs = [
   { id: 'overview', label: 'Overview', labelAr: 'نظرة عامة', icon: 'ti-info-circle' },
@@ -24,12 +25,44 @@ export default function ProjectDetailsPage() {
   const { language } = useI18n();
   const [selectedTask, setSelectedTask] = useState(null);
 
-  const project = useMemo(() => projects.find(p => p.id === projectId), [projectId]);
+  const project = useMemo(() => {
+    const qPrj = projects.find(p => p.id === projectId);
+    if (qPrj) return qPrj;
+    
+    const sInit = strategicInitiatives.find(i => i.id === projectId);
+    if (sInit) {
+      // Map strategic initiative to project structure
+      return {
+        ...sInit,
+        name: sInit.name,
+        nameAr: sInit.nameAr,
+        type: 'Strategic Initiative',
+        typeAr: 'مبادرة استراتيجية',
+        entity: sInit.owner, // Simplified mapping
+        status: sInit.status,
+        priority: sInit.priority || 'Medium',
+        team: [], // Strategic data might not have team yet
+        kpis: { delayedTasks: 0, requirements: 0, evidence: 0 },
+        lastUpdate: '2026-05-12'
+      };
+    }
+    return null;
+  }, [projectId]);
+
   const projectMilestones = useMemo(() => milestones.filter(m => m.projectId === projectId), [projectId]);
   const projectTasks = useMemo(() => tasks.filter(t => t.projectId === projectId), [projectId]);
 
   if (!project) {
-    return <div className="page-content">Project not found</div>;
+    return (
+      <div className="page-content" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '60vh', textAlign: 'center' }}>
+        <i className="ti ti-search-off" style={{ fontSize: '64px', color: '#cbd5e1', marginBottom: '20px' }} />
+        <h2 style={{ color: '#64748b', marginBottom: '12px' }}>{language === 'ar' ? 'المشروع غير موجود' : 'Project Not Found'}</h2>
+        <p style={{ color: '#94a3b8', marginBottom: '24px' }}>{language === 'ar' ? 'عذراً، لم نتمكن من العثور على المشروع المطلوب.' : 'Sorry, we couldn\'t find the project you are looking for.'}</p>
+        <button className="btn-primary" onClick={() => navigate(-1)}>
+          <i className="ti ti-arrow-left" /> {language === 'ar' ? 'العودة' : 'Go Back'}
+        </button>
+      </div>
+    );
   }
 
   const getLabel = (item, key) => (language === 'ar' ? item[`${key}Ar`] || item[key] : item[key]);
