@@ -6,6 +6,11 @@ export default function Topbar({ breadcrumbs }) {
   const location = useLocation();
   const segments = location.pathname.split('/').filter(Boolean);
 
+  const handleSignOut = () => {
+    sessionStorage.removeItem('true-authenticated');
+    window.location.href = '/';
+  };
+
   const getBreadcrumbHref = (index) => {
     const isLast = index === breadcrumbs.length - 1;
     if (isLast) return null;
@@ -58,6 +63,10 @@ export default function Topbar({ breadcrumbs }) {
           </button>
         </div>
         <span className="role-badge">{t('role')}</span>
+        <button className="signout-btn" type="button" onClick={handleSignOut} title="Sign out">
+          <i className="ti ti-logout" />
+          <span>Sign out</span>
+        </button>
         <div className="avatar">MH</div>
       </div>
     </div>
