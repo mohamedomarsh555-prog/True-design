@@ -291,6 +291,131 @@ const ar = {
   'Self Study + Evidence': 'الدراسة الذاتية + الشواهد',
   'Reviews + Visits': 'المراجعات + الزيارات',
   'Measurement Plans': 'خطط القياس',
+  'Projects Management': 'إدارة المشاريع',
+  'Milestones': 'المراحل',
+  'Tasks Management': 'إدارة المهام',
+  'Time Plan': 'الخطة الزمنية',
+  'Teams & Resources': 'الموارد والفرق',
+  'Risks & Issues': 'المخاطر والقضايا',
+  'Notifications': 'التنبيهات والإشعارات',
+  'Collaboration': 'التعاون والتواصل',
+  'Strategic & Quality Projects Management': 'إدارة المشاريع الاستراتيجية والجودة',
+  'Project dashboard with execution plans, milestones, tasks, teams, performance indicators, and schedule follow-up.': 'لوحة مشاريع تحتوي على الخطط التنفيذية والمراحل والمهام والفرق ومؤشرات الأداء والمتابعة الزمنية.',
+  'Project Name': 'اسم المشروع',
+  'Project Type': 'نوع المشروع',
+  'Owning Entity': 'الجهة المالكة',
+  'Program / College': 'البرنامج / الكلية',
+  'Priority': 'الأولوية',
+  'Planned Start': 'البداية المخططة',
+  'Planned End': 'النهاية المخططة',
+  'Actual Start': 'البداية الفعلية',
+  'Actual End': 'النهاية الفعلية',
+  'Completion': 'نسبة الإنجاز',
+  'Delayed Tasks': 'المهام المتأخرة',
+  'Requirements Completion': 'استيفاء المتطلبات',
+  'Evidence Completion': 'اكتمال الأدلة',
+  'Project Manager': 'مدير المشروع',
+  'Members': 'أعضاء الفريق',
+  'Reviewers': 'المراجعون',
+  'Consultants': 'المستشارون',
+  'Assignment Basis': 'أساس التوزيع',
+  'Responsible': 'المسؤول',
+  'Deadline': 'الموعد النهائي',
+  'Dependencies': 'الاعتماديات',
+  'Sub Tasks': 'المهام الفرعية',
+  'Planned vs Actual Timeline': 'الجدول المخطط مقابل الفعلي',
+  'Planned': 'المخطط',
+  'Actual': 'الفعلي',
+  'Delay': 'التأخير',
+  'Critical Alerts': 'التنبيهات الحرجة',
+  'Risk / Issue': 'المخاطر / القضية',
+  'Category': 'التصنيف',
+  'Impact': 'الأثر',
+  'Treatment Plan': 'خطة المعالجة',
+  'Escalation': 'التصعيد',
+  'Trigger': 'المحفز',
+  'Channel': 'القناة',
+  'Recipients': 'المستلمون',
+  'Comment': 'التعليق',
+  'Meeting': 'الاجتماع',
+  'Minutes': 'محضر الاجتماع',
+  'Activity Timeline': 'سجل النشاط',
+  'Project Status Report': 'تقرير حالة المشروع',
+  'Progress Report': 'تقرير الإنجاز',
+  'Delay Report': 'تقرير التأخير',
+  'Risk Report': 'تقرير المخاطر',
+  'Time Consumption Report': 'تقرير استهلاك الوقت',
+  'Executive Dashboard': 'لوحة تنفيذية',
+  'Academic Accreditation Project': 'مشروع اعتماد أكاديمي',
+  'Program Accreditation Project': 'مشروع اعتماد برامجي',
+  'Quality Improvement Project': 'مشروع تحسين جودة',
+  'Condition Fulfillment Project': 'مشروع استيفاء شروط',
+  'Self Study Project': 'مشروع دراسة ذاتية',
+  'Program Development Project': 'مشروع تطوير برنامج',
+  'Learning Outcomes Measurement Project': 'مشروع قياس مخرجات تعلم',
+  'Operational Plan Project': 'مشروع خطة تشغيلية',
+  'Preparing self-study': 'إعداد الدراسة الذاتية',
+  'Evidence collection': 'جمع الأدلة',
+  'Internal review': 'المراجعة الداخلية',
+  'Mock visit': 'الزيارة التجريبية',
+  'Submission to accreditation body': 'الرفع لجهة الاعتماد',
+  'Remarks remediation': 'معالجة الملاحظات',
+  'Final closure': 'الإغلاق النهائي',
+  'New': 'جديد',
+  'Pending Review': 'بانتظار المراجعة',
+  'Completed': 'مكتمل',
+  'Delayed': 'متأخر',
+  'Cancelled': 'ملغي',
+  'Critical': 'حرج',
+  'Escalated': 'مصعد',
+  'High Priority': 'أولوية عالية',
+  'Medium Priority': 'أولوية متوسطة',
+  'Low Priority': 'أولوية منخفضة',
+  'Late evidence uploads': 'تأخر رفع الأدلة',
+  'Reviewer availability conflict': 'تعارض توفر المراجعين',
+  'Low PLO achievement': 'انخفاض تحقق مخرجات التعلم',
+  'Weekly steering meeting': 'اجتماع التوجيه الأسبوعي',
+  'Requirement owners': 'ملاك المتطلبات',
+  'Accreditation committee': 'لجنة الاعتماد',
+  'Project team': 'فريق المشروع',
+  'Quality reviewers': 'مراجعو الجودة',
+  'Email / In-System': 'البريد الإلكتروني / داخل النظام',
+  'SMS / In-System': 'رسائل SMS / داخل النظام',
+  'Task comments and evidence discussion': 'تعليقات المهام ونقاش الأدلة',
+  'Meeting minutes shared with committee': 'مشاركة محضر الاجتماع مع اللجنة',
+  'File shared for reviewer response': 'مشاركة ملف لرد المراجع',
+  'Execution plan approved': 'تم اعتماد الخطة التنفيذية',
+  'Self-study draft submitted': 'تم رفع مسودة الدراسة الذاتية',
+  'Evidence matrix updated': 'تم تحديث مصفوفة الأدلة',
+  'Overdue task reminder': 'تذكير بمهمة متأخرة',
+  'Upcoming deadline alert': 'تنبيه قرب الموعد',
+  'Task approval notification': 'إشعار اعتماد مهمة',
+  'New reviewer note': 'ملاحظة مراجع جديدة',
+  'Academic Affairs and Quality Deanship': 'الشؤون الأكاديمية وعمادة الجودة',
+  'College Quality Unit': 'وحدة الجودة بالكلية',
+  'Program Quality Committee': 'لجنة جودة البرنامج',
+  'Institutional Improvement Office': 'مكتب التحسين المؤسسي',
+  'Evidence owners not responding before deadline': 'ملاك الأدلة لا يستجيبون قبل الموعد النهائي',
+  'External reviewers have overlapping visits': 'المراجعون الخارجيون لديهم زيارات متداخلة',
+  'PLO results below target for two cycles': 'نتائج مخرجات البرنامج أقل من المستهدف لدورتين',
+  'Reassign evidence tasks and escalate to owner': 'إعادة توزيع مهام الأدلة والتصعيد للمالك',
+  'Confirm backup reviewers and update schedule': 'تأكيد مراجعين بدلاء وتحديث الجدول',
+  'Launch improvement action and monitor next cycle': 'إطلاق إجراء تحسين ومتابعة الدورة القادمة',
+  'Update evidence matrix': 'تحديث مصفوفة الأدلة',
+  'Collect committee approvals': 'جمع اعتمادات اللجنة',
+  'Close reviewer observations': 'إغلاق ملاحظات المراجع',
+  'Publish achievement dashboard': 'نشر لوحة تحقق الإنجاز',
+  'Create project charter': 'إنشاء ميثاق المشروع',
+  'Operational quality plan': 'الخطة التشغيلية للجودة',
+  'permissions, expertise, committees': 'الصلاحيات والخبرات واللجان',
+  'program committee and curriculum expertise': 'لجنة البرنامج وخبرات المناهج',
+  'quality reviewers and external consultant': 'مراجعو الجودة والمستشار الخارجي',
+  'operational owners and permissions': 'ملاك التشغيل والصلاحيات',
+  'Project Manager': 'مدير المشروع',
+  '0 days': '0 يوم',
+  '7 days': '7 أيام',
+  '13 days': '13 يوم',
+  '19 days': '19 يوم',
 };
 
 function label(value, language) {
@@ -449,15 +574,90 @@ const executiveReports = [
   { id: 'REP-004', report: 'Learning outcomes results', audience: 'Assessment Unit', frequency: 'Semester', source: 'Measurement Plans', status: 'Approved' },
 ];
 
+const managedProjects = [
+  { id: 'PM-001', projectName: 'Institutional accreditation readiness', projectType: 'Academic Accreditation Project', owner: 'Academic Affairs and Quality Deanship', programCollege: 'College of Computer and Information Technology', start: '2026-04-01', end: '2026-08-30', priority: 'High Priority', status: 'In Progress', completion: '72%', delayedTasks: '2', requirements: '81%', evidence: '76%' },
+  { id: 'PM-002', projectName: 'Program specification review', projectType: 'Program Development Project', owner: 'Program Quality Committee', programCollege: 'Computer Science', start: '2026-05-01', end: '2026-07-15', priority: 'Medium Priority', status: 'Pending Review', completion: '48%', delayedTasks: '1', requirements: '64%', evidence: '58%' },
+  { id: 'PM-003', projectName: 'Learning outcomes mapping', projectType: 'Learning Outcomes Measurement Project', owner: 'Assessment Unit', programCollege: 'Information Technology', start: '2026-03-15', end: '2026-06-20', priority: 'High Priority', status: 'Completed', completion: '100%', delayedTasks: '0', requirements: '100%', evidence: '100%' },
+  { id: 'PM-004', projectName: 'Accreditation gap analysis', projectType: 'Quality Improvement Project', owner: 'College Quality Unit', programCollege: 'Software Engineering', start: '2026-04-20', end: '2026-07-30', priority: 'High Priority', status: 'Delayed', completion: '61%', delayedTasks: '4', requirements: '69%', evidence: '55%' },
+  { id: 'PM-005', projectName: 'Operational quality plan', projectType: 'Operational Plan Project', owner: 'Institutional Improvement Office', programCollege: 'All colleges', start: '2026-05-10', end: '2026-12-15', priority: 'Medium Priority', status: 'New', completion: '12%', delayedTasks: '0', requirements: '20%', evidence: '10%' },
+];
+
+const projectMilestones = [
+  { id: 'MS-001', projectName: 'Institutional accreditation readiness', milestone: 'Preparing self-study', start: '2026-04-01', end: '2026-05-20', completion: '90%', owner: 'Quality Manager', status: 'Completed' },
+  { id: 'MS-002', projectName: 'Institutional accreditation readiness', milestone: 'Evidence collection', start: '2026-04-15', end: '2026-06-15', completion: '74%', owner: 'Requirement owners', status: 'In Progress' },
+  { id: 'MS-003', projectName: 'Accreditation gap analysis', milestone: 'Internal review', start: '2026-05-01', end: '2026-06-10', completion: '58%', owner: 'Quality reviewers', status: 'Delayed' },
+  { id: 'MS-004', projectName: 'Program specification review', milestone: 'Mock visit', start: '2026-06-01', end: '2026-06-25', completion: '25%', owner: 'Program Committee', status: 'Pending Review' },
+  { id: 'MS-005', projectName: 'Institutional accreditation readiness', milestone: 'Submission to accreditation body', start: '2026-07-01', end: '2026-07-20', completion: '0%', owner: 'Accreditation committee', status: 'New' },
+  { id: 'MS-006', projectName: 'Accreditation gap analysis', milestone: 'Remarks remediation', start: '2026-06-15', end: '2026-07-25', completion: '18%', owner: 'Project team', status: 'In Progress' },
+  { id: 'MS-007', projectName: 'Learning outcomes mapping', milestone: 'Final closure', start: '2026-06-01', end: '2026-06-20', completion: '100%', owner: 'Assessment Unit', status: 'Completed' },
+];
+
+const projectTasks = [
+  { id: 'TSK-001', projectName: 'Institutional accreditation readiness', task: 'Update evidence matrix', subTasks: '4', responsible: 'Assessment Unit', priority: 'High Priority', deadline: '2026-05-22', dependencies: 'Self-study draft submitted', status: 'In Progress' },
+  { id: 'TSK-002', projectName: 'Program specification review', task: 'Collect committee approvals', subTasks: '3', responsible: 'Program Committee', priority: 'Medium Priority', deadline: '2026-05-28', dependencies: 'Course specification CS12', status: 'Pending Review' },
+  { id: 'TSK-003', projectName: 'Accreditation gap analysis', task: 'Close reviewer observations', subTasks: '7', responsible: 'Quality reviewers', priority: 'High Priority', deadline: '2026-05-18', dependencies: 'Internal review', status: 'Delayed' },
+  { id: 'TSK-004', projectName: 'Learning outcomes mapping', task: 'Publish achievement dashboard', subTasks: '2', responsible: 'Assessment Unit', priority: 'Low Priority', deadline: '2026-06-10', dependencies: 'Evidence matrix updated', status: 'Completed' },
+  { id: 'TSK-005', projectName: 'Operational quality plan', task: 'Create project charter', subTasks: '5', responsible: 'Institutional Improvement Office', priority: 'Medium Priority', deadline: '2026-05-30', dependencies: 'Execution plan approved', status: 'New' },
+];
+
+const projectTimePlan = [
+  { id: 'TP-001', projectName: 'Institutional accreditation readiness', plannedStart: '2026-04-01', plannedEnd: '2026-08-30', actualStart: '2026-04-03', actualEnd: '2026-09-06', delay: '7 days', status: 'In Progress', plannedOffset: 3, plannedWidth: 54, actualOffset: 5, actualWidth: 58 },
+  { id: 'TP-002', projectName: 'Program specification review', plannedStart: '2026-05-01', plannedEnd: '2026-07-15', actualStart: '2026-05-05', actualEnd: '2026-07-28', delay: '13 days', status: 'Pending Review', plannedOffset: 22, plannedWidth: 31, actualOffset: 25, actualWidth: 35 },
+  { id: 'TP-003', projectName: 'Learning outcomes mapping', plannedStart: '2026-03-15', plannedEnd: '2026-06-20', actualStart: '2026-03-15', actualEnd: '2026-06-18', delay: '0 days', status: 'Completed', plannedOffset: 0, plannedWidth: 38, actualOffset: 0, actualWidth: 37 },
+  { id: 'TP-004', projectName: 'Accreditation gap analysis', plannedStart: '2026-04-20', plannedEnd: '2026-07-30', actualStart: '2026-04-25', actualEnd: '2026-08-18', delay: '19 days', status: 'Delayed', plannedOffset: 15, plannedWidth: 42, actualOffset: 18, actualWidth: 48 },
+];
+
+const projectTeams = [
+  { id: 'TM-001', projectName: 'Institutional accreditation readiness', manager: 'Quality Manager', members: '8', reviewers: '3', consultants: '1', assignmentBasis: 'permissions, expertise, committees', status: 'Approved' },
+  { id: 'TM-002', projectName: 'Program specification review', manager: 'Program Chair', members: '5', reviewers: '2', consultants: '0', assignmentBasis: 'program committee and curriculum expertise', status: 'In Progress' },
+  { id: 'TM-003', projectName: 'Accreditation gap analysis', manager: 'College Quality Unit', members: '6', reviewers: '4', consultants: '1', assignmentBasis: 'quality reviewers and external consultant', status: 'Delayed' },
+  { id: 'TM-004', projectName: 'Operational quality plan', manager: 'Institutional Improvement Office', members: '7', reviewers: '2', consultants: '0', assignmentBasis: 'operational owners and permissions', status: 'New' },
+];
+
+const projectRisksIssues = [
+  { id: 'RI-001', projectName: 'Institutional accreditation readiness', item: 'Late evidence uploads', category: 'Risk / Issue', impact: 'High', owner: 'Quality Manager', treatmentPlan: 'Reassign evidence tasks and escalate to owner', escalation: 'Escalated', status: 'In Progress' },
+  { id: 'RI-002', projectName: 'Program specification review', item: 'Reviewer availability conflict', category: 'Risk / Issue', impact: 'Medium', owner: 'Program Chair', treatmentPlan: 'Confirm backup reviewers and update schedule', escalation: 'Pending Review', status: 'Pending Review' },
+  { id: 'RI-003', projectName: 'Learning outcomes mapping', item: 'Low PLO achievement', category: 'Risk / Issue', impact: 'High', owner: 'Assessment Unit', treatmentPlan: 'Launch improvement action and monitor next cycle', escalation: 'Critical', status: 'Delayed' },
+];
+
+const projectNotifications = [
+  { id: 'NT-001', trigger: 'Overdue task reminder', projectName: 'Accreditation gap analysis', channel: 'Email / In-System', recipients: 'Project team', deadline: '2026-05-18', status: 'Delayed' },
+  { id: 'NT-002', trigger: 'Upcoming deadline alert', projectName: 'Institutional accreditation readiness', channel: 'SMS / In-System', recipients: 'Requirement owners', deadline: '2026-05-22', status: 'In Progress' },
+  { id: 'NT-003', trigger: 'Task approval notification', projectName: 'Learning outcomes mapping', channel: 'Email / In-System', recipients: 'Accreditation committee', deadline: '2026-06-10', status: 'Completed' },
+  { id: 'NT-004', trigger: 'New reviewer note', projectName: 'Program specification review', channel: 'Email / In-System', recipients: 'Program Committee', deadline: '2026-05-28', status: 'Pending Review' },
+];
+
+const projectCollaboration = [
+  { id: 'CO-001', projectName: 'Institutional accreditation readiness', comment: 'Task comments and evidence discussion', file: 'evidence-matrix-v4.xlsx', meeting: 'Weekly steering meeting', minutes: 'Meeting minutes shared with committee', activity: 'Evidence matrix updated', status: 'In Progress' },
+  { id: 'CO-002', projectName: 'Program specification review', comment: 'File shared for reviewer response', file: 'program-spec-review.pdf', meeting: 'Program Committee', minutes: 'Meeting minutes shared with committee', activity: 'Self-study draft submitted', status: 'Pending Review' },
+  { id: 'CO-003', projectName: 'Learning outcomes mapping', comment: 'Task comments and evidence discussion', file: 'plo-achievement-dashboard.pdf', meeting: 'Assessment Unit', minutes: 'Final closure', activity: 'Execution plan approved', status: 'Completed' },
+];
+
+const projectExecutiveReports = [
+  { id: 'PER-001', report: 'Project Status Report', audience: 'Senior Management', frequency: 'Weekly', source: 'Projects Management', status: 'In Progress' },
+  { id: 'PER-002', report: 'Progress Report', audience: 'Deanship of Quality', frequency: 'Weekly', source: 'Milestones', status: 'Approved' },
+  { id: 'PER-003', report: 'Delay Report', audience: 'Program Chairs', frequency: 'Weekly', source: 'Tasks Management', status: 'Delayed' },
+  { id: 'PER-004', report: 'Risk Report', audience: 'Quality reviewers', frequency: 'Monthly', source: 'Risks & Issues', status: 'Critical' },
+  { id: 'PER-005', report: 'Time Consumption Report', audience: 'Project Manager', frequency: 'Monthly', source: 'Time Plan', status: 'In Progress' },
+  { id: 'PER-006', report: 'Executive Dashboard', audience: 'Senior Management', frequency: 'Monthly', source: 'Projects Management', status: 'Approved' },
+];
+
 const statusClassMap = {
   'Approved': 's-done',
   'Full Accreditation': 's-done',
   'Complete': 's-done',
+  'Completed': 's-done',
   'In Progress': 's-inprogress',
   'Eligible': 's-inprogress',
+  'New': 's-inprogress',
   'Conditional Accreditation': 's-pending',
   'Pending Submit': 's-pending',
+  'Pending Review': 's-pending',
   'Incomplete': 's-pending',
+  'Delayed': 's-rejected',
+  'Critical': 's-rejected',
+  'Escalated': 's-rejected',
+  'Cancelled': 's-not-started',
   'Not Started': 's-not-started',
   'Not Eligible': 's-not-started',
 };
@@ -502,6 +702,14 @@ const moduleConfig = {
     base: '/quality-projects',
     tabs: [
       { path: 'dashboard', label: 'Dashboard', icon: 'ti-layout-dashboard' },
+      { path: 'projects-management', label: 'Projects Management', icon: 'ti-kanban' },
+      { path: 'milestones', label: 'Milestones', icon: 'ti-flag-3' },
+      { path: 'tasks', label: 'Tasks Management', icon: 'ti-list-check' },
+      { path: 'time-plan', label: 'Time Plan', icon: 'ti-timeline' },
+      { path: 'teams', label: 'Teams & Resources', icon: 'ti-users-group' },
+      { path: 'risks', label: 'Risks & Issues', icon: 'ti-alert-triangle' },
+      { path: 'notifications', label: 'Notifications', icon: 'ti-bell-ringing' },
+      { path: 'collaboration', label: 'Collaboration', icon: 'ti-messages' },
       { path: 'institutional', label: 'Institutional', icon: 'ti-building-bank' },
       { path: 'program-review', label: 'Program Review', icon: 'ti-clipboard-list' },
       { path: 'learning-outcomes', label: 'Learning Outcomes', icon: 'ti-route' },
@@ -934,7 +1142,223 @@ function StrategicContent({ activePath }) {
   );
 }
 
+function ProjectManagementDashboard() {
+  const { language } = useI18n();
+  const delayedCount = projectTasks.filter((task) => task.status === 'Delayed').length;
+  const openRisks = projectRisksIssues.filter((risk) => ['Delayed', 'In Progress', 'Critical'].includes(risk.status)).length;
+  const evidenceAvg = Math.round(managedProjects.reduce((sum, project) => sum + Number(project.evidence.replace('%', '')), 0) / managedProjects.length);
+  const requirementsAvg = Math.round(managedProjects.reduce((sum, project) => sum + Number(project.requirements.replace('%', '')), 0) / managedProjects.length);
+
+  return (
+    <>
+      <div className="project-command-panel">
+        <div>
+          <div className="section-title">{label('Strategic & Quality Projects Management', language)}</div>
+          <div className="section-sub">{label('Project dashboard with execution plans, milestones, tasks, teams, performance indicators, and schedule follow-up.', language)}</div>
+        </div>
+        <div className="project-command-kpis">
+          <div><strong>{managedProjects.length}</strong><span>{label('Projects Management', language)}</span></div>
+          <div><strong>{delayedCount}</strong><span>{label('Delayed Tasks', language)}</span></div>
+          <div><strong>{openRisks}</strong><span>{label('Risks & Issues', language)}</span></div>
+          <div><strong>{evidenceAvg}%</strong><span>{label('Evidence Completion', language)}</span></div>
+          <div><strong>{requirementsAvg}%</strong><span>{label('Requirements Completion', language)}</span></div>
+        </div>
+      </div>
+      <SummaryCards rows={managedProjects} />
+      <SortableTable
+        title="Projects Management"
+        rows={managedProjects}
+        columns={[
+          { key: 'id', label: 'ID' },
+          { key: 'projectName', label: 'Project Name' },
+          { key: 'projectType', label: 'Project Type' },
+          { key: 'owner', label: 'Owning Entity' },
+          { key: 'programCollege', label: 'Program / College' },
+          { key: 'start', label: 'Planned Start' },
+          { key: 'end', label: 'Planned End' },
+          { key: 'priority', label: 'Priority' },
+          { key: 'status', label: 'Status', type: 'status' },
+          { key: 'completion', label: 'Completion' },
+          { key: 'delayedTasks', label: 'Delayed Tasks' },
+        ]}
+      />
+    </>
+  );
+}
+
+function TimePlanContent() {
+  const { language } = useI18n();
+  return (
+    <>
+      <div className="quality-table-card gantt-card">
+        <div className="quality-table-toolbar">
+          <div>
+            <div className="section-title">{label('Planned vs Actual Timeline', language)}</div>
+            <div className="section-sub">{label('Search, sort, and pagination are available for this table.', language)}</div>
+          </div>
+          <div className="gantt-legend">
+            <span><i className="planned" />{label('Planned', language)}</span>
+            <span><i className="actual" />{label('Actual', language)}</span>
+          </div>
+        </div>
+        <div className="gantt-list">
+          {projectTimePlan.map((item) => (
+            <div className="gantt-row" key={item.id}>
+              <div className="gantt-title">
+                <strong>{label(item.projectName, language)}</strong>
+                <span>{label('Delay', language)}: {item.delay}</span>
+              </div>
+              <div className="gantt-track" aria-label={label(item.projectName, language)}>
+                <span className="gantt-bar planned" style={{ insetInlineStart: `${item.plannedOffset}%`, width: `${item.plannedWidth}%` }} />
+                <span className="gantt-bar actual" style={{ insetInlineStart: `${item.actualOffset}%`, width: `${item.actualWidth}%` }} />
+              </div>
+              <span className={`status-pill ${getStatusClass(item.status)}`}>{label(item.status, language)}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+      <SortableTable
+        title="Time Plan"
+        rows={projectTimePlan}
+        columns={[
+          { key: 'id', label: 'ID' },
+          { key: 'projectName', label: 'Project Name' },
+          { key: 'plannedStart', label: 'Planned Start' },
+          { key: 'plannedEnd', label: 'Planned End' },
+          { key: 'actualStart', label: 'Actual Start' },
+          { key: 'actualEnd', label: 'Actual End' },
+          { key: 'delay', label: 'Delay' },
+          { key: 'status', label: 'Status', type: 'status' },
+        ]}
+      />
+    </>
+  );
+}
+
 function QualityProjectsContent({ activePath }) {
+  if (activePath === 'projects-management') {
+    return <ProjectManagementDashboard />;
+  }
+
+  if (activePath === 'milestones') {
+    return (
+      <SortableTable
+        title="Milestones"
+        rows={projectMilestones}
+        columns={[
+          { key: 'id', label: 'ID' },
+          { key: 'projectName', label: 'Project Name' },
+          { key: 'milestone', label: 'Milestones' },
+          { key: 'start', label: 'Start' },
+          { key: 'end', label: 'End' },
+          { key: 'completion', label: 'Completion' },
+          { key: 'owner', label: 'Owner' },
+          { key: 'status', label: 'Status', type: 'status' },
+        ]}
+      />
+    );
+  }
+
+  if (activePath === 'tasks') {
+    return (
+      <SortableTable
+        title="Tasks Management"
+        rows={projectTasks}
+        columns={[
+          { key: 'id', label: 'ID' },
+          { key: 'projectName', label: 'Project Name' },
+          { key: 'task', label: 'Action' },
+          { key: 'subTasks', label: 'Sub Tasks' },
+          { key: 'responsible', label: 'Responsible' },
+          { key: 'priority', label: 'Priority' },
+          { key: 'deadline', label: 'Deadline' },
+          { key: 'dependencies', label: 'Dependencies' },
+          { key: 'status', label: 'Status', type: 'status' },
+        ]}
+      />
+    );
+  }
+
+  if (activePath === 'time-plan') {
+    return <TimePlanContent />;
+  }
+
+  if (activePath === 'teams') {
+    return (
+      <SortableTable
+        title="Teams & Resources"
+        rows={projectTeams}
+        columns={[
+          { key: 'id', label: 'ID' },
+          { key: 'projectName', label: 'Project Name' },
+          { key: 'manager', label: 'Project Manager' },
+          { key: 'members', label: 'Members' },
+          { key: 'reviewers', label: 'Reviewers' },
+          { key: 'consultants', label: 'Consultants' },
+          { key: 'assignmentBasis', label: 'Assignment Basis' },
+          { key: 'status', label: 'Status', type: 'status' },
+        ]}
+      />
+    );
+  }
+
+  if (activePath === 'risks') {
+    return (
+      <SortableTable
+        title="Risks & Issues"
+        rows={projectRisksIssues}
+        columns={[
+          { key: 'id', label: 'ID' },
+          { key: 'projectName', label: 'Project Name' },
+          { key: 'item', label: 'Risk / Issue' },
+          { key: 'category', label: 'Category' },
+          { key: 'impact', label: 'Impact' },
+          { key: 'owner', label: 'Owner' },
+          { key: 'treatmentPlan', label: 'Treatment Plan' },
+          { key: 'escalation', label: 'Escalation', type: 'status' },
+          { key: 'status', label: 'Status', type: 'status' },
+        ]}
+      />
+    );
+  }
+
+  if (activePath === 'notifications') {
+    return (
+      <SortableTable
+        title="Notifications"
+        rows={projectNotifications}
+        columns={[
+          { key: 'id', label: 'ID' },
+          { key: 'trigger', label: 'Trigger' },
+          { key: 'projectName', label: 'Project Name' },
+          { key: 'channel', label: 'Channel' },
+          { key: 'recipients', label: 'Recipients' },
+          { key: 'deadline', label: 'Deadline' },
+          { key: 'status', label: 'Status', type: 'status' },
+        ]}
+      />
+    );
+  }
+
+  if (activePath === 'collaboration') {
+    return (
+      <SortableTable
+        title="Collaboration"
+        rows={projectCollaboration}
+        columns={[
+          { key: 'id', label: 'ID' },
+          { key: 'projectName', label: 'Project Name' },
+          { key: 'comment', label: 'Comment' },
+          { key: 'file', label: 'Uploaded File' },
+          { key: 'meeting', label: 'Meeting' },
+          { key: 'minutes', label: 'Minutes' },
+          { key: 'activity', label: 'Activity Timeline' },
+          { key: 'status', label: 'Status', type: 'status' },
+        ]}
+      />
+    );
+  }
+
   if (activePath === 'program-review') {
     return (
       <SortableTable
@@ -974,10 +1398,10 @@ function QualityProjectsContent({ activePath }) {
   if (activePath === 'reports') {
     return (
       <>
-        <SummaryCards rows={executiveReports} />
+        <SummaryCards rows={projectExecutiveReports} />
         <SortableTable
           title="Executive Reports"
-          rows={executiveReports}
+          rows={projectExecutiveReports}
           columns={[
             { key: 'id', label: 'ID' },
             { key: 'report', label: 'Report' },
