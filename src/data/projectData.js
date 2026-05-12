@@ -85,6 +85,7 @@ export const milestones = [
   { id: 'MS-004', projectId: 'INIT-002', name: 'Gap Analysis', nameAr: 'تحليل الفجوات', startDate: '2026-07-01', endDate: '2026-08-31', status: 'Planned', progress: 10, owner: 'Deanship of Quality' }
 ];
 
+export const tasks = [
   { id: 'TSK-001', milestoneId: 'MS-002', projectId: 'PRJ-001', title: 'Update evidence matrix', titleAr: 'تحديث مصفوفة الأدلة', assignedTo: 'Sara', priority: 'High', status: 'In Progress', dueDate: '2026-05-22', subtasks: [{ id: 'SUB-1', title: 'Verify PLO', status: 'Completed' }], comments: [], attachments: ['matrix.xlsx'], description: 'Mapping files to standards.', dependencies: [] },
   { id: 'TSK-002', milestoneId: 'MS-002', projectId: 'PRJ-001', title: 'Collect committee approvals', titleAr: 'جمع اعتمادات اللجان', assignedTo: 'Khalid', priority: 'Medium', status: 'To Do', dueDate: '2026-05-28', subtasks: [], comments: [], attachments: [], description: 'Signatures for spec.', dependencies: [] },
   { id: 'TSK-003', milestoneId: 'MS-001', projectId: 'PRJ-001', title: 'Finalize Chapter 1', titleAr: 'الانتهاء من الفصل الأول', assignedTo: 'Dr. Ahmad', priority: 'High', status: 'Completed', dueDate: '2026-04-30', subtasks: [], comments: [], attachments: ['ch1.docx'], description: 'Introduction draft.', dependencies: [] },
