@@ -2135,6 +2135,7 @@ html[dir="rtl"] .status-row-label {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
+  max-width: 100%;
   margin-bottom: 20px;
 }
 
@@ -2145,6 +2146,7 @@ html[dir="rtl"] .status-row-label {
 }
 
 .quality-table-card {
+  max-width: 100%;
   border: 1px solid var(--dga-neutral-200);
   border-radius: 8px;
   background: #fff;
@@ -2185,7 +2187,10 @@ html[dir="rtl"] .status-row-label {
 }
 
 .quality-table-scroll {
+  max-width: 100%;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-inline: contain;
 }
 
 .quality-table {
@@ -2202,6 +2207,8 @@ html[dir="rtl"] .status-row-label {
   font-size: 12px;
   text-align: left;
   vertical-align: middle;
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 
 html[dir="rtl"] .quality-table th,
@@ -3040,7 +3047,10 @@ html[dir="rtl"] .quality-table td {
   .quality-module-tabs {
     flex-wrap: nowrap;
     overflow-x: auto;
+    margin-inline: -18px;
+    padding-inline: 18px;
     padding-bottom: 6px;
+    scroll-snap-type: x proximity;
     scrollbar-width: none;
   }
 
@@ -3054,6 +3064,29 @@ html[dir="rtl"] .quality-table td {
     min-height: 38px;
     padding: 0 12px;
     font-size: 13px;
+    scroll-snap-align: start;
+  }
+
+  .quality-table-card {
+    border-radius: 6px;
+  }
+
+  .quality-table {
+    min-width: 720px;
+  }
+
+  .quality-table th,
+  .quality-table td {
+    max-width: 180px;
+    font-size: 11px;
+  }
+
+  .quality-table-toolbar {
+    padding: 14px;
+  }
+
+  .quality-pagination {
+    padding: 12px 14px;
   }
 }
 

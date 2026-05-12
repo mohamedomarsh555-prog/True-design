@@ -25,10 +25,17 @@ export default function Sidebar() {
       setOpen: setAccreditationOpen,
       items: [
         ['Dashboard', 'لوحة التحكم', '/accreditation/dashboard'],
+        ['Master Data', 'البيانات الأساسية', '/accreditation/master-data'],
         ['Academic Programs', 'البرامج الأكاديمية', '/accreditation/programs'],
+        ['Accreditation Projects', 'مشاريع الاعتماد', '/accreditation/projects'],
         ['Requirements', 'متطلبات الاعتماد', '/accreditation/requirements'],
+        ['Self Study & Gaps', 'الدراسة الذاتية والثغرات', '/accreditation/self-study'],
+        ['Evidence Repository', 'مستودع الشواهد', '/accreditation/evidence'],
+        ['Reviews & Visits', 'المراجعات والزيارات', '/accreditation/reviews'],
+        ['Submission & Decision', 'الرفع والقرار', '/accreditation/submission'],
         ['Action Log', 'سجل الإجراءات', '/accreditation/actions'],
         ['Post Accreditation', 'ما بعد الاعتماد', '/accreditation/post-accreditation'],
+        ['Governance', 'الحوكمة والصلاحيات', '/accreditation/governance'],
       ],
     },
     {
@@ -58,6 +65,7 @@ export default function Sidebar() {
         ['Program Review', 'مراجعة البرامج', '/quality-projects/program-review'],
         ['Learning Outcomes', 'مخرجات التعلم', '/quality-projects/learning-outcomes'],
         ['Gap Analysis', 'تحليل الثغرات', '/quality-projects/gap-analysis'],
+        ['Reports', 'التقارير', '/quality-projects/reports'],
       ],
     },
   ];

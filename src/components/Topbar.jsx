@@ -46,7 +46,7 @@ export default function Topbar({ breadcrumbs }) {
         ))}
       </div>
       <div className="topbar-right">
-        <div className="language-switch" aria-label="Language switch">
+        <div className="language-switch" aria-label={language === 'ar' ? 'تبديل اللغة' : 'Language switch'}>
           <button
             className={`language-option ${language === 'en' ? 'active' : ''}`}
             onClick={() => setLanguage('en')}
