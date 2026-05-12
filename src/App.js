@@ -11,7 +11,6 @@ import AllProgramsReportPage from './pages/AllProgramsReportPage';
 import ModulePage from './pages/ModulePage';
 import InstitutionalAccreditationPage from './pages/InstitutionalAccreditationPage';
 import QualityModulesPage from './pages/QualityModulesPage';
-import QualityModulesPage from './pages/QualityModulesPage';
 import ProjectDetailsPage from './pages/ProjectManagement/ProjectDetailsPage';
 import StrategicPlanDetailsPage from './pages/ProjectManagement/StrategicPlanDetailsPage';
 import StrategicObjectiveDetailsPage from './pages/ProjectManagement/StrategicObjectiveDetailsPage';
