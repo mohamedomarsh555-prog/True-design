@@ -25,6 +25,10 @@ export default function Topbar({ breadcrumbs }) {
       if (index === 1 && segments[1] && segments[1] !== 'reports') return `/programs/${segments[1]}`;
     }
 
+    if (segments[0] === 'quality-projects') {
+      if (index === 0) return '/quality-projects';
+    }
+
     if (index === 0 && location.pathname !== '/') return '/';
     return null;
   };

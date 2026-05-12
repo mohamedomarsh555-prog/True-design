@@ -1,8 +1,9 @@
-// Provides the quality, accreditation, and strategic planning module screens requested in docs/codex_prompt_v2.md.
 import { useMemo, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, Link } from 'react-router-dom';
 import Topbar from '../components/Topbar';
 import { useI18n } from '../i18n';
+import { projects as managedProjectsData, risks, milestones as projectMilestonesData, tasks as projectTasksData } from '../data/projectData';
+import { strategicPlans, strategicObjectives, strategicInitiatives, strategicKPIs } from '../data/strategicData';
 
 const todayStamp = '2026-05-12 09:30';
 
@@ -690,8 +691,10 @@ const moduleConfig = {
     base: '/strategic-planning',
     tabs: [
       { path: 'dashboard', label: 'Dashboard', icon: 'ti-layout-dashboard' },
-      { path: 'projects', label: 'Strategic Projects', icon: 'ti-briefcase' },
+      { path: 'plans', label: 'Strategic Plans', icon: 'ti-files' },
       { path: 'objectives', label: 'Objectives', icon: 'ti-target' },
+      { path: 'projects', label: 'Strategic Projects', icon: 'ti-briefcase' },
+      { path: 'kpis', label: 'KPIs', icon: 'ti-chart-infographic' },
       { path: 'reports', label: 'Reports', icon: 'ti-report-analytics' },
     ],
   },
@@ -1099,43 +1102,140 @@ function AccreditationContent({ activePath }) {
 
 function StrategicContent({ activePath }) {
   const { language } = useI18n();
+
+  if (activePath === 'plans') {
+    return (
+      <SortableTable
+        title="Strategic Plans"
+        rows={strategicPlans.map(plan => ({
+          ...plan,
+          name: <Link className="project-link" to={`/strategic-planning/plans/${plan.id}`}>{language === 'ar' ? plan.nameAr : plan.name}</Link>,
+          status: language === 'ar' ? plan.statusAr : plan.status,
+          progress: `${plan.progress}%`,
+          objectives: plan.stats.objectives,
+          projects: plan.stats.projects,
+          kpis: plan.stats.kpis
+        }))}
+        columns={[
+          { key: 'id', label: 'ID' },
+          { key: 'name', label: 'Plan Name' },
+          { key: 'duration', label: 'Duration' },
+          { key: 'status', label: 'Status', type: 'status' },
+          { key: 'progress', label: 'Progress' },
+          { key: 'objectives', label: 'Objectives' },
+          { key: 'projects', label: 'Projects' },
+          { key: 'kpis', label: 'KPIs' },
+          { key: 'owner', label: 'Owner' },
+        ]}
+      />
+    );
+  }
+
   if (activePath === 'objectives') {
     return (
-      <div className="quality-card-grid">
-        {strategicProjects.map((project) => (
-          <div className="report-card" key={project.id}>
-            <div className="rc-icon-wrap ic-blue"><i className="ti ti-target" /></div>
-            <div className="rc-title">{label(project.objective, language)}</div>
-            <div className="rc-desc">
-              {language === 'ar'
-                ? `المشروع المرتبط: ${label(project.name, language)}. المالك: ${label(project.owner, language)}.`
-                : `Linked project: ${project.name}. Owner: ${project.owner}.`}
-            </div>
-            <div className="rc-footer"><span className={`status-pill ${getStatusClass(project.status)}`}>{label(project.status, language)}</span></div>
-          </div>
-        ))}
-      </div>
+      <SortableTable
+        title="Strategic Objectives"
+        rows={strategicObjectives.map(obj => {
+          const plan = strategicPlans.find(p => p.id === obj.planId);
+          return {
+            ...obj,
+            name: <Link className="project-link" to={`/strategic-planning/objectives/${obj.id}`}>{language === 'ar' ? obj.nameAr : obj.name}</Link>,
+            planName: language === 'ar' ? plan.nameAr : plan.name,
+            status: language === 'ar' ? obj.statusAr : obj.status,
+            progress: `${obj.progress}%`,
+            weight: `${obj.weight}%`
+          };
+        })}
+        columns={[
+          { key: 'code', label: 'Code' },
+          { key: 'name', label: 'Objective' },
+          { key: 'planName', label: 'Strategic Plan' },
+          { key: 'owner', label: 'Owner' },
+          { key: 'weight', label: 'Weight' },
+          { key: 'status', label: 'Status', type: 'status' },
+          { key: 'progress', label: 'Progress' },
+        ]}
+      />
+    );
+  }
+
+  if (activePath === 'projects') {
+    return (
+      <SortableTable
+        title="Strategic Projects"
+        rows={strategicInitiatives.map(init => {
+          const obj = strategicObjectives.find(o => o.id === init.objectiveId);
+          return {
+            ...init,
+            name: <Link className="project-link" to={`/quality-projects/projects/${init.id}`}>{language === 'ar' ? init.nameAr : init.name}</Link>,
+            objectiveName: language === 'ar' ? obj.nameAr : obj.name,
+            progress: `${init.progress}%`,
+            priority: language === 'ar' ? init.priorityAr : init.priority
+          };
+        })}
+        columns={[
+          { key: 'code', label: 'Code' },
+          { key: 'name', label: 'Project' },
+          { key: 'objectiveName', label: 'Objective' },
+          { key: 'owner', label: 'Owner' },
+          { key: 'priority', label: 'Priority' },
+          { key: 'status', label: 'Status', type: 'status' },
+          { key: 'progress', label: 'Progress' },
+          { key: 'startDate', label: 'Start' },
+          { key: 'endDate', label: 'End' },
+        ]}
+      />
+    );
+  }
+
+  if (activePath === 'kpis') {
+    return (
+      <SortableTable
+        title="Strategic KPIs"
+        rows={strategicKPIs.map(kpi => {
+          const obj = strategicObjectives.find(o => o.id === kpi.objectiveId);
+          return {
+            ...kpi,
+            objectiveName: language === 'ar' ? obj.nameAr : obj.name,
+            target: `${kpi.target}%`,
+            actual: `${kpi.actual}%`
+          };
+        })}
+        columns={[
+          { key: 'id', label: 'ID' },
+          { key: 'name', label: 'Indicator' },
+          { key: 'objectiveName', label: 'Objective' },
+          { key: 'baseline', label: 'Baseline' },
+          { key: 'target', label: 'Target' },
+          { key: 'actual', label: 'Actual' },
+          { key: 'status', label: 'Status', type: 'status' },
+          { key: 'owner', label: 'Owner' },
+        ]}
+      />
     );
   }
 
   if (activePath === 'reports') {
-    return <SummaryCards rows={strategicProjects} />;
+    return <SummaryCards rows={strategicInitiatives} statusKey="status" />;
   }
 
   return (
     <>
-      {activePath === 'dashboard' && <SummaryCards rows={strategicProjects} />}
+      {activePath === 'dashboard' && <SummaryCards rows={strategicInitiatives} statusKey="status" />}
       <SortableTable
-        title="Strategic Projects"
-        rows={strategicProjects}
+        title="Strategic Overview"
+        rows={strategicInitiatives.map(init => ({
+          ...init,
+          name: <Link className="project-link" to={`/quality-projects/projects/${init.id}`}>{language === 'ar' ? init.nameAr : init.name}</Link>,
+          progress: `${init.progress}%`
+        }))}
         columns={[
           { key: 'id', label: 'ID' },
           { key: 'name', label: 'Project' },
           { key: 'owner', label: 'Owner' },
-          { key: 'objective', label: 'Objective' },
           { key: 'status', label: 'Status', type: 'status' },
           { key: 'progress', label: 'Progress' },
-          { key: 'due', label: 'Due Date' },
+          { key: 'endDate', label: 'Due Date' },
         ]}
       />
     </>
@@ -1144,10 +1244,10 @@ function StrategicContent({ activePath }) {
 
 function ProjectManagementDashboard() {
   const { language } = useI18n();
-  const delayedCount = projectTasks.filter((task) => task.status === 'Delayed').length;
-  const openRisks = projectRisksIssues.filter((risk) => ['Delayed', 'In Progress', 'Critical'].includes(risk.status)).length;
-  const evidenceAvg = Math.round(managedProjects.reduce((sum, project) => sum + Number(project.evidence.replace('%', '')), 0) / managedProjects.length);
-  const requirementsAvg = Math.round(managedProjects.reduce((sum, project) => sum + Number(project.requirements.replace('%', '')), 0) / managedProjects.length);
+  const delayedCount = managedProjectsData.reduce((sum, p) => sum + p.kpis.delayedTasks, 0);
+  const openRisks = risks.length; // From projectData
+  const evidenceAvg = Math.round(managedProjectsData.reduce((sum, project) => sum + project.kpis.evidence, 0) / managedProjectsData.length);
+  const requirementsAvg = Math.round(managedProjectsData.reduce((sum, project) => sum + project.kpis.requirements, 0) / managedProjectsData.length);
 
   return (
     <>
@@ -1164,10 +1264,22 @@ function ProjectManagementDashboard() {
           <div><strong>{requirementsAvg}%</strong><span>{label('Requirements Completion', language)}</span></div>
         </div>
       </div>
-      <SummaryCards rows={managedProjects} />
+      <SummaryCards rows={managedProjectsData} statusKey="status" />
       <SortableTable
         title="Projects Management"
-        rows={managedProjects}
+        rows={managedProjectsData.map(p => ({
+          ...p,
+          projectName: <Link className="project-link" to={`/quality-projects/projects/${p.id}`}>{language === 'ar' ? p.nameAr : p.name}</Link>,
+          projectType: language === 'ar' ? p.typeAr : p.type,
+          owner: language === 'ar' ? p.ownerAr : p.owner,
+          programCollege: language === 'ar' ? p.entityAr : p.entity,
+          status: language === 'ar' ? p.statusAr : p.status,
+          priority: language === 'ar' ? p.priorityAr : p.priority,
+          completion: `${p.progress}%`,
+          delayedTasks: p.kpis.delayedTasks,
+          start: p.startDate,
+          end: p.endDate
+        }))}
         columns={[
           { key: 'id', label: 'ID' },
           { key: 'projectName', label: 'Project Name' },
@@ -1244,7 +1356,18 @@ function QualityProjectsContent({ activePath }) {
     return (
       <SortableTable
         title="Milestones"
-        rows={projectMilestones}
+        rows={projectMilestonesData.map(ms => {
+          const p = managedProjectsData.find(prj => prj.id === ms.projectId);
+          return {
+            ...ms,
+            projectName: language === 'ar' ? p.nameAr : p.name,
+            milestone: language === 'ar' ? ms.nameAr : ms.name,
+            status: language === 'ar' ? ms.statusAr : ms.status,
+            completion: `${ms.progress}%`,
+            start: ms.startDate,
+            end: ms.endDate
+          };
+        })}
         columns={[
           { key: 'id', label: 'ID' },
           { key: 'projectName', label: 'Project Name' },
@@ -1263,7 +1386,20 @@ function QualityProjectsContent({ activePath }) {
     return (
       <SortableTable
         title="Tasks Management"
-        rows={projectTasks}
+        rows={projectTasksData.map(t => {
+          const p = managedProjectsData.find(prj => prj.id === t.projectId);
+          return {
+            ...t,
+            projectName: language === 'ar' ? p.nameAr : p.name,
+            task: language === 'ar' ? t.titleAr : t.title,
+            subTasks: t.subtasks.length,
+            responsible: t.assignedTo,
+            priority: language === 'ar' ? t.priorityAr : t.priority,
+            deadline: t.dueDate,
+            dependencies: t.dependencies.join(', ') || '-',
+            status: language === 'ar' ? t.statusAr : t.status
+          };
+        })}
         columns={[
           { key: 'id', label: 'ID' },
           { key: 'projectName', label: 'Project Name' },

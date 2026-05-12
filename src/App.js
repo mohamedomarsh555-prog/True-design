@@ -11,6 +11,9 @@ import AllProgramsReportPage from './pages/AllProgramsReportPage';
 import ModulePage from './pages/ModulePage';
 import InstitutionalAccreditationPage from './pages/InstitutionalAccreditationPage';
 import QualityModulesPage from './pages/QualityModulesPage';
+import ProjectDetailsPage from './pages/ProjectManagement/ProjectDetailsPage';
+import StrategicPlanDetailsPage from './pages/ProjectManagement/StrategicPlanDetailsPage';
+import StrategicObjectiveDetailsPage from './pages/ProjectManagement/StrategicObjectiveDetailsPage';
 import { useI18n } from './i18n';
 
 const STATIC_AUTH = {
@@ -237,8 +240,14 @@ export default function App() {
             <Route path="/accreditation/:section" element={<QualityModulesPage moduleType="accreditation" />} />
             <Route path="/strategic-planning" element={<QualityModulesPage moduleType="strategic" />} />
             <Route path="/strategic-planning/:section" element={<QualityModulesPage moduleType="strategic" />} />
+            <Route path="/strategic-planning/plans/:planId" element={<StrategicPlanDetailsPage />} />
+            <Route path="/strategic-planning/plans/:planId/:tab" element={<StrategicPlanDetailsPage />} />
+            <Route path="/strategic-planning/objectives/:objectiveId" element={<StrategicObjectiveDetailsPage />} />
+            <Route path="/strategic-planning/objectives/:objectiveId/:tab" element={<StrategicObjectiveDetailsPage />} />
             <Route path="/quality-projects" element={<QualityModulesPage moduleType="quality" />} />
             <Route path="/quality-projects/:section" element={<QualityModulesPage moduleType="quality" />} />
+            <Route path="/quality-projects/projects/:projectId" element={<ProjectDetailsPage />} />
+            <Route path="/quality-projects/projects/:projectId/:tab" element={<ProjectDetailsPage />} />
             <Route
               path="/documentation-definitions"
               element={
