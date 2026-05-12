@@ -119,3 +119,8 @@ export const strategicKPIs = [
     owner: 'IT Services'
   }
 ];
+
+export const strategicReports = [
+  { id: 'SR-001', report: 'Quarterly Strategic Progress', type: 'Performance', owner: 'Strategy Office', status: 'Published', date: '2026-04-15' },
+  { id: 'SR-002', report: 'Budget Utilization Analysis', type: 'Financial', owner: 'Finance Dept', status: 'Draft', date: '2026-05-10' }
+];

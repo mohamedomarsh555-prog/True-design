@@ -2,8 +2,35 @@ import { useMemo, useState } from 'react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import Topbar from '../components/Topbar';
 import { useI18n } from '../i18n';
-import { projects as managedProjectsData, risks, milestones as projectMilestonesData, tasks as projectTasksData } from '../data/projectData';
-import { strategicPlans, strategicObjectives, strategicInitiatives, strategicKPIs } from '../data/strategicData';
+import { 
+  projects as managedProjectsData, 
+  risks, 
+  milestones as projectMilestonesData, 
+  tasks as projectTasksData,
+  accreditationMasterData,
+  accreditationPrograms,
+  accreditationRequirements,
+  selfStudyGaps,
+  evidenceRepository,
+  reviewsVisits,
+  submissionDecisions,
+  accreditationActionLogs,
+  postAccreditationFollowUp,
+  governanceRoles,
+  projectTeams,
+  projectActivity,
+  projectMeetings,
+  projectFiles,
+  projectTimePlan,
+  projectRisksIssues,
+  projectNotifications,
+  projectCollaboration,
+  programReviewItems,
+  learningOutcomeItems,
+  projectExecutiveReports,
+  qualityProjects
+} from '../data/projectData';
+import { strategicPlans, strategicObjectives, strategicInitiatives, strategicKPIs, strategicReports } from '../data/strategicData';
 
 const todayStamp = '2026-05-12 09:30';
 
@@ -423,225 +450,7 @@ function label(value, language) {
   return language === 'ar' ? ar[value] || value : value;
 }
 
-const accreditationPrograms = [
-  {
-    id: 'cs-bsc',
-    name: 'Computer Science',
-    college: 'College of Computer and Information Technology',
-    degree: 'Bachelor',
-    body: 'NCAAA',
-    status: 'Full Accreditation',
-    start: '2024-09-01',
-    end: '2028-08-31',
-    updated: '2026-05-10',
-    updatedBy: 'Quality Manager',
-  },
-  {
-    id: 'it-bsc',
-    name: 'Information Technology',
-    college: 'College of Computer and Information Technology',
-    degree: 'Bachelor',
-    body: 'NCAAA',
-    status: 'Eligible',
-    start: '2025-09-01',
-    end: '2029-08-31',
-    updated: '2026-05-08',
-    updatedBy: 'Program Coordinator',
-  },
-  {
-    id: 'se-bsc',
-    name: 'Software Engineering',
-    college: 'College of Computer and Information Technology',
-    degree: 'Bachelor',
-    body: 'ABET',
-    status: 'Conditional Accreditation',
-    start: '2023-09-01',
-    end: '2027-08-31',
-    updated: '2026-05-04',
-    updatedBy: 'Dean Office',
-  },
-  {
-    id: 'is-msc',
-    name: 'Information Systems',
-    college: 'College of Computer and Information Technology',
-    degree: 'Master',
-    body: 'NCAAA',
-    status: 'Not Eligible',
-    start: '2026-09-01',
-    end: '2030-08-31',
-    updated: '2026-04-28',
-    updatedBy: 'Quality Manager',
-  },
-];
 
-const requirements = [
-  { id: 'REQ-001', program: 'Information Technology', document: 'Self-study evidence index', file: 'it-evidence-index-v2.pdf', status: 'Complete', uploaded: '2026-05-01', due: '2026-05-20', notes: 'Reviewed and approved' },
-  { id: 'REQ-002', program: 'Information Technology', document: 'Program specification', file: 'program-specification-draft.pdf', status: 'Incomplete', uploaded: '2026-04-26', due: '2026-05-18', notes: 'Missing advisory committee minutes' },
-  { id: 'REQ-003', program: 'Software Engineering', document: 'Field training report', file: 'se-field-training.pdf', status: 'Complete', uploaded: '2026-04-22', due: '2026-05-15', notes: 'Ready for visit package' },
-  { id: 'REQ-004', program: 'Computer Science', document: 'Learning outcomes assessment report', file: 'cs-plo-report.pdf', status: 'Complete', uploaded: '2026-05-03', due: '2026-05-25', notes: 'Approved by committee' },
-];
-
-const masterData = [
-  { id: 'MD-001', type: 'College', name: 'College of Computer and Information Technology', owner: 'Dean Office', status: 'Approved', updated: '2026-05-09' },
-  { id: 'MD-002', type: 'Accreditation Body', name: 'NCAAA', owner: 'Quality Manager', status: 'Approved', updated: '2026-05-08' },
-  { id: 'MD-003', type: 'Accreditation Body', name: 'ABET', owner: 'Quality Manager', status: 'Approved', updated: '2026-05-08' },
-  { id: 'MD-004', type: 'Degree Level', name: 'Bachelor', owner: 'Academic Affairs', status: 'Approved', updated: '2026-05-07' },
-  { id: 'MD-005', type: 'Degree Level', name: 'Master', owner: 'Academic Affairs', status: 'Approved', updated: '2026-05-07' },
-];
-
-const standards = [
-  { id: 'STD-001', body: 'NCAAA', standard: 'Mission and Goals', criterion: 'Program mission alignment', responseType: 'Narrative + Evidence', weight: '20%', status: 'Approved' },
-  { id: 'STD-002', body: 'NCAAA', standard: 'Teaching and Learning', criterion: 'PLO assessment cycle', responseType: 'Indicator + File', weight: '30%', status: 'In Progress' },
-  { id: 'STD-003', body: 'ABET', standard: 'Student Outcomes', criterion: 'Outcome achievement evidence', responseType: 'Evidence Matrix', weight: '35%', status: 'Approved' },
-  { id: 'STD-004', body: 'ABET', standard: 'Continuous Improvement', criterion: 'Closed-loop actions', responseType: 'Report + Evidence', weight: '15%', status: 'Pending Submit' },
-];
-
-const accreditationProjects = [
-  { id: 'PRJ-001', program: 'Computer Science', body: 'NCAAA', stage: 'Post Accreditation', manager: 'Quality Manager', team: 'Standards Committee', progress: '88%', due: '2026-06-15', risk: 'Low', status: 'In Progress' },
-  { id: 'PRJ-002', program: 'Information Technology', body: 'NCAAA', stage: 'Self Study', manager: 'Program Coordinator', team: 'Program Committee', progress: '64%', due: '2026-05-30', risk: 'Medium', status: 'In Progress' },
-  { id: 'PRJ-003', program: 'Software Engineering', body: 'ABET', stage: 'Internal Review', manager: 'Dean Office', team: 'External Consultant', progress: '52%', due: '2026-06-10', risk: 'High', status: 'Pending Submit' },
-  { id: 'PRJ-004', program: 'Information Systems', body: 'NCAAA', stage: 'Eligibility', manager: 'Quality Manager', team: 'Quality Unit', progress: '35%', due: '2026-07-01', risk: 'High', status: 'Not Started' },
-];
-
-const selfStudyGaps = [
-  { id: 'SS-001', program: 'Information Technology', standard: 'Teaching and Learning', score: '3.20', readiness: 'Ready', gap: 'Indirect assessment evidence needs update', owner: 'Assessment Unit', actionPlan: 'Update survey evidence by 2026-05-20', status: 'In Progress' },
-  { id: 'SS-002', program: 'Software Engineering', standard: 'Student Outcomes', score: '2.65', readiness: 'Not Ready', gap: 'Outcome 4 below target', owner: 'Program Committee', actionPlan: 'Run improvement workshop', status: 'Pending Submit' },
-  { id: 'SS-003', program: 'Computer Science', standard: 'Continuous Improvement', score: '3.70', readiness: 'Ready', gap: 'No critical gaps', owner: 'Quality Manager', actionPlan: 'Maintain monitoring cycle', status: 'Approved' },
-];
-
-const evidenceRepository = [
-  { id: 'EV-001', evidence: 'PLO assessment report', program: 'Computer Science', standard: 'Teaching and Learning', version: 'v3', uploadedBy: 'Assessment Unit', uploaded: '2026-05-03', approval: 'Approved', linkedTo: 'STD-002' },
-  { id: 'EV-002', evidence: 'Advisory committee minutes', program: 'Information Technology', standard: 'Mission and Goals', version: 'v2', uploadedBy: 'Program Coordinator', uploaded: '2026-04-29', approval: 'Pending Submit', linkedTo: 'STD-001' },
-  { id: 'EV-003', evidence: 'Field training employer survey', program: 'Software Engineering', standard: 'Student Outcomes', version: 'v1', uploadedBy: 'Program Committee', uploaded: '2026-04-25', approval: 'In Progress', linkedTo: 'STD-003' },
-];
-
-const reviewsVisits = [
-  { id: 'RV-001', program: 'Information Technology', reviewer: 'Internal Reviewer', visitType: 'Mock Visit', date: '2026-05-22', noteStatus: 'Open', response: 'Evidence update requested', status: 'In Progress' },
-  { id: 'RV-002', program: 'Software Engineering', reviewer: 'External Reviewer', visitType: 'Official Visit', date: '2026-06-05', noteStatus: 'Awaiting Review', response: 'Program response submitted', status: 'Pending Submit' },
-  { id: 'RV-003', program: 'Computer Science', reviewer: 'Quality Manager', visitType: 'Follow-up Meeting', date: '2026-05-18', noteStatus: 'Closed', response: 'No additional action', status: 'Approved' },
-];
-
-const submissionsDecisions = [
-  { id: 'SUB-001', program: 'Computer Science', packageStatus: 'Locked', submitted: '2026-04-30', visitReport: 'Uploaded', decision: 'Full Accreditation', decisionDate: '2026-05-10', nextAction: 'Annual follow-up' },
-  { id: 'SUB-002', program: 'Software Engineering', packageStatus: 'Read Only', submitted: '2026-05-01', visitReport: 'Pending Submit', decision: 'Conditional Accreditation', decisionDate: '2026-05-25', nextAction: 'Condition action plan' },
-  { id: 'SUB-003', program: 'Information Technology', packageStatus: 'Draft', submitted: 'Not Started', visitReport: 'Not Started', decision: 'Not Started', decisionDate: 'Not Started', nextAction: 'Complete pre-submission checklist' },
-];
-
-const governanceRoles = [
-  { id: 'ROLE-001', role: 'System Admin', scope: 'All colleges', permission: 'Users, roles, settings, integrations', audit: 'Required', status: 'Approved' },
-  { id: 'ROLE-002', role: 'Deanship of Quality', scope: 'All accreditation projects', permission: 'Standards, reviewers, approvals, dashboards', audit: 'Required', status: 'Approved' },
-  { id: 'ROLE-003', role: 'Program Chair', scope: 'Assigned program', permission: 'Evidence upload, self-study, responses, action plans', audit: 'Required', status: 'In Progress' },
-  { id: 'ROLE-004', role: 'External Reviewer', scope: 'Assigned review', permission: 'View documents, add notes, review responses', audit: 'Required', status: 'Pending Submit' },
-];
-
-const actionLogs = [
-  { id: 'ACT-001', program: 'Computer Science', action: 'Accreditation status confirmed', actor: 'Quality Manager', status: 'Approved', timestamp: '2026-05-10 11:45' },
-  { id: 'ACT-002', program: 'Information Technology', action: 'Requirement review note added', actor: 'Reviewer', status: 'In Progress', timestamp: '2026-05-08 14:20' },
-  { id: 'ACT-003', program: 'Software Engineering', action: 'Conditional recommendation recorded', actor: 'Dean Office', status: 'Pending Submit', timestamp: '2026-05-04 10:05' },
-  { id: 'ACT-004', program: 'Information Systems', action: 'Eligibility gap logged', actor: 'Quality Manager', status: 'Not Started', timestamp: '2026-04-28 08:30' },
-];
-
-const strategicProjects = [
-  { id: 'SP-001', name: 'Digital Quality Dashboard', owner: 'Deanship of Quality', objective: 'Improve reporting transparency', status: 'In Progress', progress: '68%', due: '2026-06-30' },
-  { id: 'SP-002', name: 'Program Review Automation', owner: 'Academic Affairs', objective: 'Accelerate program review cycles', status: 'Approved', progress: '100%', due: '2026-05-31' },
-  { id: 'SP-003', name: 'Graduate Attribute Framework', owner: 'Curriculum Committee', objective: 'Unify learning outcomes mapping', status: 'Pending Submit', progress: '42%', due: '2026-07-15' },
-  { id: 'SP-004', name: 'Evidence Repository', owner: 'IT Services', objective: 'Centralize accreditation evidence', status: 'In Progress', progress: '55%', due: '2026-08-20' },
-];
-
-const qualityProjects = [
-  { id: 'QP-001', name: 'Institutional accreditation readiness', area: 'Institutional', owner: 'Quality Manager', status: 'In Progress', progress: '72%', next: 'Mock review visit' },
-  { id: 'QP-002', name: 'Program specification review', area: 'Program Review', owner: 'Program Committee', status: 'Pending Submit', progress: '45%', next: 'Committee feedback' },
-  { id: 'QP-003', name: 'Learning outcomes mapping', area: 'Learning Outcomes', owner: 'Assessment Unit', status: 'Approved', progress: '100%', next: 'Publish report' },
-  { id: 'QP-004', name: 'Accreditation gap analysis', area: 'Gap Analysis', owner: 'External Review Team', status: 'In Progress', progress: '61%', next: 'Evidence validation' },
-];
-
-const programReviewItems = [
-  { id: 'PR-001', item: 'Program vision and mission', owner: 'Program Committee', workflow: 'Draft -> Department Chair -> Dean -> Final Approval', version: 'v4', status: 'In Progress', updated: '2026-05-08' },
-  { id: 'PR-002', item: 'Course specification CS12', owner: 'Course Coordinator', workflow: 'Draft -> Committee Review -> Final Approval', version: 'v2', status: 'Pending Submit', updated: '2026-05-06' },
-  { id: 'PR-003', item: 'Study plan revision', owner: 'Curriculum Committee', workflow: 'Draft -> Council Review -> Final Approval', version: 'v5', status: 'Approved', updated: '2026-05-03' },
-];
-
-const learningOutcomeItems = [
-  { id: 'LO-001', level: 'Institution', outcome: 'Graduate attributes mapped to university outcomes', matrix: 'Attributes -> Outcomes', assessment: 'Survey + Portfolio', achievement: '86%', status: 'Approved' },
-  { id: 'LO-002', level: 'Program', outcome: 'PLO 3 problem solving', matrix: 'PLO -> Courses -> Assessments', assessment: 'Capstone rubric', achievement: '78%', status: 'In Progress' },
-  { id: 'LO-003', level: 'Course', outcome: 'CLO 2 programming basics', matrix: 'CLO -> Exam Questions', assessment: 'Final exam + lab task', achievement: '81%', status: 'Approved' },
-  { id: 'LO-004', level: 'Program', outcome: 'PLO 5 teamwork', matrix: 'PLO -> Indirect Survey', assessment: 'Employer survey', achievement: '69%', status: 'Pending Submit' },
-];
-
-const executiveReports = [
-  { id: 'REP-001', report: 'Accreditation status by program', audience: 'Senior Management', frequency: 'Monthly', source: 'Programs + Projects', status: 'Approved' },
-  { id: 'REP-002', report: 'Readiness by standard and criterion', audience: 'Deanship of Quality', frequency: 'Weekly', source: 'Self Study + Evidence', status: 'In Progress' },
-  { id: 'REP-003', report: 'Open reviewer notes', audience: 'Program Chairs', frequency: 'Weekly', source: 'Reviews + Visits', status: 'Pending Submit' },
-  { id: 'REP-004', report: 'Learning outcomes results', audience: 'Assessment Unit', frequency: 'Semester', source: 'Measurement Plans', status: 'Approved' },
-];
-
-const managedProjects = [
-  { id: 'PM-001', projectName: 'Institutional accreditation readiness', projectType: 'Academic Accreditation Project', owner: 'Academic Affairs and Quality Deanship', programCollege: 'College of Computer and Information Technology', start: '2026-04-01', end: '2026-08-30', priority: 'High Priority', status: 'In Progress', completion: '72%', delayedTasks: '2', requirements: '81%', evidence: '76%' },
-  { id: 'PM-002', projectName: 'Program specification review', projectType: 'Program Development Project', owner: 'Program Quality Committee', programCollege: 'Computer Science', start: '2026-05-01', end: '2026-07-15', priority: 'Medium Priority', status: 'Pending Review', completion: '48%', delayedTasks: '1', requirements: '64%', evidence: '58%' },
-  { id: 'PM-003', projectName: 'Learning outcomes mapping', projectType: 'Learning Outcomes Measurement Project', owner: 'Assessment Unit', programCollege: 'Information Technology', start: '2026-03-15', end: '2026-06-20', priority: 'High Priority', status: 'Completed', completion: '100%', delayedTasks: '0', requirements: '100%', evidence: '100%' },
-  { id: 'PM-004', projectName: 'Accreditation gap analysis', projectType: 'Quality Improvement Project', owner: 'College Quality Unit', programCollege: 'Software Engineering', start: '2026-04-20', end: '2026-07-30', priority: 'High Priority', status: 'Delayed', completion: '61%', delayedTasks: '4', requirements: '69%', evidence: '55%' },
-  { id: 'PM-005', projectName: 'Operational quality plan', projectType: 'Operational Plan Project', owner: 'Institutional Improvement Office', programCollege: 'All colleges', start: '2026-05-10', end: '2026-12-15', priority: 'Medium Priority', status: 'New', completion: '12%', delayedTasks: '0', requirements: '20%', evidence: '10%' },
-];
-
-const projectMilestones = [
-  { id: 'MS-001', projectName: 'Institutional accreditation readiness', milestone: 'Preparing self-study', start: '2026-04-01', end: '2026-05-20', completion: '90%', owner: 'Quality Manager', status: 'Completed' },
-  { id: 'MS-002', projectName: 'Institutional accreditation readiness', milestone: 'Evidence collection', start: '2026-04-15', end: '2026-06-15', completion: '74%', owner: 'Requirement owners', status: 'In Progress' },
-  { id: 'MS-003', projectName: 'Accreditation gap analysis', milestone: 'Internal review', start: '2026-05-01', end: '2026-06-10', completion: '58%', owner: 'Quality reviewers', status: 'Delayed' },
-  { id: 'MS-004', projectName: 'Program specification review', milestone: 'Mock visit', start: '2026-06-01', end: '2026-06-25', completion: '25%', owner: 'Program Committee', status: 'Pending Review' },
-  { id: 'MS-005', projectName: 'Institutional accreditation readiness', milestone: 'Submission to accreditation body', start: '2026-07-01', end: '2026-07-20', completion: '0%', owner: 'Accreditation committee', status: 'New' },
-  { id: 'MS-006', projectName: 'Accreditation gap analysis', milestone: 'Remarks remediation', start: '2026-06-15', end: '2026-07-25', completion: '18%', owner: 'Project team', status: 'In Progress' },
-  { id: 'MS-007', projectName: 'Learning outcomes mapping', milestone: 'Final closure', start: '2026-06-01', end: '2026-06-20', completion: '100%', owner: 'Assessment Unit', status: 'Completed' },
-];
-
-const projectTasks = [
-  { id: 'TSK-001', projectName: 'Institutional accreditation readiness', task: 'Update evidence matrix', subTasks: '4', responsible: 'Assessment Unit', priority: 'High Priority', deadline: '2026-05-22', dependencies: 'Self-study draft submitted', status: 'In Progress' },
-  { id: 'TSK-002', projectName: 'Program specification review', task: 'Collect committee approvals', subTasks: '3', responsible: 'Program Committee', priority: 'Medium Priority', deadline: '2026-05-28', dependencies: 'Course specification CS12', status: 'Pending Review' },
-  { id: 'TSK-003', projectName: 'Accreditation gap analysis', task: 'Close reviewer observations', subTasks: '7', responsible: 'Quality reviewers', priority: 'High Priority', deadline: '2026-05-18', dependencies: 'Internal review', status: 'Delayed' },
-  { id: 'TSK-004', projectName: 'Learning outcomes mapping', task: 'Publish achievement dashboard', subTasks: '2', responsible: 'Assessment Unit', priority: 'Low Priority', deadline: '2026-06-10', dependencies: 'Evidence matrix updated', status: 'Completed' },
-  { id: 'TSK-005', projectName: 'Operational quality plan', task: 'Create project charter', subTasks: '5', responsible: 'Institutional Improvement Office', priority: 'Medium Priority', deadline: '2026-05-30', dependencies: 'Execution plan approved', status: 'New' },
-];
-
-const projectTimePlan = [
-  { id: 'TP-001', projectName: 'Institutional accreditation readiness', plannedStart: '2026-04-01', plannedEnd: '2026-08-30', actualStart: '2026-04-03', actualEnd: '2026-09-06', delay: '7 days', status: 'In Progress', plannedOffset: 3, plannedWidth: 54, actualOffset: 5, actualWidth: 58 },
-  { id: 'TP-002', projectName: 'Program specification review', plannedStart: '2026-05-01', plannedEnd: '2026-07-15', actualStart: '2026-05-05', actualEnd: '2026-07-28', delay: '13 days', status: 'Pending Review', plannedOffset: 22, plannedWidth: 31, actualOffset: 25, actualWidth: 35 },
-  { id: 'TP-003', projectName: 'Learning outcomes mapping', plannedStart: '2026-03-15', plannedEnd: '2026-06-20', actualStart: '2026-03-15', actualEnd: '2026-06-18', delay: '0 days', status: 'Completed', plannedOffset: 0, plannedWidth: 38, actualOffset: 0, actualWidth: 37 },
-  { id: 'TP-004', projectName: 'Accreditation gap analysis', plannedStart: '2026-04-20', plannedEnd: '2026-07-30', actualStart: '2026-04-25', actualEnd: '2026-08-18', delay: '19 days', status: 'Delayed', plannedOffset: 15, plannedWidth: 42, actualOffset: 18, actualWidth: 48 },
-];
-
-const projectTeams = [
-  { id: 'TM-001', projectName: 'Institutional accreditation readiness', manager: 'Quality Manager', members: '8', reviewers: '3', consultants: '1', assignmentBasis: 'permissions, expertise, committees', status: 'Approved' },
-  { id: 'TM-002', projectName: 'Program specification review', manager: 'Program Chair', members: '5', reviewers: '2', consultants: '0', assignmentBasis: 'program committee and curriculum expertise', status: 'In Progress' },
-  { id: 'TM-003', projectName: 'Accreditation gap analysis', manager: 'College Quality Unit', members: '6', reviewers: '4', consultants: '1', assignmentBasis: 'quality reviewers and external consultant', status: 'Delayed' },
-  { id: 'TM-004', projectName: 'Operational quality plan', manager: 'Institutional Improvement Office', members: '7', reviewers: '2', consultants: '0', assignmentBasis: 'operational owners and permissions', status: 'New' },
-];
-
-const projectRisksIssues = [
-  { id: 'RI-001', projectName: 'Institutional accreditation readiness', item: 'Late evidence uploads', category: 'Risk / Issue', impact: 'High', owner: 'Quality Manager', treatmentPlan: 'Reassign evidence tasks and escalate to owner', escalation: 'Escalated', status: 'In Progress' },
-  { id: 'RI-002', projectName: 'Program specification review', item: 'Reviewer availability conflict', category: 'Risk / Issue', impact: 'Medium', owner: 'Program Chair', treatmentPlan: 'Confirm backup reviewers and update schedule', escalation: 'Pending Review', status: 'Pending Review' },
-  { id: 'RI-003', projectName: 'Learning outcomes mapping', item: 'Low PLO achievement', category: 'Risk / Issue', impact: 'High', owner: 'Assessment Unit', treatmentPlan: 'Launch improvement action and monitor next cycle', escalation: 'Critical', status: 'Delayed' },
-];
-
-const projectNotifications = [
-  { id: 'NT-001', trigger: 'Overdue task reminder', projectName: 'Accreditation gap analysis', channel: 'Email / In-System', recipients: 'Project team', deadline: '2026-05-18', status: 'Delayed' },
-  { id: 'NT-002', trigger: 'Upcoming deadline alert', projectName: 'Institutional accreditation readiness', channel: 'SMS / In-System', recipients: 'Requirement owners', deadline: '2026-05-22', status: 'In Progress' },
-  { id: 'NT-003', trigger: 'Task approval notification', projectName: 'Learning outcomes mapping', channel: 'Email / In-System', recipients: 'Accreditation committee', deadline: '2026-06-10', status: 'Completed' },
-  { id: 'NT-004', trigger: 'New reviewer note', projectName: 'Program specification review', channel: 'Email / In-System', recipients: 'Program Committee', deadline: '2026-05-28', status: 'Pending Review' },
-];
-
-const projectCollaboration = [
-  { id: 'CO-001', projectName: 'Institutional accreditation readiness', comment: 'Task comments and evidence discussion', file: 'evidence-matrix-v4.xlsx', meeting: 'Weekly steering meeting', minutes: 'Meeting minutes shared with committee', activity: 'Evidence matrix updated', status: 'In Progress' },
-  { id: 'CO-002', projectName: 'Program specification review', comment: 'File shared for reviewer response', file: 'program-spec-review.pdf', meeting: 'Program Committee', minutes: 'Meeting minutes shared with committee', activity: 'Self-study draft submitted', status: 'Pending Review' },
-  { id: 'CO-003', projectName: 'Learning outcomes mapping', comment: 'Task comments and evidence discussion', file: 'plo-achievement-dashboard.pdf', meeting: 'Assessment Unit', minutes: 'Final closure', activity: 'Execution plan approved', status: 'Completed' },
-];
-
-const projectExecutiveReports = [
-  { id: 'PER-001', report: 'Project Status Report', audience: 'Senior Management', frequency: 'Weekly', source: 'Projects Management', status: 'In Progress' },
-  { id: 'PER-002', report: 'Progress Report', audience: 'Deanship of Quality', frequency: 'Weekly', source: 'Milestones', status: 'Approved' },
-  { id: 'PER-003', report: 'Delay Report', audience: 'Program Chairs', frequency: 'Weekly', source: 'Tasks Management', status: 'Delayed' },
-  { id: 'PER-004', report: 'Risk Report', audience: 'Quality reviewers', frequency: 'Monthly', source: 'Risks & Issues', status: 'Critical' },
-  { id: 'PER-005', report: 'Time Consumption Report', audience: 'Project Manager', frequency: 'Monthly', source: 'Time Plan', status: 'In Progress' },
-  { id: 'PER-006', report: 'Executive Dashboard', audience: 'Senior Management', frequency: 'Monthly', source: 'Projects Management', status: 'Approved' },
-];
 
 const statusClassMap = {
   'Approved': 's-done',
@@ -1216,7 +1025,23 @@ function StrategicContent({ activePath }) {
   }
 
   if (activePath === 'reports') {
-    return <SummaryCards rows={strategicInitiatives} statusKey="status" />;
+    return (
+      <>
+        <SummaryCards rows={strategicReports} statusKey="status" />
+        <SortableTable
+          title="Strategic Reports"
+          rows={strategicReports}
+          columns={[
+            { key: 'id', label: 'ID' },
+            { key: 'report', label: 'Report Title' },
+            { key: 'type', label: 'Type' },
+            { key: 'owner', label: 'Owner' },
+            { key: 'date', label: 'Date' },
+            { key: 'status', label: 'Status', type: 'status' },
+          ]}
+        />
+      </>
+    );
   }
 
   return (

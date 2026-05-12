@@ -3,7 +3,7 @@ import { useState, useMemo } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import Topbar from '../../components/Topbar';
 import { useI18n } from '../../i18n';
-import { projects, milestones, tasks, risks } from '../../data/projectData';
+import { projects, milestones, tasks, risks, projectTeams, projectFiles, projectMeetings, projectActivity } from '../../data/projectData';
 import { strategicInitiatives } from '../../data/strategicData';
 
 const tabs = [
@@ -151,12 +151,16 @@ export default function ProjectDetailsPage() {
         {tab === 'milestones' && <ProjectMilestones milestones={projectMilestones} tasks={projectTasks} onTaskClick={setSelectedTask} />}
         {tab === 'tasks' && <ProjectTasks tasks={projectTasks} onTaskClick={setSelectedTask} />}
         {tab === 'gantt' && <ProjectGantt project={project} milestones={projectMilestones} tasks={projectTasks} />}
-        {/* Other tabs placeholders */}
-        {['team', 'risks', 'files', 'meetings', 'activity', 'reports'].includes(tab) && (
+        {tab === 'team' && <ProjectTeam projectId={projectId} />}
+        {tab === 'risks' && <ProjectRisks projectId={projectId} />}
+        {tab === 'files' && <ProjectFiles projectId={projectId} />}
+        {tab === 'meetings' && <ProjectMeetings projectId={projectId} />}
+        {tab === 'activity' && <ProjectActivityLog projectId={projectId} />}
+        {tab === 'reports' && (
           <div className="placeholder-content">
-            <i className={`ti ${tabs.find(t => t.id === tab).icon}`} />
-            <h2>{language === 'ar' ? tabs.find(t => t.id === tab).labelAr : tabs.find(t => t.id === tab).label}</h2>
-            <p>Section is under construction for {project.name}</p>
+            <i className="ti ti-report-analytics" />
+            <h2>{language === 'ar' ? 'تقارير المشروع' : 'Project Reports'}</h2>
+            <p>Reports are being generated for {project.name}</p>
           </div>
         )}
       </div>
@@ -444,6 +448,129 @@ function ProjectGantt({ milestones, tasks }) {
             </div>
           </div>
         ))}
+      </div>
+    </div>
+  );
+}
+
+function ProjectTeam({ projectId }) {
+  const { language } = useI18n();
+  const team = projectTeams.filter(t => t.projectId === projectId);
+  return (
+    <div className="card">
+      <table className="tasks-table">
+        <thead>
+          <tr>
+            <th>{language === 'ar' ? 'الاسم' : 'Name'}</th>
+            <th>{language === 'ar' ? 'الدور' : 'Role'}</th>
+            <th>{language === 'ar' ? 'الحالة' : 'Status'}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {team.map(m => (
+            <tr key={m.id}>
+              <td>{m.manager}</td>
+              <td>{m.role}</td>
+              <td><span className="task-status-pill" data-status={m.status}>{m.status}</span></td>
+            </tr>
+          ))}
+          {team.length === 0 && <tr><td colSpan="3" style={{ textAlign: 'center', padding: '40px' }}>No team members assigned yet.</td></tr>}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+function ProjectRisks({ projectId }) {
+  const { language } = useI18n();
+  const projectRisks = risks.filter(r => r.projectId === projectId);
+  return (
+    <div className="card">
+      <table className="tasks-table">
+        <thead>
+          <tr>
+            <th>{language === 'ar' ? 'المخاطر' : 'Risk'}</th>
+            <th>{language === 'ar' ? 'الفئة' : 'Category'}</th>
+            <th>{language === 'ar' ? 'الأثر' : 'Impact'}</th>
+            <th>{language === 'ar' ? 'خطة المعالجة' : 'Treatment'}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {projectRisks.map(r => (
+            <tr key={r.id}>
+              <td>{language === 'ar' ? r.titleAr : r.title}</td>
+              <td>{r.category}</td>
+              <td><span className="priority-badge" data-priority={r.impact}>{r.impact}</span></td>
+              <td>{r.treatment || r.treatmentPlan}</td>
+            </tr>
+          ))}
+          {projectRisks.length === 0 && <tr><td colSpan="4" style={{ textAlign: 'center', padding: '40px' }}>No risks identified yet.</td></tr>}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+function ProjectFiles({ projectId }) {
+  const { language } = useI18n();
+  const files = projectFiles.filter(f => f.projectId === projectId);
+  return (
+    <div className="card">
+      <div className="quality-card-grid">
+        {files.map(f => (
+          <div key={f.id} className="report-card">
+            <div className="rc-icon-wrap"><i className="ti ti-file-description" /></div>
+            <div className="rc-title">{f.name}</div>
+            <div className="rc-desc">{f.size} • {f.version} • {f.uploadedBy}</div>
+            <div className="rc-footer">{f.date}</div>
+          </div>
+        ))}
+        {files.length === 0 && <div style={{ textAlign: 'center', padding: '40px', gridColumn: '1/-1' }}>No files uploaded yet.</div>}
+      </div>
+    </div>
+  );
+}
+
+function ProjectMeetings({ projectId }) {
+  const { language } = useI18n();
+  const meetings = projectMeetings.filter(m => m.projectId === projectId);
+  return (
+    <div className="card">
+      <div className="milestone-track">
+        {meetings.map(m => (
+          <div key={m.id} className="ms-track-item">
+            <div className="ms-dot" data-status={m.status === 'Completed' ? 'Completed' : 'Scheduled'}></div>
+            <div className="ms-info">
+              <h4>{m.title}</h4>
+              <span>{m.date} at {m.time} • Attendees: {m.attendees}</span>
+            </div>
+            <div className="ms-meta">
+              <span className="task-status-pill" data-status={m.status}>{m.status}</span>
+            </div>
+          </div>
+        ))}
+        {meetings.length === 0 && <div style={{ textAlign: 'center', padding: '40px' }}>No meetings scheduled yet.</div>}
+      </div>
+    </div>
+  );
+}
+
+function ProjectActivityLog({ projectId }) {
+  const { language } = useI18n();
+  const activity = projectActivity.filter(a => a.projectId === projectId);
+  return (
+    <div className="card">
+      <div className="milestone-track">
+        {activity.map(a => (
+          <div key={a.id} className="ms-track-item">
+            <div className="ms-dot" data-status="Activity"></div>
+            <div className="ms-info">
+              <h4>{a.user} {a.action}</h4>
+              <span>{a.date}</span>
+            </div>
+          </div>
+        ))}
+        {activity.length === 0 && <div style={{ textAlign: 'center', padding: '40px' }}>No activity logged yet.</div>}
       </div>
     </div>
   );
