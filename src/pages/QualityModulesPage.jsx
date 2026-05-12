@@ -2,8 +2,142 @@
 import { useMemo, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Topbar from '../components/Topbar';
+import { useI18n } from '../i18n';
 
 const todayStamp = '2026-05-12 09:30';
+
+const ar = {
+  'Academic Accreditation Management': 'إدارة الاعتماد الأكاديمي',
+  'Integrated program accreditation tracking, requirements, immutable actions, and post-accreditation follow-up.': 'متابعة متكاملة لاعتماد البرامج والمتطلبات وسجل الإجراءات وما بعد الاعتماد.',
+  'Strategic Planning': 'التخطيط الاستراتيجي',
+  'Strategic projects, objectives, reports, ownership, milestones, and institutional progress.': 'إدارة المشاريع والأهداف والتقارير والملكية والمراحل والتقدم المؤسسي.',
+  'Quality & Accreditation Projects': 'مشاريع الجودة والاعتماد',
+  'Institutional accreditation, program review, learning outcomes, and gap analysis project portfolio.': 'محفظة مشاريع الاعتماد المؤسسي ومراجعة البرامج ومخرجات التعلم وتحليل الثغرات.',
+  'Quality & Accreditation': 'الجودة والاعتماد',
+  'Dashboard': 'لوحة التحكم',
+  'Academic Programs': 'البرامج الأكاديمية',
+  'Requirements': 'متطلبات الاعتماد',
+  'Action Log': 'سجل الإجراءات',
+  'Post Accreditation': 'ما بعد الاعتماد',
+  'Strategic Projects': 'المشاريع الاستراتيجية',
+  'Objectives': 'الأهداف',
+  'Reports': 'التقارير',
+  'Institutional': 'الاعتماد المؤسسي',
+  'Program Review': 'مراجعة البرامج',
+  'Learning Outcomes': 'مخرجات التعلم',
+  'Gap Analysis': 'تحليل الثغرات',
+  'Views': 'العروض',
+  'Records': 'السجلات',
+  'Alert': 'تنبيه',
+  'Total Records': 'إجمالي السجلات',
+  'Approved / Complete': 'معتمد / مكتمل',
+  'Positive status': 'حالة إيجابية',
+  'In Progress': 'قيد التنفيذ',
+  'Active work': 'عمل نشط',
+  'Needs Follow-up': 'تحتاج متابعة',
+  'Requires action': 'يتطلب إجراء',
+  'Updated': 'آخر تحديث',
+  'Search, sort, and pagination are available for this table.': 'البحث والترتيب وترقيم الصفحات متاحة لهذا الجدول.',
+  'Search': 'بحث',
+  'Page': 'صفحة',
+  'of': 'من',
+  'Previous': 'السابق',
+  'Next': 'التالي',
+  'Academic Programs Master Data': 'البيانات الرئيسية للبرامج الأكاديمية',
+  'Accreditation Requirements': 'متطلبات الاعتماد',
+  'Immutable Accreditation Action Log': 'سجل إجراءات الاعتماد غير القابل للتعديل',
+  'Latest Accreditation Updates': 'آخر تحديثات الاعتماد',
+  'Strategic Projects': 'المشاريع الاستراتيجية',
+  'Quality & Accreditation Project Portfolio': 'محفظة مشاريع الجودة والاعتماد',
+  'Program': 'البرنامج',
+  'College': 'الكلية',
+  'Degree': 'الدرجة',
+  'Body': 'جهة الاعتماد',
+  'Status': 'الحالة',
+  'Start': 'البداية',
+  'End': 'النهاية',
+  'Updated By': 'آخر محدث',
+  'ID': 'المعرف',
+  'Document': 'الوثيقة',
+  'Uploaded File': 'الملف المرفوع',
+  'Uploaded': 'تاريخ الرفع',
+  'Due': 'تاريخ الاستحقاق',
+  'Reviewer Notes': 'ملاحظات المراجع',
+  'Action': 'الإجراء',
+  'Actor': 'المنفذ',
+  'Timestamp': 'الوقت',
+  'Last Update': 'آخر تحديث',
+  'Project': 'المشروع',
+  'Owner': 'المالك',
+  'Objective': 'الهدف',
+  'Progress': 'التقدم',
+  'Due Date': 'تاريخ الاستحقاق',
+  'Area': 'المجال',
+  'Next Step': 'الخطوة التالية',
+  'Computer Science': 'علوم الحاسب',
+  'Information Technology': 'تقنية المعلومات',
+  'Software Engineering': 'هندسة البرمجيات',
+  'Information Systems': 'نظم المعلومات',
+  'College of Computer and Information Technology': 'كلية الحاسب وتقنية المعلومات',
+  'Bachelor': 'بكالوريوس',
+  'Master': 'ماجستير',
+  'Full Accreditation': 'اعتماد كامل',
+  'Eligible': 'مؤهل',
+  'Conditional Accreditation': 'اعتماد مشروط',
+  'Not Eligible': 'غير مؤهل',
+  'Complete': 'مكتمل',
+  'Incomplete': 'غير مكتمل',
+  'Approved': 'معتمد',
+  'Pending Submit': 'بانتظار التقديم',
+  'Not Started': 'لم يبدأ',
+  'Self-study evidence index': 'فهرس شواهد الدراسة الذاتية',
+  'Program specification': 'توصيف البرنامج',
+  'Field training report': 'تقرير التدريب الميداني',
+  'Learning outcomes assessment report': 'تقرير قياس مخرجات التعلم',
+  'Reviewed and approved': 'تمت المراجعة والاعتماد',
+  'Missing advisory committee minutes': 'محاضر اللجنة الاستشارية غير مكتملة',
+  'Ready for visit package': 'جاهز لحزمة الزيارة',
+  'Approved by committee': 'معتمد من اللجنة',
+  'Accreditation status confirmed': 'تم تأكيد حالة الاعتماد',
+  'Requirement review note added': 'تمت إضافة ملاحظة مراجعة المتطلب',
+  'Conditional recommendation recorded': 'تم تسجيل توصية مشروطة',
+  'Eligibility gap logged': 'تم تسجيل فجوة الأهلية',
+  'Quality Manager': 'مدير الجودة',
+  'Program Coordinator': 'منسق البرنامج',
+  'Dean Office': 'مكتب العمادة',
+  'Reviewer': 'المراجع',
+  'Digital Quality Dashboard': 'لوحة الجودة الرقمية',
+  'Program Review Automation': 'أتمتة مراجعة البرامج',
+  'Graduate Attribute Framework': 'إطار خصائص الخريجين',
+  'Evidence Repository': 'مستودع الشواهد',
+  'Deanship of Quality': 'عمادة الجودة',
+  'Academic Affairs': 'الشؤون الأكاديمية',
+  'Curriculum Committee': 'لجنة المناهج',
+  'IT Services': 'خدمات تقنية المعلومات',
+  'Improve reporting transparency': 'تحسين شفافية التقارير',
+  'Accelerate program review cycles': 'تسريع دورات مراجعة البرامج',
+  'Unify learning outcomes mapping': 'توحيد ربط مخرجات التعلم',
+  'Centralize accreditation evidence': 'مركزة شواهد الاعتماد',
+  'Institutional accreditation readiness': 'جاهزية الاعتماد المؤسسي',
+  'Program specification review': 'مراجعة توصيف البرنامج',
+  'Learning outcomes mapping': 'ربط مخرجات التعلم',
+  'Accreditation gap analysis': 'تحليل فجوات الاعتماد',
+  'Institutional': 'مؤسسي',
+  'Program Review': 'مراجعة البرامج',
+  'Learning Outcomes': 'مخرجات التعلم',
+  'Gap Analysis': 'تحليل الثغرات',
+  'Program Committee': 'لجنة البرنامج',
+  'Assessment Unit': 'وحدة القياس',
+  'External Review Team': 'فريق المراجعة الخارجي',
+  'Mock review visit': 'زيارة مراجعة تجريبية',
+  'Committee feedback': 'تغذية راجعة من اللجنة',
+  'Publish report': 'نشر التقرير',
+  'Evidence validation': 'التحقق من الشواهد',
+};
+
+function label(value, language) {
+  return language === 'ar' ? ar[value] || value : value;
+}
 
 const accreditationPrograms = [
   {
@@ -143,6 +277,7 @@ function getStatusClass(status) {
 }
 
 function SortableTable({ columns, rows, title }) {
+  const { language } = useI18n();
   const [query, setQuery] = useState('');
   const [sortKey, setSortKey] = useState(columns[0].key);
   const [sortDir, setSortDir] = useState('asc');
@@ -174,8 +309,8 @@ function SortableTable({ columns, rows, title }) {
     <div className="quality-table-card">
       <div className="quality-table-toolbar">
         <div>
-          <div className="section-title">{title}</div>
-          <div className="section-sub">Search, sort, and pagination are available for this table.</div>
+          <div className="section-title">{label(title, language)}</div>
+          <div className="section-sub">{label('Search, sort, and pagination are available for this table.', language)}</div>
         </div>
         <label className="quality-search">
           <i className="ti ti-search" />
@@ -185,7 +320,7 @@ function SortableTable({ columns, rows, title }) {
               setQuery(event.target.value);
               setPage(1);
             }}
-            placeholder="Search"
+            placeholder={label('Search', language)}
           />
         </label>
       </div>
@@ -196,7 +331,7 @@ function SortableTable({ columns, rows, title }) {
               {columns.map((column) => (
                 <th key={column.key}>
                   <button type="button" onClick={() => handleSort(column.key)}>
-                    {column.label}
+                    {label(column.label, language)}
                     {sortKey === column.key && <i className={`ti ${sortDir === 'asc' ? 'ti-arrow-up' : 'ti-arrow-down'}`} />}
                   </button>
                 </th>
@@ -209,9 +344,9 @@ function SortableTable({ columns, rows, title }) {
                 {columns.map((column) => (
                   <td key={`${row.id}-${column.key}`}>
                     {column.type === 'status' ? (
-                      <span className={`status-pill ${getStatusClass(row[column.key])}`}>{row[column.key]}</span>
+                      <span className={`status-pill ${getStatusClass(row[column.key])}`}>{label(row[column.key], language)}</span>
                     ) : (
-                      row[column.key]
+                      label(row[column.key], language)
                     )}
                   </td>
                 ))}
@@ -221,10 +356,10 @@ function SortableTable({ columns, rows, title }) {
         </table>
       </div>
       <div className="quality-pagination">
-        <span>Page {page} of {totalPages}</span>
+        <span>{label('Page', language)} {page} {label('of', language)} {totalPages}</span>
         <div className="btn-group">
-          <button className="btn-outline" type="button" disabled={page === 1} onClick={() => setPage((value) => value - 1)}>Previous</button>
-          <button className="btn-outline" type="button" disabled={page === totalPages} onClick={() => setPage((value) => value + 1)}>Next</button>
+          <button className="btn-outline" type="button" disabled={page === 1} onClick={() => setPage((value) => value - 1)}>{label('Previous', language)}</button>
+          <button className="btn-outline" type="button" disabled={page === totalPages} onClick={() => setPage((value) => value + 1)}>{label('Next', language)}</button>
         </div>
       </div>
     </div>
@@ -232,6 +367,7 @@ function SortableTable({ columns, rows, title }) {
 }
 
 function SummaryCards({ rows, statusKey = 'status' }) {
+  const { language } = useI18n();
   const total = rows.length;
   const approved = rows.filter((row) => ['Approved', 'Full Accreditation', 'Complete'].includes(row[statusKey])).length;
   const inProgress = rows.filter((row) => ['In Progress', 'Eligible'].includes(row[statusKey])).length;
@@ -239,15 +375,16 @@ function SummaryCards({ rows, statusKey = 'status' }) {
 
   return (
     <div className="dashboard-grid">
-      <div className="dash-stat-card"><div className="dash-stat-num">{total}</div><div className="dash-stat-lbl">Total Records</div><div className="dash-stat-change">Updated {todayStamp}</div></div>
-      <div className="dash-stat-card"><div className="dash-stat-num">{approved}</div><div className="dash-stat-lbl">Approved / Complete</div><div className="dash-stat-change">Positive status</div></div>
-      <div className="dash-stat-card"><div className="dash-stat-num">{inProgress}</div><div className="dash-stat-lbl">In Progress</div><div className="dash-stat-change">Active work</div></div>
-      <div className="dash-stat-card"><div className="dash-stat-num">{pending}</div><div className="dash-stat-lbl">Needs Follow-up</div><div className="dash-stat-change">Requires action</div></div>
+      <div className="dash-stat-card"><div className="dash-stat-num">{total}</div><div className="dash-stat-lbl">{label('Total Records', language)}</div><div className="dash-stat-change">{label('Updated', language)} {todayStamp}</div></div>
+      <div className="dash-stat-card"><div className="dash-stat-num">{approved}</div><div className="dash-stat-lbl">{label('Approved / Complete', language)}</div><div className="dash-stat-change">{label('Positive status', language)}</div></div>
+      <div className="dash-stat-card"><div className="dash-stat-num">{inProgress}</div><div className="dash-stat-lbl">{label('In Progress', language)}</div><div className="dash-stat-change">{label('Active work', language)}</div></div>
+      <div className="dash-stat-card"><div className="dash-stat-num">{pending}</div><div className="dash-stat-lbl">{label('Needs Follow-up', language)}</div><div className="dash-stat-change">{label('Requires action', language)}</div></div>
     </div>
   );
 }
 
 function ModuleTabs({ config, activePath, navigate }) {
+  const { language } = useI18n();
   return (
     <div className="quality-module-tabs" role="tablist">
       {config.tabs.map((tab) => (
@@ -258,7 +395,7 @@ function ModuleTabs({ config, activePath, navigate }) {
           onClick={() => navigate(`${config.base}/${tab.path}`)}
         >
           <i className={`ti ${tab.icon}`} />
-          <span>{tab.label}</span>
+          <span>{label(tab.label, language)}</span>
         </button>
       ))}
     </div>
@@ -266,6 +403,7 @@ function ModuleTabs({ config, activePath, navigate }) {
 }
 
 function AccreditationContent({ activePath }) {
+  const { language } = useI18n();
   if (activePath === 'programs') {
     return (
       <SortableTable
@@ -329,10 +467,14 @@ function AccreditationContent({ activePath }) {
           <div className="report-card" key={program.id}>
             <div className="rc-icon-wrap ic-green"><i className="ti ti-progress-check" /></div>
             <div className="rc-body">
-              <div className="rc-title">{program.name}</div>
-              <div className="rc-desc">Post-accreditation follow-up plan ends on {program.end}. Latest update by {program.updatedBy}.</div>
+              <div className="rc-title">{label(program.name, language)}</div>
+              <div className="rc-desc">
+                {language === 'ar'
+                  ? `خطة متابعة ما بعد الاعتماد تنتهي في ${program.end}. آخر تحديث بواسطة ${label(program.updatedBy, language)}.`
+                  : `Post-accreditation follow-up plan ends on ${program.end}. Latest update by ${program.updatedBy}.`}
+              </div>
             </div>
-            <div className="rc-footer"><span className={`status-pill ${getStatusClass(program.status)}`}>{program.status}</span></div>
+            <div className="rc-footer"><span className={`status-pill ${getStatusClass(program.status)}`}>{label(program.status, language)}</span></div>
           </div>
         ))}
       </div>
@@ -358,15 +500,20 @@ function AccreditationContent({ activePath }) {
 }
 
 function StrategicContent({ activePath }) {
+  const { language } = useI18n();
   if (activePath === 'objectives') {
     return (
       <div className="quality-card-grid">
         {strategicProjects.map((project) => (
           <div className="report-card" key={project.id}>
             <div className="rc-icon-wrap ic-blue"><i className="ti ti-target" /></div>
-            <div className="rc-title">{project.objective}</div>
-            <div className="rc-desc">Linked project: {project.name}. Owner: {project.owner}.</div>
-            <div className="rc-footer"><span className={`status-pill ${getStatusClass(project.status)}`}>{project.status}</span></div>
+            <div className="rc-title">{label(project.objective, language)}</div>
+            <div className="rc-desc">
+              {language === 'ar'
+                ? `المشروع المرتبط: ${label(project.name, language)}. المالك: ${label(project.owner, language)}.`
+                : `Linked project: ${project.name}. Owner: ${project.owner}.`}
+            </div>
+            <div className="rc-footer"><span className={`status-pill ${getStatusClass(project.status)}`}>{label(project.status, language)}</span></div>
           </div>
         ))}
       </div>
@@ -444,6 +591,7 @@ function QualityProjectsContent({ activePath }) {
 }
 
 export default function QualityModulesPage({ moduleType }) {
+  const { language } = useI18n();
   const navigate = useNavigate();
   const location = useLocation();
   const config = moduleConfig[moduleType];
@@ -458,18 +606,18 @@ export default function QualityModulesPage({ moduleType }) {
 
   return (
     <>
-      <Topbar breadcrumbs={[config.title, activeTab.label]} />
+      <Topbar breadcrumbs={[label(config.title, language), label(activeTab.label, language)]} />
       <div className="page-content">
         <div className="list-hero institutional-hero quality-module-hero">
           <div>
-            <div className="hero-badge"><i className={`ti ${config.icon}`} /> Quality & Accreditation</div>
-            <div className="hero-title">{config.title}</div>
-            <div className="hero-sub">{config.subtitle}</div>
+            <div className="hero-badge"><i className={`ti ${config.icon}`} /> {label('Quality & Accreditation', language)}</div>
+            <div className="hero-title">{label(config.title, language)}</div>
+            <div className="hero-sub">{label(config.subtitle, language)}</div>
           </div>
           <div className="hero-stats">
-            <div className="stat-chip"><div className="num">{config.tabs.length}</div><div className="lbl">Views</div></div>
-            <div className="stat-chip"><div className="num">4</div><div className="lbl">Records</div></div>
-            <div className="stat-chip"><div className="num">1</div><div className="lbl">Alert</div></div>
+            <div className="stat-chip"><div className="num">{config.tabs.length}</div><div className="lbl">{label('Views', language)}</div></div>
+            <div className="stat-chip"><div className="num">4</div><div className="lbl">{label('Records', language)}</div></div>
+            <div className="stat-chip"><div className="num">1</div><div className="lbl">{label('Alert', language)}</div></div>
           </div>
         </div>
 

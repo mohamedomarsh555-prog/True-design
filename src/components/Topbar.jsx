@@ -63,9 +63,9 @@ export default function Topbar({ breadcrumbs }) {
           </button>
         </div>
         <span className="role-badge">{t('role')}</span>
-        <button className="signout-btn" type="button" onClick={handleSignOut} title="Sign out">
+        <button className="signout-btn" type="button" onClick={handleSignOut} title={language === 'ar' ? 'تسجيل الخروج' : 'Sign out'}>
           <i className="ti ti-logout" />
-          <span>Sign out</span>
+          <span>{language === 'ar' ? 'تسجيل الخروج' : 'Sign out'}</span>
         </button>
         <div className="avatar">MH</div>
       </div>

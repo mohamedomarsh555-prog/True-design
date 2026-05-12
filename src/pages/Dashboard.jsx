@@ -4,11 +4,11 @@ import { courses, programs } from '../data';
 import { useI18n } from '../i18n';
 
 const statusMeta = {
-  notStarted: { label: 'Not Start', className: 'not-started' },
-  inProgress: { label: 'In Progress', className: 'in-progress' },
-  submitted: { label: 'Submitted', className: 'submitted' },
-  approved: { label: 'Approved', className: 'approved' },
-  rejected: { label: 'Rejected', className: 'rejected' },
+  notStarted: { label: 'Not Start', labelAr: 'لم يبدأ', className: 'not-started' },
+  inProgress: { label: 'In Progress', labelAr: 'قيد التنفيذ', className: 'in-progress' },
+  submitted: { label: 'Submitted', labelAr: 'تم التقديم', className: 'submitted' },
+  approved: { label: 'Approved', labelAr: 'معتمد', className: 'approved' },
+  rejected: { label: 'Rejected', labelAr: 'مرفوض', className: 'rejected' },
 };
 
 const statusOrder = ['notStarted', 'inProgress', 'submitted', 'approved', 'rejected'];
@@ -17,64 +17,115 @@ const tabData = [
   {
     id: 'course-specifications',
     label: 'Course Specifications',
+    labelAr: 'توصيفات المقررات',
     icon: 'ti-file-description',
     type: 'Course Quality',
+    typeAr: 'جودة المقررات',
     rows: [
-      { label: 'Computer Science Fundamentals', code: 'CS12', status: 'approved' },
-      { label: 'Information Technology Fundamentals', code: 'IT1231', status: 'notStarted' },
-      { label: 'Programming Basic', code: 'C180', status: 'notStarted' },
+      { label: 'Computer Science Fundamentals', labelAr: 'أساسيات علوم الحاسب', code: 'CS12', status: 'approved' },
+      { label: 'Information Technology Fundamentals', labelAr: 'أساسيات تقنية المعلومات', code: 'IT1231', status: 'notStarted' },
+      { label: 'Programming Basic', labelAr: 'أساسيات البرمجة', code: 'C180', status: 'notStarted' },
     ],
   },
   {
     id: 'course-report',
     label: 'Course Report',
+    labelAr: 'تقرير المقرر',
     icon: 'ti-chart-bar',
     type: 'Course Quality',
+    typeAr: 'جودة المقررات',
     rows: [
-      { label: 'Computer Science Fundamentals', code: 'CS12', status: 'approved' },
-      { label: 'Information Technology Fundamentals', code: 'IT1231', status: 'notStarted' },
-      { label: 'Programming Basic', code: 'C180', status: 'notStarted' },
+      { label: 'Computer Science Fundamentals', labelAr: 'أساسيات علوم الحاسب', code: 'CS12', status: 'approved' },
+      { label: 'Information Technology Fundamentals', labelAr: 'أساسيات تقنية المعلومات', code: 'IT1231', status: 'notStarted' },
+      { label: 'Programming Basic', labelAr: 'أساسيات البرمجة', code: 'C180', status: 'notStarted' },
     ],
   },
   {
     id: 'crn-report',
     label: 'CRN Report',
+    labelAr: 'تقرير الشعب',
     icon: 'ti-list-numbers',
     type: 'Operations',
+    typeAr: 'التشغيل',
     rows: [
-      { label: 'Section 1', code: 'CRN-001', status: 'approved' },
-      { label: 'Section 2', code: 'CRN-002', status: 'notStarted' },
-      { label: 'DS CLO', code: 'CLO', status: 'approved' },
+      { label: 'Section 1', labelAr: 'الشعبة 1', code: 'CRN-001', status: 'approved' },
+      { label: 'Section 2', labelAr: 'الشعبة 2', code: 'CRN-002', status: 'notStarted' },
+      { label: 'DS CLO', labelAr: 'مخرجات مقرر DS', code: 'CLO', status: 'approved' },
       { label: 'CR100', code: 'CR100', status: 'notStarted' },
     ],
   },
   {
     id: 'self-study',
     label: 'Self Study',
+    labelAr: 'الدراسة الذاتية',
     icon: 'ti-microscope',
     type: 'Programs',
+    typeAr: 'البرامج',
     rows: [
-      { label: 'Computer Science', code: 'CS', status: 'notStarted' },
-      { label: 'Computer Science Evidence', code: 'CS-EV', status: 'approved' },
-      { label: 'Information System', code: 'IS', status: 'submitted' },
-      { label: 'Computer Science KPI', code: 'CS-KPI', status: 'approved' },
-      { label: 'Information Technology', code: 'IT', status: 'inProgress' },
-      { label: 'Computer Science Review', code: 'CS-RV', status: 'approved' },
+      { label: 'Computer Science', labelAr: 'علوم الحاسب', code: 'CS', status: 'notStarted' },
+      { label: 'Computer Science Evidence', labelAr: 'شواهد علوم الحاسب', code: 'CS-EV', status: 'approved' },
+      { label: 'Information System', labelAr: 'نظم المعلومات', code: 'IS', status: 'submitted' },
+      { label: 'Computer Science KPI', labelAr: 'مؤشرات علوم الحاسب', code: 'CS-KPI', status: 'approved' },
+      { label: 'Information Technology', labelAr: 'تقنية المعلومات', code: 'IT', status: 'inProgress' },
+      { label: 'Computer Science Review', labelAr: 'مراجعة علوم الحاسب', code: 'CS-RV', status: 'approved' },
     ],
   },
   {
     id: 'attachments',
     label: 'Attachments',
+    labelAr: 'المرفقات',
     icon: 'ti-paperclip',
     type: 'Evidence',
+    typeAr: 'الشواهد',
     rows: [
-      { label: 'Course evidence package', code: 'DOC-01', status: 'inProgress' },
-      { label: 'Survey files', code: 'DOC-02', status: 'submitted' },
-      { label: 'Committee minutes', code: 'DOC-03', status: 'notStarted' },
-      { label: 'Accreditation evidence', code: 'DOC-04', status: 'rejected' },
+      { label: 'Course evidence package', labelAr: 'حزمة شواهد المقرر', code: 'DOC-01', status: 'inProgress' },
+      { label: 'Survey files', labelAr: 'ملفات الاستبيانات', code: 'DOC-02', status: 'submitted' },
+      { label: 'Committee minutes', labelAr: 'محاضر اللجنة', code: 'DOC-03', status: 'notStarted' },
+      { label: 'Accreditation evidence', labelAr: 'شواهد الاعتماد', code: 'DOC-04', status: 'rejected' },
     ],
   },
 ];
+
+const dashboardText = {
+  en: {
+    details: 'Dashboard Details',
+    reportViews: 'Dashboard report views',
+    approved: 'Approved',
+    notApproved: 'Not Approved',
+    of: 'of',
+    totalItems: 'Total Items',
+    needsFollowUp: 'Needs Follow-up',
+    statusDistribution: 'Status Distribution',
+    submissionStatus: 'Submission Status by Item',
+    reviewQueue: 'Review Queue',
+    queuePending: (count) => `${count} items still need coordinator follow-up.`,
+    queueDone: 'Everything in this view is approved.',
+    activeCourses: 'Active Courses',
+    trackedItems: (count) => `${count} tracked items`,
+    courseSpec: 'Course Specification - CS12',
+    programSpec: 'Program Specification - CS',
+    kpis: 'KPIs & Indicators - CS',
+  },
+  ar: {
+    details: 'تفاصيل لوحة التحكم',
+    reportViews: 'عروض تقارير لوحة التحكم',
+    approved: 'معتمد',
+    notApproved: 'غير معتمد',
+    of: 'من',
+    totalItems: 'إجمالي العناصر',
+    needsFollowUp: 'تحتاج متابعة',
+    statusDistribution: 'توزيع الحالات',
+    submissionStatus: 'حالة التقديم حسب العنصر',
+    reviewQueue: 'قائمة المراجعة',
+    queuePending: (count) => `${count} عناصر تحتاج متابعة من المنسق.`,
+    queueDone: 'كل العناصر في هذا العرض معتمدة.',
+    activeCourses: 'المقررات النشطة',
+    trackedItems: (count) => `${count} عنصر متابع`,
+    courseSpec: 'توصيف المقرر - CS12',
+    programSpec: 'توصيف البرنامج - CS',
+    kpis: 'مؤشرات الأداء - CS',
+  },
+};
 
 function getTabSummary(tab) {
   const total = tab.rows.length;
@@ -95,6 +146,8 @@ function formatPercent(value) {
 }
 
 function DashboardDetails() {
+  const { language } = useI18n();
+  const labels = dashboardText[language];
   const [activeTabId, setActiveTabId] = useState(tabData[0].id);
   const activeTab = tabData.find((tab) => tab.id === activeTabId) || tabData[0];
   const summary = useMemo(() => getTabSummary(activeTab), [activeTab]);
@@ -105,7 +158,7 @@ function DashboardDetails() {
     <section className="dashboard-details panel">
       <div className="dashboard-details-head">
         <div>
-          <h2>Dashboard Details</h2>
+          <h2>{labels.details}</h2>
           <span className="heading-rule" />
         </div>
         <div className="dashboard-period">
@@ -114,7 +167,7 @@ function DashboardDetails() {
         </div>
       </div>
 
-      <div className="dashboard-tabs" role="tablist" aria-label="Dashboard report views">
+      <div className="dashboard-tabs" role="tablist" aria-label={labels.reportViews}>
         {tabData.map((tab) => (
           <button
             key={tab.id}
@@ -125,53 +178,53 @@ function DashboardDetails() {
             onClick={() => setActiveTabId(tab.id)}
           >
             <i className={`ti ${tab.icon}`} />
-            <span>{tab.label}</span>
+            <span>{language === 'ar' ? tab.labelAr : tab.label}</span>
           </button>
         ))}
       </div>
 
       <div className="dashboard-detail-grid">
         <div className="approval-card">
-          <div className="chart-eyebrow">{activeTab.type}</div>
+          <div className="chart-eyebrow">{language === 'ar' ? activeTab.typeAr : activeTab.type}</div>
           <div className="donut-wrap">
             <div className="donut-label donut-label-left">
-              <span>Not Approved: {formatPercent(summary.notApprovedPercent)}</span>
+              <span>{labels.notApproved}: {formatPercent(summary.notApprovedPercent)}</span>
             </div>
             <div
               className="approval-donut"
               style={{ '--approved': `${chartFill}%` }}
-              aria-label={`${activeTab.label} approval ${formatPercent(summary.approvedPercent)}`}
+              aria-label={`${language === 'ar' ? activeTab.labelAr : activeTab.label} ${labels.approved} ${formatPercent(summary.approvedPercent)}`}
             >
               <div className="donut-core">
                 <strong>{summary.approved}</strong>
-                <span>of {summary.total}</span>
+                <span>{labels.of} {summary.total}</span>
               </div>
             </div>
             <div className="donut-label donut-label-right">
-              <span>Approved: {formatPercent(summary.approvedPercent)}</span>
+              <span>{labels.approved}: {formatPercent(summary.approvedPercent)}</span>
             </div>
           </div>
           <div className="approval-legend">
-            <span><i className="legend-dot approved" />Approved</span>
-            <span><i className="legend-dot not-started" />Not Approved</span>
+            <span><i className="legend-dot approved" />{labels.approved}</span>
+            <span><i className="legend-dot not-started" />{labels.notApproved}</span>
           </div>
         </div>
 
         <div className="summary-side">
           <div className="summary-mini-card">
-            <span>Total Items</span>
+            <span>{labels.totalItems}</span>
             <strong>{summary.total}</strong>
           </div>
           <div className="summary-mini-card">
-            <span>Approved</span>
+            <span>{labels.approved}</span>
             <strong>{summary.approved}</strong>
           </div>
           <div className="summary-mini-card attention">
-            <span>Needs Follow-up</span>
+            <span>{labels.needsFollowUp}</span>
             <strong>{pendingRows.length}</strong>
           </div>
           <div className="distribution-card">
-            <div className="chart-card-title">Status Distribution</div>
+            <div className="chart-card-title">{labels.statusDistribution}</div>
             <div className="distribution-bar" aria-label="Status distribution">
               {statusOrder.map((status) => {
                 const count = summary.counts[status];
@@ -181,7 +234,7 @@ function DashboardDetails() {
                     key={status}
                     className={`distribution-segment ${statusMeta[status].className}`}
                     style={{ width: `${(count / summary.total) * 100}%` }}
-                    title={`${statusMeta[status].label}: ${count}`}
+                    title={`${language === 'ar' ? statusMeta[status].labelAr : statusMeta[status].label}: ${count}`}
                   />
                 );
               })}
@@ -190,7 +243,7 @@ function DashboardDetails() {
               {statusOrder.map((status) => (
                 <span key={status}>
                   <i className={`legend-dot ${statusMeta[status].className}`} />
-                  {statusMeta[status].label}: {summary.counts[status]}
+                  {language === 'ar' ? statusMeta[status].labelAr : statusMeta[status].label}: {summary.counts[status]}
                 </span>
               ))}
             </div>
@@ -199,20 +252,20 @@ function DashboardDetails() {
       </div>
 
       <div className="status-chart-card">
-        <div className="chart-card-title">Submission Status by Item</div>
+        <div className="chart-card-title">{labels.submissionStatus}</div>
         <div className="status-bars">
           {activeTab.rows.map((row) => {
             const meta = statusMeta[row.status];
             return (
               <div className="status-row" key={`${activeTab.id}-${row.code}`}>
                 <div className="status-row-label">
-                  <strong title={row.label}>{row.label}</strong>
+                  <strong title={language === 'ar' ? row.labelAr || row.label : row.label}>{language === 'ar' ? row.labelAr || row.label : row.label}</strong>
                   <span>{row.code}</span>
                 </div>
                 <div className="status-track">
                   <span className={`status-fill ${meta.className}`} />
                 </div>
-                <span className={`status-chip ${meta.className}`}>{meta.label}</span>
+                <span className={`status-chip ${meta.className}`}>{language === 'ar' ? meta.labelAr : meta.label}</span>
               </div>
             );
           })}
@@ -221,7 +274,7 @@ function DashboardDetails() {
           {statusOrder.map((status) => (
             <span key={status}>
               <i className={`legend-dot ${statusMeta[status].className}`} />
-              {statusMeta[status].label}
+              {language === 'ar' ? statusMeta[status].labelAr : statusMeta[status].label}
             </span>
           ))}
         </div>
@@ -229,11 +282,11 @@ function DashboardDetails() {
 
       <div className="review-strip">
         <div>
-          <div className="chart-card-title">Review Queue</div>
+          <div className="chart-card-title">{labels.reviewQueue}</div>
           <p>
             {pendingRows.length
-              ? `${pendingRows.length} items still need coordinator follow-up.`
-              : 'Everything in this view is approved.'}
+              ? labels.queuePending(pendingRows.length)
+              : labels.queueDone}
           </p>
         </div>
         <div className="review-list">
@@ -254,6 +307,7 @@ function DashboardDetails() {
 
 export default function Dashboard() {
   const { language, t } = useI18n();
+  const labels = dashboardText[language];
   const totalReports = tabData.reduce((sum, tab) => sum + tab.rows.length, 0);
   const totalApproved = tabData.reduce((sum, tab) => sum + getTabSummary(tab).approved, 0);
   const totalPending = tabData.reduce(
@@ -262,16 +316,16 @@ export default function Dashboard() {
   );
 
   const stats = [
-    { num: String(courses.length), lbl: 'Active Courses', lblAr: 'Active Courses', change: `${t('firstSemester')} 2025` },
+    { num: String(courses.length), lbl: labels.activeCourses, change: `${t('firstSemester')} 2025` },
     { num: String(programs.length), lbl: t('programs'), change: `${t('academicYear')} 2025/2026` },
     { num: String(totalPending), lbl: t('pendingReports'), change: t('requiresAction') },
-    { num: String(totalApproved), lbl: t('approvedReports'), change: `${totalReports} tracked items` },
+    { num: String(totalApproved), lbl: t('approvedReports'), change: labels.trackedItems(totalReports) },
   ];
 
   const quickActions = [
-    { icon: 'ti-file-description', label: 'Course Specification - CS12', labelAr: 'Course Specification - CS12', status: t('status.pendingSubmit'), cls: 's-pending' },
-    { icon: 'ti-file-certificate', label: 'Program Specification - CS', labelAr: 'Program Specification - CS', status: t('status.pendingSubmit'), cls: 's-pending' },
-    { icon: 'ti-target', label: 'KPIs & Indicators - CS', labelAr: 'KPIs & Indicators - CS', status: t('status.inProgress'), cls: 's-inprogress' },
+    { icon: 'ti-file-description', label: labels.courseSpec, status: t('status.pendingSubmit'), cls: 's-pending' },
+    { icon: 'ti-file-certificate', label: labels.programSpec, status: t('status.pendingSubmit'), cls: 's-pending' },
+    { icon: 'ti-target', label: labels.kpis, status: t('status.inProgress'), cls: 's-inprogress' },
   ];
 
   return (
@@ -284,7 +338,7 @@ export default function Dashboard() {
           {stats.map((s, i) => (
             <div key={i} className="dash-stat-card">
               <div className="dash-stat-num">{s.num}</div>
-              <div className="dash-stat-lbl">{s.lblAr && language === 'ar' ? s.lblAr : s.lbl}</div>
+              <div className="dash-stat-lbl">{s.lbl}</div>
               <div className="dash-stat-change">{s.change}</div>
             </div>
           ))}
@@ -301,7 +355,7 @@ export default function Dashboard() {
                   <i className={`ti ${item.icon}`} />
                 </div>
                 <div style={{ flex: 1 }}>
-                  <div className="hist-title">{language === 'ar' ? item.labelAr : item.label}</div>
+                  <div className="hist-title">{item.label}</div>
                 </div>
                 <span className={`status-pill ${item.cls}`}>{item.status}</span>
                 <button className="act-btn primary"><i className="ti ti-arrow-right" /></button>

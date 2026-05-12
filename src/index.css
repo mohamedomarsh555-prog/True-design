@@ -268,6 +268,12 @@ html[dir="rtl"] body {
   text-decoration: none;
 }
 
+.mobile-shellbar,
+.sidebar-mobile-head,
+.sidebar-backdrop {
+  display: none;
+}
+
 .logo-icon {
   width: 34px;
   height: 34px;
@@ -2812,7 +2818,7 @@ html[dir="rtl"] .quality-table td {
   }
 
   .quality-module-tabs .dashboard-tab {
-    width: 100%;
+    width: auto;
   }
 
   .quality-table th,
@@ -2865,5 +2871,210 @@ html[dir="rtl"] .quality-table td {
 
   .status-pill {
     white-space: normal;
+  }
+}
+
+/* Mobile drawer navigation */
+@media (max-width: 900px) {
+  .mobile-shellbar {
+    position: sticky;
+    top: 0;
+    z-index: 120;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 64px;
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--dga-neutral-200);
+    background: #fff;
+    box-shadow: var(--dga-shadow);
+  }
+
+  .mobile-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+  }
+
+  .mobile-brand .logo-text {
+    color: var(--dga-neutral-900);
+  }
+
+  .mobile-menu-btn {
+    width: 42px;
+    height: 42px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--dga-neutral-200);
+    border-radius: 8px;
+    background: #fff;
+    color: var(--dga-neutral-900);
+    cursor: pointer;
+    font-size: 24px;
+  }
+
+  .sidebar-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 129;
+    display: block;
+    background: rgba(22, 22, 22, 0.42);
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: auto;
+    z-index: 130;
+    width: min(86vw, 340px);
+    max-width: none;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    overflow-x: hidden;
+    overflow-y: auto;
+    transform: translateX(-104%);
+    transition: transform 0.22s ease;
+    border-bottom: 0;
+    border-inline-end: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 24px 60px rgba(22, 22, 22, 0.24);
+  }
+
+  html[dir="rtl"] .sidebar {
+    left: auto;
+    right: 0;
+    transform: translateX(104%);
+  }
+
+  .sidebar.mobile-open,
+  html[dir="rtl"] .sidebar.mobile-open {
+    transform: translateX(0);
+  }
+
+  .sidebar-mobile-head {
+    min-height: 64px;
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 800;
+  }
+
+  .sidebar-mobile-head .mobile-menu-btn {
+    border-color: rgba(255, 255, 255, 0.18);
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+  }
+
+  .sidebar-logo {
+    min-height: 68px;
+    min-width: 0;
+    padding: 14px 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    border-inline-end: 0;
+  }
+
+  .sidebar .logo-text {
+    color: #fff;
+    font-size: 16px;
+  }
+
+  .nav-section,
+  .nav-divider,
+  .nav-label,
+  .sub-list {
+    display: block;
+  }
+
+  .nav-label {
+    display: block;
+    padding: 14px 16px 6px;
+  }
+
+  .nav-divider {
+    display: block;
+  }
+
+  .nav-item,
+  .sub-item {
+    min-height: 42px;
+    width: 100%;
+    padding: 10px 16px;
+    flex: 0 0 auto;
+    white-space: normal;
+    font-size: 13px;
+  }
+
+  .sub-item {
+    padding: 9px 16px 9px 30px;
+    background: rgba(0, 0, 0, 0.16);
+  }
+
+  html[dir="rtl"] .sub-item {
+    padding: 9px 30px 9px 16px;
+  }
+
+  .nav-chevron {
+    display: inline-flex;
+  }
+
+  .nav-item.active,
+  html[dir="rtl"] .nav-item.active {
+    box-shadow: inset 4px 0 0 var(--dga-warning);
+  }
+
+  html[dir="rtl"] .nav-item.active {
+    box-shadow: inset -4px 0 0 var(--dga-warning);
+  }
+}
+
+@media (max-width: 640px) {
+  .quality-module-tabs {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 6px;
+    scrollbar-width: none;
+  }
+
+  .quality-module-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .quality-module-tabs .dashboard-tab {
+    width: auto;
+    min-width: max-content;
+    min-height: 38px;
+    padding: 0 12px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 520px) {
+  .mobile-shellbar {
+    min-height: 58px;
+    padding: 8px 12px;
+  }
+
+  .mobile-menu-btn {
+    width: 38px;
+    height: 38px;
+    font-size: 22px;
+  }
+
+  .mobile-brand .logo-icon {
+    width: 34px;
+    height: 34px;
+  }
+
+  .mobile-brand .logo-text {
+    font-size: 14px;
   }
 }

@@ -11,6 +11,7 @@ import AllProgramsReportPage from './pages/AllProgramsReportPage';
 import ModulePage from './pages/ModulePage';
 import InstitutionalAccreditationPage from './pages/InstitutionalAccreditationPage';
 import QualityModulesPage from './pages/QualityModulesPage';
+import { useI18n } from './i18n';
 
 const STATIC_AUTH = {
   username: 'Gouda',
@@ -19,11 +20,63 @@ const STATIC_AUTH = {
 };
 
 function LoginFlow({ onAuthenticated }) {
+  const { language } = useI18n();
   const [step, setStep] = useState('login');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [otp, setOtp] = useState('');
   const [error, setError] = useState('');
+
+  const authText = {
+    en: {
+      signInAria: 'TRUE sign in',
+      brandSub: 'Quality assurance system',
+      portal: 'Academic Quality Portal',
+      welcome: 'Welcome back',
+      intro: 'Sign in to continue to reports, accreditation evidence, dashboards, and program quality tracking.',
+      signIn: 'Sign in',
+      signInHint: 'Enter your account credentials.',
+      verifyOtp: 'Verify OTP',
+      otpHint: 'Enter the one-time passcode to access TRUE.',
+      invalidLogin: 'Invalid username or password.',
+      invalidOtp: 'Invalid OTP code.',
+      username: 'Username',
+      password: 'Password',
+      otpCode: 'OTP Code',
+      usernamePlaceholder: 'Enter username',
+      passwordPlaceholder: 'Enter password',
+      otpPlaceholder: 'Enter 6-digit OTP',
+      continue: 'Continue',
+      verify: 'Verify and enter',
+      back: 'Back to sign in',
+      loginForm: 'Login form',
+      otpForm: 'OTP verification',
+    },
+    ar: {
+      signInAria: 'تسجيل الدخول إلى TRUE',
+      brandSub: 'نظام ضمان الجودة',
+      portal: 'بوابة الجودة الأكاديمية',
+      welcome: 'مرحباً بعودتك',
+      intro: 'سجّل الدخول للمتابعة إلى التقارير وأدلة الاعتماد ولوحات المتابعة وجودة البرامج.',
+      signIn: 'تسجيل الدخول',
+      signInHint: 'أدخل بيانات حسابك.',
+      verifyOtp: 'التحقق من رمز OTP',
+      otpHint: 'أدخل رمز التحقق لمتابعة الدخول إلى TRUE.',
+      invalidLogin: 'اسم المستخدم أو كلمة المرور غير صحيحة.',
+      invalidOtp: 'رمز التحقق غير صحيح.',
+      username: 'اسم المستخدم',
+      password: 'كلمة المرور',
+      otpCode: 'رمز OTP',
+      usernamePlaceholder: 'أدخل اسم المستخدم',
+      passwordPlaceholder: 'أدخل كلمة المرور',
+      otpPlaceholder: 'أدخل رمز التحقق من 6 أرقام',
+      continue: 'متابعة',
+      verify: 'تحقق وادخل',
+      back: 'العودة لتسجيل الدخول',
+      loginForm: 'نموذج تسجيل الدخول',
+      otpForm: 'التحقق من OTP',
+    },
+  }[language];
 
   const handleLogin = (event) => {
     event.preventDefault();
@@ -32,7 +85,7 @@ function LoginFlow({ onAuthenticated }) {
       setStep('otp');
       return;
     }
-    setError('Invalid username or password.');
+    setError(authText.invalidLogin);
   };
 
   const handleOtp = (event) => {
@@ -42,12 +95,12 @@ function LoginFlow({ onAuthenticated }) {
       onAuthenticated();
       return;
     }
-    setError('Invalid OTP code.');
+    setError(authText.invalidOtp);
   };
 
   return (
     <main className="auth-page">
-      <section className="auth-hero" aria-label="TRUE sign in">
+      <section className="auth-hero" aria-label={authText.signInAria}>
         <div className="auth-brand">
           <div className="auth-logo">
             <svg width="24" height="24" viewBox="0 0 20 20" aria-hidden="true">
@@ -56,24 +109,24 @@ function LoginFlow({ onAuthenticated }) {
           </div>
           <div>
             <strong>CPTIT TRUE</strong>
-            <span>Quality assurance system</span>
+            <span>{authText.brandSub}</span>
           </div>
         </div>
         <div className="auth-hero-copy">
-          <span className="auth-kicker">Academic Quality Portal</span>
-          <h1>Welcome back</h1>
-          <p>Sign in to continue to reports, accreditation evidence, dashboards, and program quality tracking.</p>
+          <span className="auth-kicker">{authText.portal}</span>
+          <h1>{authText.welcome}</h1>
+          <p>{authText.intro}</p>
         </div>
       </section>
 
-      <section className="auth-card" aria-label={step === 'login' ? 'Login form' : 'OTP verification'}>
+      <section className="auth-card" aria-label={step === 'login' ? authText.loginForm : authText.otpForm}>
         <div className="auth-card-head">
           <div className="auth-step-icon">
             <i className={`ti ${step === 'login' ? 'ti-lock' : 'ti-shield-check'}`} />
           </div>
           <div>
-            <h2>{step === 'login' ? 'Sign in' : 'Verify OTP'}</h2>
-            <p>{step === 'login' ? 'Enter your account credentials.' : 'Enter the one-time passcode to access TRUE.'}</p>
+            <h2>{step === 'login' ? authText.signIn : authText.verifyOtp}</h2>
+            <p>{step === 'login' ? authText.signInHint : authText.otpHint}</p>
           </div>
         </div>
 
@@ -82,46 +135,46 @@ function LoginFlow({ onAuthenticated }) {
         {step === 'login' ? (
           <form className="auth-form" onSubmit={handleLogin}>
             <label className="auth-field">
-              <span>Username</span>
+              <span>{authText.username}</span>
               <input
                 type="text"
                 value={username}
                 onChange={(event) => setUsername(event.target.value)}
                 autoComplete="username"
-                placeholder="Enter username"
+                placeholder={authText.usernamePlaceholder}
               />
             </label>
             <label className="auth-field">
-              <span>Password</span>
+              <span>{authText.password}</span>
               <input
                 type="password"
                 value={password}
                 onChange={(event) => setPassword(event.target.value)}
                 autoComplete="current-password"
-                placeholder="Enter password"
+                placeholder={authText.passwordPlaceholder}
               />
             </label>
             <button className="auth-submit" type="submit">
-              Continue
+              {authText.continue}
               <i className="ti ti-arrow-right" />
             </button>
           </form>
         ) : (
           <form className="auth-form" onSubmit={handleOtp}>
             <label className="auth-field">
-              <span>OTP Code</span>
+              <span>{authText.otpCode}</span>
               <input
                 type="text"
                 inputMode="numeric"
                 value={otp}
                 onChange={(event) => setOtp(event.target.value)}
                 autoComplete="one-time-code"
-                placeholder="Enter 6-digit OTP"
+                placeholder={authText.otpPlaceholder}
                 maxLength="6"
               />
             </label>
             <button className="auth-submit" type="submit">
-              Verify and enter
+              {authText.verify}
               <i className="ti ti-login-2" />
             </button>
             <button
@@ -133,7 +186,7 @@ function LoginFlow({ onAuthenticated }) {
                 setError('');
               }}
             >
-              Back to sign in
+              {authText.back}
             </button>
           </form>
         )}
