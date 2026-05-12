@@ -10,6 +10,7 @@ import ProgramPage from './pages/ProgramPage';
 import AllProgramsReportPage from './pages/AllProgramsReportPage';
 import ModulePage from './pages/ModulePage';
 import InstitutionalAccreditationPage from './pages/InstitutionalAccreditationPage';
+import QualityModulesPage from './pages/QualityModulesPage';
 
 const STATIC_AUTH = {
   username: 'Gouda',
@@ -179,6 +180,12 @@ export default function App() {
               path="/institutional-accreditation"
               element={<InstitutionalAccreditationPage />}
             />
+            <Route path="/accreditation" element={<QualityModulesPage moduleType="accreditation" />} />
+            <Route path="/accreditation/:section" element={<QualityModulesPage moduleType="accreditation" />} />
+            <Route path="/strategic-planning" element={<QualityModulesPage moduleType="strategic" />} />
+            <Route path="/strategic-planning/:section" element={<QualityModulesPage moduleType="strategic" />} />
+            <Route path="/quality-projects" element={<QualityModulesPage moduleType="quality" />} />
+            <Route path="/quality-projects/:section" element={<QualityModulesPage moduleType="quality" />} />
             <Route
               path="/documentation-definitions"
               element={

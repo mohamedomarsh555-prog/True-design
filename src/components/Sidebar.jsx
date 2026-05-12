@@ -8,9 +8,55 @@ export default function Sidebar() {
   const { t } = useI18n();
   const [coursesOpen, setCoursesOpen] = useState(true);
   const [programsOpen, setProgramsOpen] = useState(true);
+  const [accreditationOpen, setAccreditationOpen] = useState(true);
+  const [strategicOpen, setStrategicOpen] = useState(false);
+  const [qualityProjectsOpen, setQualityProjectsOpen] = useState(false);
 
   const isCoursesListActive = location.pathname === '/courses';
   const isProgramsListActive = location.pathname === '/programs';
+  const qualityNav = [
+    {
+      base: '/accreditation',
+      icon: 'ti-certificate',
+      label: 'Academic Accreditation',
+      open: accreditationOpen,
+      setOpen: setAccreditationOpen,
+      items: [
+        ['Dashboard', '/accreditation/dashboard'],
+        ['Academic Programs', '/accreditation/programs'],
+        ['Requirements', '/accreditation/requirements'],
+        ['Action Log', '/accreditation/actions'],
+        ['Post Accreditation', '/accreditation/post-accreditation'],
+      ],
+    },
+    {
+      base: '/strategic-planning',
+      icon: 'ti-chart-arrows-vertical',
+      label: 'Strategic Planning',
+      open: strategicOpen,
+      setOpen: setStrategicOpen,
+      items: [
+        ['Dashboard', '/strategic-planning/dashboard'],
+        ['Strategic Projects', '/strategic-planning/projects'],
+        ['Objectives', '/strategic-planning/objectives'],
+        ['Reports', '/strategic-planning/reports'],
+      ],
+    },
+    {
+      base: '/quality-projects',
+      icon: 'ti-rosette-discount-check',
+      label: 'Quality Projects',
+      open: qualityProjectsOpen,
+      setOpen: setQualityProjectsOpen,
+      items: [
+        ['Dashboard', '/quality-projects/dashboard'],
+        ['Institutional', '/quality-projects/institutional'],
+        ['Program Review', '/quality-projects/program-review'],
+        ['Learning Outcomes', '/quality-projects/learning-outcomes'],
+        ['Gap Analysis', '/quality-projects/gap-analysis'],
+      ],
+    },
+  ];
 
   return (
     <div className="sidebar">
@@ -89,6 +135,43 @@ export default function Sidebar() {
           {t('allPrograms')}
         </div>
       </div>
+
+      <div className="nav-divider" />
+
+      <div className="nav-label">Quality & Accreditation</div>
+      {qualityNav.map((group) => (
+        <div key={group.base}>
+          <div
+            className={`nav-item ${location.pathname.startsWith(group.base) ? 'active' : ''}`}
+            onClick={() => {
+              group.setOpen(true);
+              navigate(`${group.base}/dashboard`);
+            }}
+          >
+            <i className={`ti ${group.icon}`} />
+            {group.label}
+            <i
+              className={`ti ti-chevron-down nav-chevron ${group.open ? 'open' : ''}`}
+              onClick={(event) => {
+                event.stopPropagation();
+                group.setOpen(open => !open);
+              }}
+            />
+          </div>
+          <div className={`sub-list ${group.open ? 'open' : ''}`}>
+            {group.items.map(([label, path]) => (
+              <div
+                key={path}
+                className={`sub-item ${location.pathname === path ? 'active' : ''}`}
+                onClick={() => navigate(path)}
+              >
+                <div className="ci-dot program-dot" />
+                {label}
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
 
       <div className="nav-divider" />
 
