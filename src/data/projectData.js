@@ -85,11 +85,10 @@ export const milestones = [
   { id: 'MS-004', projectId: 'INIT-002', name: 'Gap Analysis', nameAr: 'تحليل الفجوات', startDate: '2026-07-01', endDate: '2026-08-31', status: 'Planned', progress: 10, owner: 'Deanship of Quality' }
 ];
 
-export const tasks = [
-  { id: 'TSK-001', milestoneId: 'MS-002', projectId: 'PRJ-001', title: 'Update evidence matrix', titleAr: 'تحديث مصفوفة الأدلة', assignedTo: 'Sara', priority: 'High', status: 'In Progress', dueDate: '2026-05-22', subtasks: [{ id: 'SUB-1', title: 'Verify PLO', status: 'Completed' }], comments: [], attachments: ['matrix.xlsx'], description: 'Mapping files to standards.' },
-  { id: 'TSK-002', milestoneId: 'MS-002', projectId: 'PRJ-001', title: 'Collect committee approvals', titleAr: 'جمع اعتمادات اللجان', assignedTo: 'Khalid', priority: 'Medium', status: 'To Do', dueDate: '2026-05-28', subtasks: [], comments: [], attachments: [], description: 'Signatures for spec.' },
-  { id: 'TSK-003', milestoneId: 'MS-001', projectId: 'PRJ-001', title: 'Finalize Chapter 1', titleAr: 'الانتهاء من الفصل الأول', assignedTo: 'Dr. Ahmad', priority: 'High', status: 'Completed', dueDate: '2026-04-30', subtasks: [], comments: [], attachments: ['ch1.docx'], description: 'Introduction draft.' },
-  { id: 'TSK-004', projectId: 'INIT-002', title: 'Identify missing evidence', titleAr: 'تحديد الأدلة المفقودة', assignedTo: 'Sara', priority: 'High', status: 'In Progress', dueDate: '2026-07-15', subtasks: [], comments: [], attachments: [], description: 'Review NCAAA list.' }
+  { id: 'TSK-001', milestoneId: 'MS-002', projectId: 'PRJ-001', title: 'Update evidence matrix', titleAr: 'تحديث مصفوفة الأدلة', assignedTo: 'Sara', priority: 'High', status: 'In Progress', dueDate: '2026-05-22', subtasks: [{ id: 'SUB-1', title: 'Verify PLO', status: 'Completed' }], comments: [], attachments: ['matrix.xlsx'], description: 'Mapping files to standards.', dependencies: [] },
+  { id: 'TSK-002', milestoneId: 'MS-002', projectId: 'PRJ-001', title: 'Collect committee approvals', titleAr: 'جمع اعتمادات اللجان', assignedTo: 'Khalid', priority: 'Medium', status: 'To Do', dueDate: '2026-05-28', subtasks: [], comments: [], attachments: [], description: 'Signatures for spec.', dependencies: [] },
+  { id: 'TSK-003', milestoneId: 'MS-001', projectId: 'PRJ-001', title: 'Finalize Chapter 1', titleAr: 'الانتهاء من الفصل الأول', assignedTo: 'Dr. Ahmad', priority: 'High', status: 'Completed', dueDate: '2026-04-30', subtasks: [], comments: [], attachments: ['ch1.docx'], description: 'Introduction draft.', dependencies: [] },
+  { id: 'TSK-004', projectId: 'INIT-002', title: 'Identify missing evidence', titleAr: 'تحديد الأدلة المفقودة', assignedTo: 'Sara', priority: 'High', status: 'In Progress', dueDate: '2026-07-15', subtasks: [], comments: [], attachments: [], description: 'Review NCAAA list.', dependencies: [] }
 ];
 
 export const risks = [
@@ -160,6 +159,16 @@ export const accreditationActionLogs = [
 
 export const postAccreditationFollowUp = [
   { id: 'PA-001', program: 'Computer Science', item: 'Annual report submission', due: '2027-05-10', status: 'Planned' }
+];
+
+export const accreditationStandards = [
+  { id: 'STD-001', body: 'NCAAA', standard: 'Mission and Goals', criterion: 'Program mission alignment', responseType: 'Narrative + Evidence', weight: '20%', status: 'Approved' },
+  { id: 'STD-002', body: 'NCAAA', standard: 'Teaching and Learning', criterion: 'PLO assessment cycle', responseType: 'Indicator + File', weight: '30%', status: 'In Progress' }
+];
+
+export const accreditationProjects = [
+  { id: 'AP-001', program: 'Computer Science', body: 'NCAAA', stage: 'Post Accreditation', manager: 'Quality Manager', team: 'Standards Committee', progress: '88%', due: '2026-06-15', risk: 'Low', status: 'In Progress' },
+  { id: 'AP-002', program: 'Information Technology', body: 'NCAAA', stage: 'Self Study', manager: 'Program Coordinator', team: 'Program Committee', progress: '64%', due: '2026-05-30', risk: 'Medium', status: 'In Progress' }
 ];
 
 export const projectTimePlan = [

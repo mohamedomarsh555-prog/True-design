@@ -28,7 +28,9 @@ import {
   programReviewItems,
   learningOutcomeItems,
   projectExecutiveReports,
-  qualityProjects
+  qualityProjects,
+  accreditationStandards,
+  accreditationProjects
 } from '../data/projectData';
 import { strategicPlans, strategicObjectives, strategicInitiatives, strategicKPIs, strategicReports } from '../data/strategicData';
 
@@ -668,7 +670,7 @@ function AccreditationContent({ activePath }) {
       <>
         <SortableTable
           title="Accreditation Master Data"
-          rows={masterData}
+          rows={accreditationMasterData}
           columns={[
             { key: 'id', label: 'ID' },
             { key: 'type', label: 'Type' },
@@ -680,7 +682,7 @@ function AccreditationContent({ activePath }) {
         />
         <SortableTable
           title="Accreditation Standards Library"
-          rows={standards}
+          rows={accreditationStandards}
           columns={[
             { key: 'id', label: 'ID' },
             { key: 'body', label: 'Body' },
@@ -743,7 +745,7 @@ function AccreditationContent({ activePath }) {
     return (
       <SortableTable
         title="Accreditation Requirements"
-        rows={requirements}
+        rows={accreditationRequirements}
         columns={[
           { key: 'id', label: 'ID' },
           { key: 'program', label: 'Program' },
@@ -821,7 +823,7 @@ function AccreditationContent({ activePath }) {
     return (
       <SortableTable
         title="Submission Packages & Decisions"
-        rows={submissionsDecisions}
+        rows={submissionDecisions}
         columns={[
           { key: 'id', label: 'ID' },
           { key: 'program', label: 'Program' },
@@ -840,7 +842,7 @@ function AccreditationContent({ activePath }) {
     return (
       <SortableTable
         title="Immutable Accreditation Action Log"
-        rows={actionLogs}
+        rows={accreditationActionLogs}
         columns={[
           { key: 'id', label: 'ID' },
           { key: 'program', label: 'Program' },
@@ -1082,7 +1084,7 @@ function ProjectManagementDashboard() {
           <div className="section-sub">{label('Project dashboard with execution plans, milestones, tasks, teams, performance indicators, and schedule follow-up.', language)}</div>
         </div>
         <div className="project-command-kpis">
-          <div><strong>{managedProjects.length}</strong><span>{label('Projects Management', language)}</span></div>
+          <div><strong>{managedProjectsData.length}</strong><span>{label('Projects Management', language)}</span></div>
           <div><strong>{delayedCount}</strong><span>{label('Delayed Tasks', language)}</span></div>
           <div><strong>{openRisks}</strong><span>{label('Risks & Issues', language)}</span></div>
           <div><strong>{evidenceAvg}%</strong><span>{label('Evidence Completion', language)}</span></div>
@@ -1173,6 +1175,7 @@ function TimePlanContent() {
 }
 
 function QualityProjectsContent({ activePath }) {
+  const { language } = useI18n();
   if (activePath === 'projects-management') {
     return <ProjectManagementDashboard />;
   }
@@ -1182,7 +1185,7 @@ function QualityProjectsContent({ activePath }) {
       <SortableTable
         title="Milestones"
         rows={projectMilestonesData.map(ms => {
-          const p = managedProjectsData.find(prj => prj.id === ms.projectId);
+          const p = managedProjectsData.find(prj => prj.id === ms.projectId) || { name: 'Unknown', nameAr: 'غير معروف' };
           return {
             ...ms,
             projectName: language === 'ar' ? p.nameAr : p.name,
@@ -1212,17 +1215,17 @@ function QualityProjectsContent({ activePath }) {
       <SortableTable
         title="Tasks Management"
         rows={projectTasksData.map(t => {
-          const p = managedProjectsData.find(prj => prj.id === t.projectId);
+          const p = managedProjectsData.find(prj => prj.id === t.projectId) || { name: 'Unknown', nameAr: 'غير معروف' };
           return {
             ...t,
             projectName: language === 'ar' ? p.nameAr : p.name,
             task: language === 'ar' ? t.titleAr : t.title,
-            subTasks: t.subtasks.length,
+            subTasks: (t.subtasks || []).length,
             responsible: t.assignedTo,
-            priority: language === 'ar' ? t.priorityAr : t.priority,
+            priority: language === 'ar' ? (t.priorityAr || t.priority) : t.priority,
             deadline: t.dueDate,
-            dependencies: t.dependencies.join(', ') || '-',
-            status: language === 'ar' ? t.statusAr : t.status
+            dependencies: (t.dependencies || []).join(', ') || '-',
+            status: language === 'ar' ? (t.statusAr || t.status) : t.status
           };
         })}
         columns={[
