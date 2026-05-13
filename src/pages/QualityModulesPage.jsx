@@ -446,6 +446,43 @@ const ar = {
   '7 days': '7 أيام',
   '13 days': '13 يوم',
   '19 days': '19 يوم',
+  'Strategic Plans': '\u0627\u0644\u062e\u0637\u0637 \u0627\u0644\u0627\u0633\u062a\u0631\u0627\u062a\u064a\u062c\u064a\u0629',
+  'Strategic Objectives': '\u0627\u0644\u0623\u0647\u062f\u0627\u0641 \u0627\u0644\u0627\u0633\u062a\u0631\u0627\u062a\u064a\u062c\u064a\u0629',
+  'Strategic KPIs': '\u0645\u0624\u0634\u0631\u0627\u062a \u0627\u0644\u0623\u062f\u0627\u0621 \u0627\u0644\u0627\u0633\u062a\u0631\u0627\u062a\u064a\u062c\u064a\u0629',
+  'Strategic Reports': '\u0627\u0644\u062a\u0642\u0627\u0631\u064a\u0631 \u0627\u0644\u0627\u0633\u062a\u0631\u0627\u062a\u064a\u062c\u064a\u0629',
+  'Strategic Overview': '\u0646\u0638\u0631\u0629 \u0639\u0627\u0645\u0629 \u0627\u0633\u062a\u0631\u0627\u062a\u064a\u062c\u064a\u0629',
+  'Plan Name': '\u0627\u0633\u0645 \u0627\u0644\u062e\u0637\u0629',
+  'Duration': '\u0627\u0644\u0645\u062f\u0629',
+  'KPIs': '\u0645\u0624\u0634\u0631\u0627\u062a \u0627\u0644\u0623\u062f\u0627\u0621',
+  'Code': '\u0627\u0644\u0631\u0645\u0632',
+  'Strategic Plan': '\u0627\u0644\u062e\u0637\u0629 \u0627\u0644\u0627\u0633\u062a\u0631\u0627\u062a\u064a\u062c\u064a\u0629',
+  'Indicator': '\u0627\u0644\u0645\u0624\u0634\u0631',
+  'Baseline': '\u062e\u0637 \u0627\u0644\u0623\u0633\u0627\u0633',
+  'Target': '\u0627\u0644\u0645\u0633\u062a\u0647\u062f\u0641',
+  'Report Title': '\u0639\u0646\u0648\u0627\u0646 \u0627\u0644\u062a\u0642\u0631\u064a\u0631',
+  'TRUE University Vision 2030': '\u0631\u0624\u064a\u0629 \u062c\u0627\u0645\u0639\u0629 TRUE 2030',
+  '5 Years': '5 \u0633\u0646\u0648\u0627\u062a',
+  'University Board': '\u0645\u062c\u0644\u0633 \u0627\u0644\u062c\u0627\u0645\u0639\u0629',
+  'Active': '\u0646\u0634\u0637\u0629',
+  'On Track': '\u0641\u064a \u0627\u0644\u0645\u0633\u0627\u0631 \u0627\u0644\u0635\u062d\u064a\u062d',
+  'At Risk': '\u0641\u064a \u062e\u0637\u0631',
+  'Published': '\u0645\u0646\u0634\u0648\u0631',
+  'Performance': '\u0627\u0644\u0623\u062f\u0627\u0621',
+  'Financial': '\u0645\u0627\u0644\u064a',
+  'Strategy Office': '\u0645\u0643\u062a\u0628 \u0627\u0644\u0627\u0633\u062a\u0631\u0627\u062a\u064a\u062c\u064a\u0629',
+  'Finance Dept': '\u0625\u062f\u0627\u0631\u0629 \u0627\u0644\u0645\u0627\u0644\u064a\u0629',
+  'Quality Automation Team': '\u0641\u0631\u064a\u0642 \u0623\u062a\u0645\u062a\u0629 \u0627\u0644\u062c\u0648\u062f\u0629',
+  'Percentage of Accredited Programs': '\u0646\u0633\u0628\u0629 \u0627\u0644\u0628\u0631\u0627\u0645\u062c \u0627\u0644\u0645\u0639\u062a\u0645\u062f\u0629',
+  'Automation of Administrative Processes': '\u0623\u062a\u0645\u062a\u0629 \u0627\u0644\u0639\u0645\u0644\u064a\u0627\u062a \u0627\u0644\u0625\u062f\u0627\u0631\u064a\u0629',
+  'Quarterly Strategic Progress': '\u062a\u0642\u0631\u064a\u0631 \u0627\u0644\u062a\u0642\u062f\u0645 \u0627\u0644\u0627\u0633\u062a\u0631\u0627\u062a\u064a\u062c\u064a \u0627\u0644\u0631\u0628\u0639\u064a',
+  'Budget Utilization Analysis': '\u062a\u062d\u0644\u064a\u0644 \u0627\u0633\u062a\u062e\u062f\u0627\u0645 \u0627\u0644\u0645\u064a\u0632\u0627\u0646\u064a\u0629',
+  'Annual': '\u0633\u0646\u0648\u064a',
+  'Quarterly': '\u0631\u0628\u0639 \u0633\u0646\u0648\u064a',
+  'Department': '\u0627\u0644\u0642\u0633\u0645',
+  'Lecture': '\u0645\u062d\u0627\u0636\u0631\u0629',
+  'Practical Training': '\u062a\u062f\u0631\u064a\u0628 \u0639\u0645\u0644\u064a',
+  'Educational': '\u062a\u0639\u0644\u064a\u0645\u064a',
+  'Practical': '\u0639\u0645\u0644\u064a',
 };
 
 function label(value, language) {
@@ -459,12 +496,17 @@ const statusClassMap = {
   'Full Accreditation': 's-done',
   'Complete': 's-done',
   'Completed': 's-done',
+  'Active': 's-done',
+  'On Track': 's-done',
+  'Published': 's-done',
   'In Progress': 's-inprogress',
   'Eligible': 's-inprogress',
   'New': 's-inprogress',
+  'Planned': 's-inprogress',
   'Conditional Accreditation': 's-pending',
   'Pending Submit': 's-pending',
   'Pending Review': 's-pending',
+  'At Risk': 's-pending',
   'Incomplete': 's-pending',
   'Delayed': 's-rejected',
   'Critical': 's-rejected',
@@ -605,7 +647,9 @@ function SortableTable({ columns, rows, title }) {
                 {columns.map((column) => (
                   <td key={`${row.id}-${column.key}`}>
                     {column.type === 'status' ? (
-                      <span className={`status-pill ${getStatusClass(row[column.key])}`}>{label(row[column.key], language)}</span>
+                      <span className={`status-pill ${getStatusClass(row[`${column.key}En`] || row[`${column.key}Raw`] || row[column.key])}`}>
+                        {label(row[column.key], language)}
+                      </span>
                     ) : (
                       label(row[column.key], language)
                     )}
@@ -923,7 +967,7 @@ function StrategicContent({ activePath }) {
         rows={strategicPlans.map(plan => ({
           ...plan,
           name: <Link className="project-link" to={`/strategic-planning/plans/${plan.id}`}>{language === 'ar' ? plan.nameAr : plan.name}</Link>,
-          status: language === 'ar' ? plan.statusAr : plan.status,
+          status: plan.status,
           progress: `${plan.progress}%`,
           objectives: plan.stats.objectives,
           projects: plan.stats.projects,
@@ -954,7 +998,8 @@ function StrategicContent({ activePath }) {
             ...obj,
             name: <Link className="project-link" to={`/strategic-planning/objectives/${obj.id}`}>{language === 'ar' ? obj.nameAr : obj.name}</Link>,
             planName: language === 'ar' ? plan.nameAr : plan.name,
-            status: language === 'ar' ? obj.statusAr : obj.status,
+            owner: language === 'ar' ? obj.ownerAr : obj.owner,
+            status: obj.status,
             progress: `${obj.progress}%`,
             weight: `${obj.weight}%`
           };
@@ -983,7 +1028,7 @@ function StrategicContent({ activePath }) {
             name: <Link className="project-link" to={`/quality-projects/projects/${init.id}`}>{language === 'ar' ? init.nameAr : init.name}</Link>,
             objectiveName: language === 'ar' ? obj.nameAr : obj.name,
             progress: `${init.progress}%`,
-            priority: language === 'ar' ? init.priorityAr : init.priority
+            priority: init.priority
           };
         })}
         columns={[
@@ -1009,6 +1054,7 @@ function StrategicContent({ activePath }) {
           const obj = strategicObjectives.find(o => o.id === kpi.objectiveId);
           return {
             ...kpi,
+            name: language === 'ar' ? kpi.nameAr : kpi.name,
             objectiveName: language === 'ar' ? obj.nameAr : obj.name,
             target: `${kpi.target}%`,
             actual: `${kpi.actual}%`

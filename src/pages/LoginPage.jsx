@@ -11,8 +11,8 @@ const STATIC_AUTH = {
 export default function LoginPage({ onAuthenticated }) {
   const { language, setLanguage, isRtl } = useI18n();
   const [step, setStep] = useState('login');
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState(STATIC_AUTH.username);
+  const [password, setPassword] = useState(STATIC_AUTH.password);
   const [showPassword, setShowPassword] = useState(false);
   const [otp, setOtp] = useState('');
   const [error, setError] = useState('');

@@ -108,7 +108,7 @@ export default function StrategicObjectiveDetailsPage() {
                       <div className="ms-dot" data-status={init.status === 'Completed' ? 'Completed' : 'In Progress'}></div>
                       <div className="ms-info">
                         <h4>{language === 'ar' ? init.nameAr : init.name}</h4>
-                        <span>{init.progress}% • {init.status}</span>
+                        <span>{init.progress}% • {language === 'ar' ? init.statusAr || init.status : init.status}</span>
                       </div>
                     </div>
                   ))}
@@ -134,12 +134,12 @@ export default function StrategicObjectiveDetailsPage() {
            <table className="tasks-table">
              <thead>
                <tr>
-                 <th>Code</th>
-                 <th>Name</th>
-                 <th>Owner</th>
-                 <th>Status</th>
-                 <th>Progress</th>
-                 <th>End Date</th>
+                 <th>{language === 'ar' ? '\u0627\u0644\u0631\u0645\u0632' : 'Code'}</th>
+                 <th>{language === 'ar' ? '\u0627\u0644\u0627\u0633\u0645' : 'Name'}</th>
+                 <th>{language === 'ar' ? '\u0627\u0644\u0645\u0627\u0644\u0643' : 'Owner'}</th>
+                 <th>{language === 'ar' ? '\u0627\u0644\u062d\u0627\u0644\u0629' : 'Status'}</th>
+                 <th>{language === 'ar' ? '\u0627\u0644\u062a\u0642\u062f\u0645' : 'Progress'}</th>
+                 <th>{language === 'ar' ? '\u062a\u0627\u0631\u064a\u062e \u0627\u0644\u0646\u0647\u0627\u064a\u0629' : 'End Date'}</th>
                </tr>
              </thead>
              <tbody>
@@ -147,8 +147,8 @@ export default function StrategicObjectiveDetailsPage() {
                  <tr key={init.id}>
                    <td>{init.code}</td>
                    <td><Link className="project-link" to={`/quality-projects/projects/${init.id}`}>{language === 'ar' ? init.nameAr : init.name}</Link></td>
-                   <td>{init.owner}</td>
-                   <td><span className="task-status-pill" data-status={init.status}>{init.status}</span></td>
+                   <td>{language === 'ar' ? init.ownerAr || init.owner : init.owner}</td>
+                   <td><span className="task-status-pill" data-status={init.status}>{language === 'ar' ? init.statusAr || init.status : init.status}</span></td>
                    <td>{init.progress}%</td>
                    <td>{init.endDate}</td>
                  </tr>
@@ -167,17 +167,17 @@ export default function StrategicObjectiveDetailsPage() {
                   <span className={`status-pill s-${kpi.status.toLowerCase().replace(' ', '-')}`}>{kpi.status}</span>
                 </div>
                 <div className="kpi-body">
-                   <p style={{ fontSize: '12px', color: '#64748b', marginBottom: '12px' }}>{kpi.measurement}</p>
+                   <p style={{ fontSize: '12px', color: '#64748b', marginBottom: '12px' }}>{language === 'ar' ? kpi.measurementAr || kpi.measurement : kpi.measurement}</p>
                   <div className="kpi-stat">
-                    <label>Actual / Target</label>
+                    <label>{language === 'ar' ? '\u0627\u0644\u0641\u0639\u0644\u064a / \u0627\u0644\u0645\u0633\u062a\u0647\u062f\u0641' : 'Actual / Target'}</label>
                     <strong>{kpi.actual}% / {kpi.target}%</strong>
                   </div>
                   <div className="kpi-progress">
                     <div className="progress-bar-fill" style={{ width: `${(kpi.actual / kpi.target) * 100}%` }}></div>
                   </div>
                   <div className="kpi-meta">
-                    <span>Baseline: {kpi.baseline}%</span>
-                    <span>Freq: {kpi.frequency}</span>
+                    <span>{language === 'ar' ? '\u062e\u0637 \u0627\u0644\u0623\u0633\u0627\u0633' : 'Baseline'}: {kpi.baseline}%</span>
+                    <span>{language === 'ar' ? '\u0627\u0644\u062a\u0643\u0631\u0627\u0631' : 'Freq'}: {language === 'ar' ? kpi.frequencyAr || kpi.frequency : kpi.frequency}</span>
                   </div>
                 </div>
               </div>
@@ -189,7 +189,7 @@ export default function StrategicObjectiveDetailsPage() {
           <div className="placeholder-content">
             <i className={`ti ${tabs.find(t => t.id === tab).icon}`} />
             <h2>{language === 'ar' ? tabs.find(t => t.id === tab).labelAr : tabs.find(t => t.id === tab).label}</h2>
-            <p>Objective section under development</p>
+            <p>{language === 'ar' ? '\u0647\u0630\u0627 \u0627\u0644\u0642\u0633\u0645 \u0642\u064a\u062f \u0627\u0644\u062a\u0637\u0648\u064a\u0631' : 'Objective section under development'}</p>
           </div>
         )}
       </div>

@@ -107,7 +107,7 @@ export default function StrategicPlanDetailsPage() {
           <div className="placeholder-content">
             <i className={`ti ${tabs.find(t => t.id === tab).icon}`} />
             <h2>{language === 'ar' ? tabs.find(t => t.id === tab).labelAr : tabs.find(t => t.id === tab).label}</h2>
-            <p>Strategic section under development</p>
+            <p>{language === 'ar' ? '\u0647\u0630\u0627 \u0627\u0644\u0642\u0633\u0645 \u0642\u064a\u062f \u0627\u0644\u062a\u0637\u0648\u064a\u0631' : 'Strategic section under development'}</p>
           </div>
         )}
       </div>
@@ -133,7 +133,7 @@ function PlanOverview({ plan, objectives, initiatives }) {
                 <div className="ms-dot" data-status={obj.status === 'On Track' ? 'Completed' : 'In Progress'}></div>
                 <div className="ms-info">
                   <h4>{language === 'ar' ? obj.nameAr : obj.name}</h4>
-                  <span>{obj.progress}% الإنجاز • {obj.status}</span>
+                  <span>{obj.progress}% {language === 'ar' ? '\u0627\u0644\u0625\u0646\u062c\u0627\u0632' : 'progress'} • {language === 'ar' ? obj.statusAr : obj.status}</span>
                 </div>
               </div>
             ))}
@@ -190,8 +190,8 @@ function PlanObjectives({ objectives }) {
                 <i className="ti ti-user" style={{ marginInlineEnd: '8px' }} />
                 {language === 'ar' ? obj.ownerAr : obj.owner}
               </div>
-              <div className="task-priority">Weight: {obj.weight}%</div>
-              <div className="task-status-pill"><Link to={`/strategic-planning/objectives/${obj.id}`}>View Details</Link></div>
+              <div className="task-priority">{language === 'ar' ? '\u0627\u0644\u0648\u0632\u0646' : 'Weight'}: {obj.weight}%</div>
+              <div className="task-status-pill"><Link to={`/strategic-planning/objectives/${obj.id}`}>{language === 'ar' ? '\u0639\u0631\u0636 \u0627\u0644\u062a\u0641\u0627\u0635\u064a\u0644' : 'View Details'}</Link></div>
             </div>
           </div>
         </div>
@@ -207,13 +207,13 @@ function PlanInitiatives({ initiatives, objectives }) {
       <table className="tasks-table">
         <thead>
           <tr>
-            <th>Code</th>
-            <th>Name</th>
-            <th>Objective</th>
-            <th>Owner</th>
-            <th>Budget</th>
-            <th>Status</th>
-            <th>Progress</th>
+            <th>{language === 'ar' ? '\u0627\u0644\u0631\u0645\u0632' : 'Code'}</th>
+            <th>{language === 'ar' ? '\u0627\u0644\u0627\u0633\u0645' : 'Name'}</th>
+            <th>{language === 'ar' ? '\u0627\u0644\u0647\u062f\u0641' : 'Objective'}</th>
+            <th>{language === 'ar' ? '\u0627\u0644\u0645\u0627\u0644\u0643' : 'Owner'}</th>
+            <th>{language === 'ar' ? '\u0627\u0644\u0645\u064a\u0632\u0627\u0646\u064a\u0629' : 'Budget'}</th>
+            <th>{language === 'ar' ? '\u0627\u0644\u062d\u0627\u0644\u0629' : 'Status'}</th>
+            <th>{language === 'ar' ? '\u0627\u0644\u062a\u0642\u062f\u0645' : 'Progress'}</th>
           </tr>
         </thead>
         <tbody>
@@ -224,9 +224,9 @@ function PlanInitiatives({ initiatives, objectives }) {
                 <td>{init.code}</td>
                 <td><Link className="project-link" to={`/quality-projects/projects/${init.id}`}>{language === 'ar' ? init.nameAr : init.name}</Link></td>
                 <td>{language === 'ar' ? obj?.nameAr : obj?.name}</td>
-                <td>{init.owner}</td>
+                <td>{language === 'ar' ? init.ownerAr || init.owner : init.owner}</td>
                 <td>{init.budget}</td>
-                <td><span className="task-status-pill" data-status={init.status}>{init.status}</span></td>
+                <td><span className="task-status-pill" data-status={init.status}>{language === 'ar' ? init.statusAr || init.status : init.status}</span></td>
                 <td>{init.progress}%</td>
               </tr>
             );
@@ -252,15 +252,15 @@ function PlanKPIs({ objectives }) {
             </div>
             <div className="kpi-body">
               <div className="kpi-stat">
-                <label>Actual / Target</label>
+                <label>{language === 'ar' ? '\u0627\u0644\u0641\u0639\u0644\u064a / \u0627\u0644\u0645\u0633\u062a\u0647\u062f\u0641' : 'Actual / Target'}</label>
                 <strong>{kpi.actual}% / {kpi.target}%</strong>
               </div>
               <div className="kpi-progress">
                 <div className="progress-bar-fill" style={{ width: `${(kpi.actual / kpi.target) * 100}%` }}></div>
               </div>
               <div className="kpi-meta">
-                <span>Freq: {kpi.frequency}</span>
-                <span>Trend: <i className={`ti ti-trending-${kpi.trend.toLowerCase()}`} /> {kpi.trend}</span>
+                <span>{language === 'ar' ? '\u0627\u0644\u062a\u0643\u0631\u0627\u0631' : 'Freq'}: {language === 'ar' ? kpi.frequencyAr || kpi.frequency : kpi.frequency}</span>
+                <span>{language === 'ar' ? '\u0627\u0644\u0627\u062a\u062c\u0627\u0647' : 'Trend'}: <i className={`ti ti-trending-${kpi.trend.toLowerCase()}`} /> {language === 'ar' ? kpi.trendAr || kpi.trend : kpi.trend}</span>
               </div>
             </div>
           </div>

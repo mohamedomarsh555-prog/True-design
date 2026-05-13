@@ -160,7 +160,7 @@ export default function ProjectDetailsPage() {
           <div className="placeholder-content">
             <i className="ti ti-report-analytics" />
             <h2>{language === 'ar' ? 'تقارير المشروع' : 'Project Reports'}</h2>
-            <p>Reports are being generated for {project.name}</p>
+            <p>{language === 'ar' ? '\u064a\u062a\u0645 \u0625\u0646\u0634\u0627\u0621 \u062a\u0642\u0627\u0631\u064a\u0631 \u0647\u0630\u0627 \u0627\u0644\u0645\u0634\u0631\u0648\u0639' : `Reports are being generated for ${project.name}`}</p>
           </div>
         )}
       </div>
@@ -216,7 +216,7 @@ function TaskDetailsPanel({ task, onClose }) {
                 <span>{st.title}</span>
               </div>
             ))}
-            <button className="add-subtask">+ Add subtask</button>
+            <button className="add-subtask">+ {language === 'ar' ? '\u0625\u0636\u0627\u0641\u0629 \u0645\u0647\u0645\u0629 \u0641\u0631\u0639\u064a\u0629' : 'Add subtask'}</button>
           </div>
         </div>
 
@@ -229,7 +229,7 @@ function TaskDetailsPanel({ task, onClose }) {
                 <span>{at}</span>
               </div>
             ))}
-            <button className="upload-btn"><i className="ti ti-upload" /> Upload</button>
+            <button className="upload-btn"><i className="ti ti-upload" /> {language === 'ar' ? '\u0631\u0641\u0639' : 'Upload'}</button>
           </div>
         </div>
 
@@ -245,7 +245,7 @@ function TaskDetailsPanel({ task, onClose }) {
                 <p>{c.text}</p>
               </div>
             ))}
-            <textarea placeholder="Add a comment..." className="comment-input" />
+            <textarea placeholder={language === 'ar' ? '\u0623\u0636\u0641 \u062a\u0639\u0644\u064a\u0642\u0627\u064b...' : 'Add a comment...'} className="comment-input" />
           </div>
         </div>
       </div>
@@ -350,9 +350,9 @@ function ProjectTasks({ tasks, onTaskClick }) {
     <div className="tasks-view-container">
       <div className="view-header">
         <div className="view-switcher">
-          <button onClick={() => setView('kanban')} className={view === 'kanban' ? 'active' : ''}><i className="ti ti-layout-kanban" /> Kanban</button>
-          <button onClick={() => setView('list')} className={view === 'list' ? 'active' : ''}><i className="ti ti-list" /> List</button>
-          <button onClick={() => setView('calendar')} className={view === 'calendar' ? 'active' : ''}><i className="ti ti-calendar" /> Calendar</button>
+          <button onClick={() => setView('kanban')} className={view === 'kanban' ? 'active' : ''}><i className="ti ti-layout-kanban" /> {language === 'ar' ? '\u0643\u0627\u0646\u0628\u0627\u0646' : 'Kanban'}</button>
+          <button onClick={() => setView('list')} className={view === 'list' ? 'active' : ''}><i className="ti ti-list" /> {language === 'ar' ? '\u0642\u0627\u0626\u0645\u0629' : 'List'}</button>
+          <button onClick={() => setView('calendar')} className={view === 'calendar' ? 'active' : ''}><i className="ti ti-calendar" /> {language === 'ar' ? '\u062a\u0642\u0648\u064a\u0645' : 'Calendar'}</button>
         </div>
       </div>
       
@@ -361,7 +361,7 @@ function ProjectTasks({ tasks, onTaskClick }) {
           {['To Do', 'In Progress', 'Completed'].map(col => (
             <div key={col} className="kanban-col">
               <div className="col-header">
-                <h3>{col}</h3>
+                <h3>{language === 'ar' ? ({ 'To Do': '\u0644\u0644\u062a\u0646\u0641\u064a\u0630', 'In Progress': '\u0642\u064a\u062f \u0627\u0644\u062a\u0646\u0641\u064a\u0630', Completed: '\u0645\u0643\u062a\u0645\u0644\u0629' }[col]) : col}</h3>
                 <span>{tasks.filter(t => t.status === col).length}</span>
               </div>
               <div className="col-cards">
@@ -386,11 +386,11 @@ function ProjectTasks({ tasks, onTaskClick }) {
           <table className="tasks-table">
             <thead>
               <tr>
-                <th>Task Name</th>
-                <th>Assigned</th>
-                <th>Due Date</th>
-                <th>Priority</th>
-                <th>Status</th>
+                <th>{language === 'ar' ? '\u0627\u0633\u0645 \u0627\u0644\u0645\u0647\u0645\u0629' : 'Task Name'}</th>
+                <th>{language === 'ar' ? '\u0627\u0644\u0645\u0633\u0646\u062f \u0625\u0644\u064a\u0647' : 'Assigned'}</th>
+                <th>{language === 'ar' ? '\u062a\u0627\u0631\u064a\u062e \u0627\u0644\u0627\u0633\u062a\u062d\u0642\u0627\u0642' : 'Due Date'}</th>
+                <th>{language === 'ar' ? '\u0627\u0644\u0623\u0648\u0644\u0648\u064a\u0629' : 'Priority'}</th>
+                <th>{language === 'ar' ? '\u0627\u0644\u062d\u0627\u0644\u0629' : 'Status'}</th>
               </tr>
             </thead>
             <tbody>
@@ -408,7 +408,7 @@ function ProjectTasks({ tasks, onTaskClick }) {
         </div>
       )}
 
-      {view === 'calendar' && <div className="placeholder-calendar">Calendar View Placeholder</div>}
+      {view === 'calendar' && <div className="placeholder-calendar">{language === 'ar' ? '\u0639\u0631\u0636 \u0627\u0644\u062a\u0642\u0648\u064a\u0645 \u0642\u064a\u062f \u0627\u0644\u062a\u062c\u0647\u064a\u0632' : 'Calendar View Placeholder'}</div>}
     </div>
   );
 }
@@ -420,9 +420,9 @@ function ProjectGantt({ milestones, tasks }) {
       <div className="gantt-header">
         <div className="gantt-sidebar-head">{language === 'ar' ? 'المهام' : 'Tasks'}</div>
         <div className="gantt-timeline-head">
-          <div className="month">April 2026</div>
-          <div className="month">May 2026</div>
-          <div className="month">June 2026</div>
+          <div className="month">{language === 'ar' ? '\u0623\u0628\u0631\u064a\u0644 2026' : 'April 2026'}</div>
+          <div className="month">{language === 'ar' ? '\u0645\u0627\u064a\u0648 2026' : 'May 2026'}</div>
+          <div className="month">{language === 'ar' ? '\u064a\u0648\u0646\u064a\u0648 2026' : 'June 2026'}</div>
         </div>
       </div>
       <div className="gantt-body">
@@ -474,7 +474,7 @@ function ProjectTeam({ projectId }) {
               <td><span className="task-status-pill" data-status={m.status}>{m.status}</span></td>
             </tr>
           ))}
-          {team.length === 0 && <tr><td colSpan="3" style={{ textAlign: 'center', padding: '40px' }}>No team members assigned yet.</td></tr>}
+          {team.length === 0 && <tr><td colSpan="3" style={{ textAlign: 'center', padding: '40px' }}>{language === 'ar' ? '\u0644\u0645 \u064a\u062a\u0645 \u0625\u0633\u0646\u0627\u062f \u0623\u0639\u0636\u0627\u0621 \u0641\u0631\u064a\u0642 \u0628\u0639\u062f.' : 'No team members assigned yet.'}</td></tr>}
         </tbody>
       </table>
     </div>
@@ -504,7 +504,7 @@ function ProjectRisks({ projectId }) {
               <td>{r.treatment || r.treatmentPlan}</td>
             </tr>
           ))}
-          {projectRisks.length === 0 && <tr><td colSpan="4" style={{ textAlign: 'center', padding: '40px' }}>No risks identified yet.</td></tr>}
+          {projectRisks.length === 0 && <tr><td colSpan="4" style={{ textAlign: 'center', padding: '40px' }}>{language === 'ar' ? '\u0644\u0645 \u064a\u062a\u0645 \u062a\u062d\u062f\u064a\u062f \u0645\u062e\u0627\u0637\u0631 \u0628\u0639\u062f.' : 'No risks identified yet.'}</td></tr>}
         </tbody>
       </table>
     </div>
@@ -525,7 +525,7 @@ function ProjectFiles({ projectId }) {
             <div className="rc-footer">{f.date}</div>
           </div>
         ))}
-        {files.length === 0 && <div style={{ textAlign: 'center', padding: '40px', gridColumn: '1/-1' }}>No files uploaded yet.</div>}
+        {files.length === 0 && <div style={{ textAlign: 'center', padding: '40px', gridColumn: '1/-1' }}>{language === 'ar' ? '\u0644\u0645 \u064a\u062a\u0645 \u0631\u0641\u0639 \u0645\u0644\u0641\u0627\u062a \u0628\u0639\u062f.' : 'No files uploaded yet.'}</div>}
       </div>
     </div>
   );
