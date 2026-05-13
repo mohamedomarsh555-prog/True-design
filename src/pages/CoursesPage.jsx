@@ -1,13 +1,45 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Topbar from '../components/Topbar';
-import { courses } from '../data';
+import EntityListToolbar from '../components/EntityListToolbar';
+import { courses, courseReportTypes } from '../data';
 import { useI18n } from '../i18n';
+
+const normalize = (value) => String(value || '').toLowerCase().trim();
 
 export default function CoursesPage() {
   const navigate = useNavigate();
   const { t, text, statusFromClass } = useI18n();
   const [viewMode, setViewMode] = useState('list');
+  const [query, setQuery] = useState('');
+  const [sortBy, setSortBy] = useState('code');
+
+  const visibleCourses = useMemo(() => {
+    const search = normalize(query);
+    const filtered = courses.filter((course) => {
+      const haystack = [
+        course.code,
+        course.name,
+        course.nameAr,
+        course.semester,
+        course.semesterAr,
+      ].map(normalize).join(' ');
+
+      return !search || haystack.includes(search);
+    });
+
+    return [...filtered].sort((a, b) => {
+      if (sortBy === 'name') return text(a, 'name').localeCompare(text(b, 'name'));
+      if (sortBy === 'semester') return text(a, 'semester').localeCompare(text(b, 'semester'));
+      return a.code.localeCompare(b.code, undefined, { numeric: true });
+    });
+  }, [query, sortBy, text]);
+
+  const sortOptions = [
+    { value: 'code', label: t('sortByCode') },
+    { value: 'name', label: t('sortByName') },
+    { value: 'semester', label: t('sortBySemester') },
+  ];
 
   return (
     <>
@@ -23,8 +55,8 @@ export default function CoursesPage() {
           </div>
           <div className="hero-stats">
             <div className="stat-chip"><div className="num">{courses.length}</div><div className="lbl">{t('courses')}</div></div>
-            <div className="stat-chip"><div className="num">9</div><div className="lbl">{t('reports')}</div></div>
-            <div className="stat-chip"><div className="num">3</div><div className="lbl">{t('status.pending')}</div></div>
+            <div className="stat-chip"><div className="num">{courseReportTypes.length}</div><div className="lbl">{t('reports')}</div></div>
+            <div className="stat-chip"><div className="num">{visibleCourses.length}</div><div className="lbl">{t('shown')}</div></div>
           </div>
         </div>
 
@@ -55,8 +87,21 @@ export default function CoursesPage() {
           </div>
         </div>
 
+        <EntityListToolbar
+          query={query}
+          onQueryChange={setQuery}
+          sortBy={sortBy}
+          onSortByChange={setSortBy}
+          total={courses.length}
+          visible={visibleCourses.length}
+          entityLabel={t('courses')}
+          searchPlaceholder={t('searchCourses')}
+          sortOptions={sortOptions}
+          onReset={() => setQuery('')}
+        />
+
         <div className={`course-list-grid ${viewMode === 'list' ? 'as-list' : ''}`}>
-          {courses.map((course, index) => (
+          {visibleCourses.map((course, index) => (
             <button
               key={course.id}
               className="course-list-card"
@@ -80,6 +125,17 @@ export default function CoursesPage() {
             </button>
           ))}
         </div>
+
+        {!visibleCourses.length && (
+          <div className="list-empty-state">
+            <i className="ti ti-search-off" />
+            <strong>{t('noCoursesFound')}</strong>
+            <span>{t('adjustSearch')}</span>
+            <button type="button" className="act-btn primary" onClick={() => setQuery('')}>
+              {t('clearSearch')}
+            </button>
+          </div>
+        )}
       </div>
     </>
   );

@@ -12,7 +12,7 @@
 .login-background {
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, #004d26 0%, #002d44 100%);
+  background: linear-gradient(135deg, #004d26 0%, #043d2f 100%);
   z-index: -1;
 }
 

@@ -102,7 +102,7 @@
   width: 28px;
   height: 28px;
   border-radius: 50%;
-  background: #1e2d6b;
+  background: var(--dga-green, #006c35);
   color: #fff;
   display: flex;
   align-items: center;
@@ -198,7 +198,7 @@
 }
 
 .ms-dot[data-status="Completed"] { background: #10b981; }
-.ms-dot[data-status="In Progress"] { background: #3b82f6; }
+.ms-dot[data-status="In Progress"] { background: var(--dga-focus, #1b8354); }
 .ms-dot[data-status="Not Started"] { background: #cbd5e1; }
 
 .ms-info h4 {
@@ -258,7 +258,7 @@
   gap: 10px;
 }
 
-.ms-title i { color: #3b82f6; }
+.ms-title i { color: var(--dga-green, #006c35); }
 
 .ms-status-badge {
   font-size: 11px;
@@ -296,7 +296,7 @@
 }
 
 .task-status-pill[data-status="Completed"] { background: #dcfce7; color: #15803d; }
-.task-status-pill[data-status="In Progress"] { background: #dbeafe; color: #1e40af; }
+.task-status-pill[data-status="In Progress"] { background: var(--dga-info-soft, #eef8f2); color: var(--dga-green-800, #064e3b); }
 .task-status-pill[data-status="To Do"] { background: #f1f5f9; color: #475569; }
 
 /* ── Kanban Board ── */
@@ -440,11 +440,11 @@
   font-weight: 700;
 }
 
-.milestone-bar { background: #3b82f6; }
+.milestone-bar { background: var(--dga-focus, #1b8354); }
 .task-bar { background: #94a3b8; height: 12px; top: 16px; }
 
 .project-link {
-  color: #1e2d6b;
+  color: var(--dga-green-800, #064e3b);
   font-weight: 600;
   text-decoration: none;
 }
@@ -455,7 +455,7 @@
 
 /* ── Strategic Planning Extensions ── */
 .objective-code-badge {
-  background: #1e2d6b;
+  background: var(--dga-green, #006c35);
   color: #fff;
   font-size: 11px;
   font-weight: 700;

@@ -1,13 +1,44 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Topbar from '../components/Topbar';
-import { programs } from '../data';
+import EntityListToolbar from '../components/EntityListToolbar';
+import { programs, programReportTypes } from '../data';
 import { useI18n } from '../i18n';
+
+const normalize = (value) => String(value || '').toLowerCase().trim();
 
 export default function ProgramsPage() {
   const navigate = useNavigate();
   const { t, text, statusFromClass } = useI18n();
   const [viewMode, setViewMode] = useState('list');
+  const [query, setQuery] = useState('');
+  const [sortBy, setSortBy] = useState('code');
+
+  const visiblePrograms = useMemo(() => {
+    const search = normalize(query);
+    const filtered = programs.filter((program) => {
+      const haystack = [
+        program.code,
+        program.name,
+        program.nameAr,
+        program.year,
+      ].map(normalize).join(' ');
+
+      return !search || haystack.includes(search);
+    });
+
+    return [...filtered].sort((a, b) => {
+      if (sortBy === 'name') return text(a, 'name').localeCompare(text(b, 'name'));
+      if (sortBy === 'year') return a.year.localeCompare(b.year);
+      return a.code.localeCompare(b.code, undefined, { numeric: true });
+    });
+  }, [query, sortBy, text]);
+
+  const sortOptions = [
+    { value: 'code', label: t('sortByCode') },
+    { value: 'name', label: t('sortByName') },
+    { value: 'year', label: t('sortByYear') },
+  ];
 
   return (
     <>
@@ -23,8 +54,8 @@ export default function ProgramsPage() {
           </div>
           <div className="hero-stats">
             <div className="stat-chip"><div className="num">{programs.length}</div><div className="lbl">{t('programs')}</div></div>
-            <div className="stat-chip"><div className="num">9</div><div className="lbl">{t('reports')}</div></div>
-            <div className="stat-chip"><div className="num">3</div><div className="lbl">{t('status.pending')}</div></div>
+            <div className="stat-chip"><div className="num">{programReportTypes.length}</div><div className="lbl">{t('reports')}</div></div>
+            <div className="stat-chip"><div className="num">{visiblePrograms.length}</div><div className="lbl">{t('shown')}</div></div>
           </div>
         </div>
 
@@ -55,8 +86,21 @@ export default function ProgramsPage() {
           </div>
         </div>
 
+        <EntityListToolbar
+          query={query}
+          onQueryChange={setQuery}
+          sortBy={sortBy}
+          onSortByChange={setSortBy}
+          total={programs.length}
+          visible={visiblePrograms.length}
+          entityLabel={t('programs')}
+          searchPlaceholder={t('searchPrograms')}
+          sortOptions={sortOptions}
+          onReset={() => setQuery('')}
+        />
+
         <div className={`course-list-grid ${viewMode === 'list' ? 'as-list' : ''}`}>
-          {programs.map((program, index) => (
+          {visiblePrograms.map((program, index) => (
             <button
               key={program.id}
               className="course-list-card"
@@ -80,6 +124,17 @@ export default function ProgramsPage() {
             </button>
           ))}
         </div>
+
+        {!visiblePrograms.length && (
+          <div className="list-empty-state">
+            <i className="ti ti-search-off" />
+            <strong>{t('noProgramsFound')}</strong>
+            <span>{t('adjustSearch')}</span>
+            <button type="button" className="act-btn primary" onClick={() => setQuery('')}>
+              {t('clearSearch')}
+            </button>
+          </div>
+        )}
       </div>
     </>
   );

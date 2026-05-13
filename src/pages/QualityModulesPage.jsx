@@ -651,8 +651,10 @@ function ModuleTabs({ config, activePath, navigate }) {
       {config.tabs.map((tab) => (
         <button
           key={tab.path}
-          className={`dashboard-tab ${activePath === tab.path ? 'active' : ''}`}
+          className={`dashboard-tab quality-module-tab ${activePath === tab.path ? 'active' : ''}`}
           type="button"
+          role="tab"
+          aria-selected={activePath === tab.path}
           onClick={() => navigate(`${config.base}/${tab.path}`)}
         >
           <i className={`ti ${tab.icon}`} />

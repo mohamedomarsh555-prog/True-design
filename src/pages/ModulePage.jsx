@@ -22,7 +22,7 @@ export default function ModulePage({ titleKey, subtitleKey, icon, tone = 'course
         </div>
 
         <div className="history-card">
-          <div className="hist-icon hi-blue">
+          <div className="hist-icon hi-primary">
             <i className={`ti ${icon}`} />
           </div>
           <div className="hist-info">

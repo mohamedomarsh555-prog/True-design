@@ -97,7 +97,7 @@ export default function Sidebar() {
       <div className="mobile-brand" onClick={() => goTo('/')}>
         <div className="logo-icon">
           <svg width="20" height="20" viewBox="0 0 20 20">
-            <polyline points="3,10 8,15 17,5" fill="none" stroke="#1e2d6b" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+            <polyline points="3,10 8,15 17,5" fill="none" stroke="#006c35" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </div>
         <span className="logo-text">CPTIT TRUE</span>
@@ -119,7 +119,7 @@ export default function Sidebar() {
       <div className="sidebar-logo" style={{ cursor: 'pointer' }} onClick={() => goTo('/')}>
         <div className="logo-icon">
           <svg width="20" height="20" viewBox="0 0 20 20">
-            <polyline points="3,10 8,15 17,5" fill="none" stroke="#1e2d6b" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+            <polyline points="3,10 8,15 17,5" fill="none" stroke="#006c35" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </div>
         <span className="logo-text">CPTIT TRUE</span>

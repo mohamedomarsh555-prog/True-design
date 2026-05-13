@@ -351,7 +351,7 @@ export default function Dashboard() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             {quickActions.map((item, i) => (
               <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '12px 0', borderBottom: i < 2 ? '1px solid #f3f4f6' : 'none' }}>
-                <div className="hist-icon hi-blue" style={{ flexShrink: 0 }}>
+                <div className="hist-icon hi-primary" style={{ flexShrink: 0 }}>
                   <i className={`ti ${item.icon}`} />
                 </div>
                 <div style={{ flex: 1 }}>

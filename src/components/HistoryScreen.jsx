@@ -7,10 +7,10 @@ export default function HistoryScreen({ entityCode, reportId, reportTitle, type,
   const { t, statusFromClass } = useI18n();
   const isProgram = type === 'program';
   const newCardClass = isProgram ? 'new-program' : 'new-course';
-  const newIconClass = isProgram ? 'hi-amber-new' : 'hi-blue-new';
+  const newIconClass = isProgram ? 'hi-amber-new' : 'hi-primary-new';
   const addBtnClass = isProgram ? 'add-program' : 'add-course';
   const newPillClass = isProgram ? 's-new-amber' : 's-new';
-  const histIconClass = isProgram ? 'hi-amber' : 'hi-blue';
+  const histIconClass = isProgram ? 'hi-amber' : 'hi-primary';
   const histIcon = isProgram ? 'ti-file-certificate' : 'ti-file-description';
 
   return (
