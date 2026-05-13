@@ -81,6 +81,7 @@ export default function CoursePage() {
         ) : (
           <HistoryScreen
             entityCode={course.code}
+            entityId={course.id}
             reportId={activeReport.id}
             reportTitle={text(activeReport, 'title')}
             type="course"

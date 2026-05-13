@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { historyItems } from '../data';
 import { useI18n } from '../i18n';
 
-export default function HistoryScreen({ entityCode, reportId, reportTitle, type, onBack }) {
+export default function HistoryScreen({ entityCode, entityId, reportId, reportTitle, type, onBack }) {
   const navigate = useNavigate();
   const { t, statusFromClass } = useI18n();
   const isProgram = type === 'program';
@@ -68,7 +68,14 @@ export default function HistoryScreen({ entityCode, reportId, reportTitle, type,
             <div className="hist-meta">
               <span className={`status-pill ${item.status}`}>{statusFromClass(item.status, item.statusLabel)}</span>
               <div className="hist-actions">
-                <button className={`act-btn ${item.status === 's-pending' ? 'primary' : ''}`}>
+                <button
+                  className={`act-btn ${item.status === 's-pending' ? 'primary' : ''}`}
+                  onClick={() => {
+                    if (!isProgram && reportId === 'course-specification' && entityId) {
+                      navigate(`/courses/${entityId}/reports/course-specification/view`);
+                    }
+                  }}
+                >
                   <i className="ti ti-eye" /> {t('view')}
                 </button>
               </div>

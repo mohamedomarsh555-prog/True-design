@@ -70,7 +70,13 @@ export default function AllCoursesReportPage() {
                   <div className="hist-actions">
                     <button
                       className={`act-btn ${isPending ? 'primary' : ''}`}
-                      onClick={() => navigate(`/courses/${course.id}/reports/${report.id}`)}
+                      onClick={() => {
+                        if (report.id === 'course-specification') {
+                          navigate(`/courses/${course.id}/reports/course-specification/view`);
+                          return;
+                        }
+                        navigate(`/courses/${course.id}/reports/${report.id}`);
+                      }}
                     >
                       <i className="ti ti-eye" /> {t('view')}
                     </button>
