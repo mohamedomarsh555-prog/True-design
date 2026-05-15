@@ -1,0 +1,916 @@
+/* Stable hierarchy layer loaded after the base app styles. */
+.page-content.hierarchy-page {
+  width: 100%;
+  padding-top: 30px;
+}
+
+.page-content.hierarchy-page .hierarchy-layout {
+  display: grid;
+  grid-template-columns: 320px minmax(0, 1fr);
+  gap: 22px;
+  align-items: start;
+  width: 100%;
+}
+
+html[dir="rtl"] .page-content.hierarchy-page .hierarchy-layout {
+  direction: rtl;
+}
+
+.page-content.hierarchy-page .hierarchy-main {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.page-content.hierarchy-page .academic-tree-panel {
+  position: sticky;
+  top: 96px;
+  max-height: calc(100vh - 122px);
+  overflow: auto;
+  padding: 14px;
+  border: 1px solid rgba(210, 214, 219, 0.86);
+  border-radius: 8px;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fbf9 100%);
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.06);
+}
+
+.page-content.hierarchy-page .tree-search {
+  height: 44px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 12px;
+  padding: 0 12px;
+  border: 1px solid var(--dga-neutral-200);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--dga-neutral-500);
+}
+
+.page-content.hierarchy-page .tree-search input {
+  width: 100%;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--dga-neutral-900);
+  font: inherit;
+  font-size: 13px;
+}
+
+.page-content.hierarchy-page .tree-list {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.page-content.hierarchy-page .tree-node {
+  width: 100%;
+  min-height: 38px;
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 9px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--dga-neutral-700);
+  font: inherit;
+  font-size: 13px;
+  text-align: start;
+}
+
+.page-content.hierarchy-page .tree-node button {
+  width: 24px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 6px;
+  background: rgba(0, 108, 53, 0.08);
+  color: var(--dga-green);
+  cursor: pointer;
+}
+
+.page-content.hierarchy-page .tree-node span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.page-content.hierarchy-page .tree-node em {
+  padding: 2px 6px;
+  border-radius: 999px;
+  background: #edf7f1;
+  color: var(--dga-green-800);
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 800;
+}
+
+.page-content.hierarchy-page .tree-node.university {
+  margin-bottom: 8px;
+  border-color: rgba(0, 108, 53, 0.18);
+  background: #f2faf5;
+  cursor: pointer;
+}
+
+.page-content.hierarchy-page .tree-node.department {
+  margin-inline-start: 18px;
+}
+
+.page-content.hierarchy-page .tree-node.program {
+  margin-inline-start: 42px;
+  cursor: pointer;
+}
+
+.page-content.hierarchy-page .tree-node.active,
+.page-content.hierarchy-page .tree-node:hover {
+  border-color: rgba(0, 108, 53, 0.2);
+  background: linear-gradient(90deg, rgba(0, 108, 53, 0.13), rgba(255, 255, 255, 0.82));
+  color: var(--dga-green-900);
+}
+
+.page-content.hierarchy-page .hier-hero,
+.page-content.hierarchy-page .detail-header,
+.home-hierarchy-section,
+.page-content.hierarchy-page .hier-panel {
+  border: 1px solid rgba(210, 214, 219, 0.78);
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.06);
+}
+
+.page-content.hierarchy-page .hier-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 420px;
+  gap: 24px;
+  align-items: center;
+  padding: 24px;
+  overflow: hidden;
+  background: linear-gradient(120deg, rgba(0, 108, 53, 0.08), rgba(255, 255, 255, 0.94) 42%), #fff;
+}
+
+.page-content.hierarchy-page .hier-hero.compact {
+  grid-template-columns: 1fr;
+}
+
+.page-content.hierarchy-page .hier-hero span,
+.home-hierarchy-head span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  color: var(--dga-green-800);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.page-content.hierarchy-page .hier-hero h1,
+.page-content.hierarchy-page .detail-header h1,
+.home-hierarchy-head h2 {
+  margin: 0;
+  color: #0f172a;
+  font-size: clamp(26px, 2.4vw, 36px);
+  line-height: 1.15;
+  letter-spacing: 0;
+}
+
+.page-content.hierarchy-page .hier-hero p,
+.page-content.hierarchy-page .detail-header p,
+.home-hierarchy-head p,
+.page-content.hierarchy-page .hier-panel-head p {
+  margin-top: 8px;
+  color: var(--dga-neutral-500);
+  line-height: 1.55;
+}
+
+.page-content.hierarchy-page .hier-metric-grid,
+.home-hierarchy-section .hier-metric-grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.page-content.hierarchy-page .hier-metric,
+.home-hierarchy-section .hier-metric {
+  min-height: 108px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px;
+  border: 1px solid rgba(210, 214, 219, 0.78);
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.045);
+}
+
+.page-content.hierarchy-page .hier-metric i,
+.home-hierarchy-section .hier-metric i {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  background: #e9f6ee;
+  color: var(--dga-green);
+  font-size: 19px;
+}
+
+.page-content.hierarchy-page .hier-metric strong,
+.home-hierarchy-section .hier-metric strong {
+  color: #0f172a;
+  font-size: 26px;
+  line-height: 1;
+}
+
+.page-content.hierarchy-page .hier-metric span,
+.home-hierarchy-section .hier-metric span {
+  color: var(--dga-neutral-500);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.page-content.hierarchy-page .hier-panel-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--dga-neutral-200);
+}
+
+.page-content.hierarchy-page .hier-panel-head h2 {
+  margin: 0;
+  color: #0f172a;
+  font-size: 20px;
+}
+
+.page-content.hierarchy-page .hier-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.page-content.hierarchy-page .hier-filters label {
+  min-width: 260px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 12px;
+  border: 1px solid var(--dga-neutral-200);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--dga-neutral-500);
+}
+
+.page-content.hierarchy-page .hier-filters input,
+.page-content.hierarchy-page .hier-filters select {
+  height: 42px;
+  border: 1px solid var(--dga-neutral-200);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--dga-neutral-900);
+  font: inherit;
+  font-size: 13px;
+  outline: 0;
+}
+
+.page-content.hierarchy-page .hier-filters label input {
+  width: 100%;
+  height: auto;
+  border: 0;
+  background: transparent;
+}
+
+.page-content.hierarchy-page .hier-filters select {
+  min-width: 190px;
+  padding: 0 12px;
+}
+
+.hier-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: max-content;
+  min-height: 28px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.tone-green { background: #dff5e8; color: #006c35; }
+.tone-yellow { background: #fff3cd; color: #9a6200; }
+.tone-orange { background: #fff0df; color: #a44b00; }
+.tone-red { background: #fde7e7; color: #b42318; }
+.tone-neutral { background: #eef2f6; color: #475467; }
+
+.hier-progress {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.hier-progress > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  color: var(--dga-neutral-500);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.hier-progress strong {
+  color: var(--dga-green-800);
+}
+
+.hier-progress i {
+  height: 8px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #edf1f3;
+}
+
+.hier-progress b {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #006c35, #22a06b);
+}
+
+.progress-ring {
+  width: 92px;
+  height: 92px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: conic-gradient(#006c35 var(--value), #e8eef0 0deg);
+}
+
+.progress-ring > div {
+  width: 70px;
+  height: 70px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #fff;
+  text-align: center;
+}
+
+.progress-ring strong {
+  color: #0f172a;
+  font-size: 18px;
+  line-height: 1;
+}
+
+.progress-ring span {
+  color: var(--dga-neutral-500);
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.page-content.hierarchy-page .org-map,
+.home-hierarchy-section .org-map {
+  padding: 16px;
+  border: 1px solid rgba(0, 108, 53, 0.13);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.76);
+}
+
+.page-content.hierarchy-page .org-node,
+.home-hierarchy-section .org-node {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  min-height: 42px;
+  padding: 10px 12px;
+  border: 1px solid rgba(210, 214, 219, 0.86);
+  border-radius: 8px;
+  background: #fff;
+  color: #0f172a;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.page-content.hierarchy-page .org-node span,
+.page-content.hierarchy-page .org-node em,
+.home-hierarchy-section .org-node span,
+.home-hierarchy-section .org-node em {
+  color: var(--dga-green);
+  font-style: normal;
+  font-weight: 900;
+}
+
+.page-content.hierarchy-page .org-node.university,
+.home-hierarchy-section .org-node.university {
+  background: var(--dga-green);
+  color: #fff;
+}
+
+.page-content.hierarchy-page .org-node.university span,
+.home-hierarchy-section .org-node.university span {
+  color: #dff5e8;
+}
+
+.page-content.hierarchy-page .org-branches,
+.home-hierarchy-section .org-branches {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.page-content.hierarchy-page .org-children {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+  padding-inline-start: 10px;
+  border-inline-start: 2px solid #dcefe5;
+}
+
+.page-content.hierarchy-page .org-node.department {
+  min-height: 34px;
+  font-size: 12px;
+}
+
+.page-content.hierarchy-page .college-card-grid,
+.page-content.hierarchy-page .program-h-grid,
+.page-content.hierarchy-page .department-grid,
+.page-content.hierarchy-page .standards-grid,
+.page-content.hierarchy-page .hier-report-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  padding: 20px;
+}
+
+.page-content.hierarchy-page .college-card,
+.page-content.hierarchy-page .program-h-card,
+.page-content.hierarchy-page .department-card,
+.page-content.hierarchy-page .standard-card,
+.page-content.hierarchy-page .hier-report-card {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 16px;
+  border: 1px solid rgba(210, 214, 219, 0.86);
+  border-radius: 8px;
+  background: linear-gradient(180deg, #fff 0%, #fbfcfd 100%);
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.035);
+}
+
+.page-content.hierarchy-page .college-card-head,
+.page-content.hierarchy-page .program-h-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.page-content.hierarchy-page .college-card-head {
+  justify-content: flex-start;
+}
+
+.page-content.hierarchy-page .college-icon {
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  border-radius: 8px;
+  background: #e9f6ee;
+  color: var(--dga-green);
+  font-size: 22px;
+}
+
+.page-content.hierarchy-page .college-card span,
+.page-content.hierarchy-page .program-h-card span,
+.page-content.hierarchy-page .department-card span,
+.page-content.hierarchy-page .standard-card span,
+.page-content.hierarchy-page .hier-report-card span {
+  color: var(--dga-neutral-500);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.page-content.hierarchy-page .college-card h3,
+.page-content.hierarchy-page .program-h-card h3,
+.page-content.hierarchy-page .department-card h3,
+.page-content.hierarchy-page .standard-card h3,
+.page-content.hierarchy-page .hier-report-card h3 {
+  margin: 4px 0;
+  color: #0f172a;
+  font-size: 18px;
+  line-height: 1.25;
+}
+
+.page-content.hierarchy-page .college-card p,
+.page-content.hierarchy-page .program-h-card p,
+.page-content.hierarchy-page .department-card p,
+.page-content.hierarchy-page .hier-report-card p {
+  color: var(--dga-neutral-500);
+  font-size: 13px;
+}
+
+.page-content.hierarchy-page .college-stats,
+.page-content.hierarchy-page .program-h-stats,
+.page-content.hierarchy-page .department-meta {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.page-content.hierarchy-page .program-h-stats {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.page-content.hierarchy-page .department-meta {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.page-content.hierarchy-page .college-stats div,
+.page-content.hierarchy-page .program-h-stats div,
+.page-content.hierarchy-page .department-meta span {
+  padding: 10px;
+  border-radius: 8px;
+  background: #f6f8f9;
+}
+
+.page-content.hierarchy-page .college-stats strong,
+.page-content.hierarchy-page .program-h-stats strong {
+  display: block;
+  color: #0f172a;
+  font-size: 18px;
+}
+
+.page-content.hierarchy-page .college-card-foot,
+.page-content.hierarchy-page .report-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding-top: 4px;
+}
+
+.page-content.hierarchy-page .college-card-foot button,
+.page-content.hierarchy-page .hier-open-btn,
+.page-content.hierarchy-page .department-card button,
+.page-content.hierarchy-page .standard-card button,
+.page-content.hierarchy-page .report-actions button {
+  min-height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 0 12px;
+  border: 1px solid rgba(0, 108, 53, 0.18);
+  border-radius: 8px;
+  background: #f2faf5;
+  color: var(--dga-green-800);
+  cursor: pointer;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.page-content.hierarchy-page .detail-header {
+  position: sticky;
+  top: 84px;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 18px 20px;
+}
+
+.page-content.hierarchy-page .detail-header-side {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.page-content.hierarchy-page .academic-breadcrumbs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 8px;
+  color: var(--dga-neutral-500);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.page-content.hierarchy-page .academic-breadcrumbs span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.page-content.hierarchy-page .nested-tabs {
+  position: sticky;
+  top: 196px;
+  z-index: 3;
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--dga-neutral-200);
+  background: rgba(255, 255, 255, 0.94);
+}
+
+.page-content.hierarchy-page .nested-tabs button {
+  flex: 0 0 auto;
+  min-height: 38px;
+  padding: 0 12px;
+  border: 1px solid var(--dga-neutral-200);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--dga-neutral-700);
+  cursor: pointer;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.page-content.hierarchy-page .nested-tabs button.active {
+  border-color: var(--dga-green);
+  background: var(--dga-green);
+  color: #fff;
+}
+
+.page-content.hierarchy-page .overview-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 360px;
+  gap: 16px;
+  padding: 20px;
+}
+
+.page-content.hierarchy-page .overview-main-panel,
+.page-content.hierarchy-page .status-visual-panel {
+  padding: 18px;
+  border: 1px solid var(--dga-neutral-200);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.page-content.hierarchy-page .status-visual-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+  justify-content: center;
+}
+
+.page-content.hierarchy-page .overview-main-panel p {
+  color: var(--dga-neutral-500);
+  line-height: 1.6;
+}
+
+.page-content.hierarchy-page .drill-card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.page-content.hierarchy-page .drill-card {
+  min-height: 96px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 6px;
+  padding: 14px;
+  border: 1px solid rgba(0, 108, 53, 0.14);
+  border-radius: 8px;
+  background: #f7fbf8;
+  color: #0f172a;
+  cursor: pointer;
+  font: inherit;
+  text-align: start;
+}
+
+.page-content.hierarchy-page .drill-card strong {
+  color: var(--dga-green);
+  font-size: 24px;
+}
+
+.page-content.hierarchy-page .drill-card em {
+  color: var(--dga-neutral-500);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 800;
+}
+
+.page-content.hierarchy-page .hier-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px;
+}
+
+.page-content.hierarchy-page .hier-list-row {
+  min-height: 66px;
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid var(--dga-neutral-200);
+  border-radius: 8px;
+  background: #fff;
+  cursor: pointer;
+  font: inherit;
+  text-align: start;
+}
+
+.page-content.hierarchy-page .hier-list-row > i {
+  color: var(--dga-green);
+}
+
+.page-content.hierarchy-page .hier-list-row strong {
+  display: block;
+  color: #0f172a;
+}
+
+.page-content.hierarchy-page .hier-list-row span {
+  color: var(--dga-neutral-500);
+  font-size: 12px;
+}
+
+.page-content.hierarchy-page .hier-table {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px;
+}
+
+.page-content.hierarchy-page .hier-table-row {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr 1.4fr;
+  align-items: center;
+  gap: 16px;
+  padding: 14px;
+  border: 1px solid var(--dga-neutral-200);
+  border-radius: 8px;
+}
+
+.page-content.hierarchy-page .hier-table-row span {
+  color: var(--dga-neutral-500);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.floating-details-panel {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 60;
+  width: min(420px, calc(100vw - 48px));
+  border: 1px solid rgba(210, 214, 219, 0.9);
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 24px 70px rgba(15, 23, 42, 0.22);
+}
+
+html[dir="rtl"] .floating-details-panel {
+  right: auto;
+  left: 24px;
+}
+
+.floating-panel-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px;
+  border-bottom: 1px solid var(--dga-neutral-200);
+}
+
+.floating-panel-head span {
+  color: var(--dga-green);
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.floating-panel-head h3 {
+  margin-top: 4px;
+  font-size: 18px;
+}
+
+.floating-panel-head button {
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--dga-neutral-200);
+  border-radius: 8px;
+  background: #fff;
+  cursor: pointer;
+}
+
+.floating-panel-body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  color: var(--dga-neutral-500);
+  line-height: 1.6;
+}
+
+.home-hierarchy-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 22px 0;
+  padding: 20px;
+}
+
+.home-hierarchy-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.empty-state.compact {
+  padding: 22px;
+  border: 1px dashed var(--dga-neutral-300);
+  border-radius: 8px;
+  background: #fbfcfd;
+  color: var(--dga-neutral-500);
+  text-align: center;
+}
+
+@media (max-width: 1300px) {
+  .page-content.hierarchy-page .hierarchy-layout {
+    grid-template-columns: 280px minmax(0, 1fr);
+  }
+
+  .page-content.hierarchy-page .hier-metric-grid,
+  .home-hierarchy-section .hier-metric-grid,
+  .page-content.hierarchy-page .college-card-grid,
+  .page-content.hierarchy-page .program-h-grid,
+  .page-content.hierarchy-page .department-grid,
+  .page-content.hierarchy-page .standards-grid,
+  .page-content.hierarchy-page .hier-report-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .page-content.hierarchy-page .hier-hero {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 980px) {
+  .page-content.hierarchy-page .hierarchy-layout,
+  .page-content.hierarchy-page .overview-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .page-content.hierarchy-page .academic-tree-panel,
+  .page-content.hierarchy-page .detail-header,
+  .page-content.hierarchy-page .nested-tabs {
+    position: relative;
+    top: auto;
+  }
+
+  .page-content.hierarchy-page .academic-tree-panel {
+    max-height: none;
+  }
+
+  .page-content.hierarchy-page .hier-metric-grid,
+  .home-hierarchy-section .hier-metric-grid,
+  .page-content.hierarchy-page .college-card-grid,
+  .page-content.hierarchy-page .program-h-grid,
+  .page-content.hierarchy-page .department-grid,
+  .page-content.hierarchy-page .standards-grid,
+  .page-content.hierarchy-page .hier-report-grid,
+  .page-content.hierarchy-page .drill-card-grid,
+  .page-content.hierarchy-page .org-branches,
+  .home-hierarchy-section .org-branches {
+    grid-template-columns: 1fr;
+  }
+
+  .page-content.hierarchy-page .hier-panel-head,
+  .home-hierarchy-head,
+  .page-content.hierarchy-page .detail-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .page-content.hierarchy-page .hier-filters,
+  .page-content.hierarchy-page .hier-filters label,
+  .page-content.hierarchy-page .hier-filters select {
+    width: 100%;
+  }
+}

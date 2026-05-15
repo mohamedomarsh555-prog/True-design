@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { courseReportTypes } from '../data';
 import { useI18n } from '../i18n';
 
 const navItems = [
   { base: '/', path: '/', icon: 'ti-layout-dashboard', label: 'Dashboard', labelAr: 'لوحة التحكم', exact: true },
-  { base: '/courses', path: '/courses', icon: 'ti-book-2', label: 'Courses', labelAr: 'المقررات' },
   { base: '/colleges', path: '/colleges', icon: 'ti-building-community', label: 'Colleges', labelAr: 'الكليات' },
   { base: '/programs', path: '/programs', icon: 'ti-award', label: 'Programs', labelAr: 'البرامج' },
   { base: '/accreditation', path: '/accreditation/dashboard', icon: 'ti-certificate', label: 'Academic Accreditation', labelAr: 'الاعتماد الأكاديمي' },
@@ -18,13 +18,38 @@ const navItems = [
 export default function Sidebar() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { language } = useI18n();
+  const { language, t, text } = useI18n();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [coursesOpen, setCoursesOpen] = useState(() => location.pathname.startsWith('/courses'));
 
   const goTo = (path) => {
     navigate(path);
     setMobileOpen(false);
   };
+
+  const goToCourseArea = () => {
+    setCoursesOpen((value) => !value);
+    navigate('/courses');
+    setMobileOpen(false);
+  };
+
+  const courseSubItems = [
+    {
+      id: 'course-list',
+      path: '/courses',
+      icon: 'ti-list-details',
+      label: t('courseList'),
+    },
+    ...courseReportTypes.map((report) => ({
+      id: report.id,
+      path: `/courses/reports/${report.id}`,
+      icon: report.icon,
+      label: text(report, 'title'),
+    })),
+  ];
+
+  const isCoursesActive = location.pathname.startsWith('/courses');
+  const isCoursesOpen = coursesOpen || isCoursesActive;
 
   return (
     <>
@@ -72,6 +97,35 @@ export default function Sidebar() {
         </div>
 
         <div className="nav-section">
+          <button
+            className={`nav-item ${isCoursesActive ? 'active' : ''}`}
+            type="button"
+            onClick={goToCourseArea}
+          >
+            <i className="ti ti-book-2" />
+            {t('courses')}
+            <i className={`ti ti-chevron-down nav-chevron ${isCoursesOpen ? 'open' : ''}`} />
+          </button>
+          <div className={`sub-list ${isCoursesOpen ? 'open' : ''}`}>
+            {courseSubItems.map((item) => {
+              const active = item.path === '/courses'
+                ? location.pathname === '/courses'
+                : location.pathname === item.path;
+              return (
+                <button
+                  key={item.id}
+                  className={`sub-item ${active ? 'active' : ''}`}
+                  type="button"
+                  onClick={() => goTo(item.path)}
+                >
+                  <span className="ci-dot course-dot" />
+                  <i className={`ti ${item.icon}`} />
+                  <span>{item.label}</span>
+                </button>
+              );
+            })}
+          </div>
+
           {navItems.map((item) => {
             const active = item.exact ? location.pathname === item.base : location.pathname.startsWith(item.base);
             return (
