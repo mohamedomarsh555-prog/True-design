@@ -5988,3 +5988,143 @@ html[dir="rtl"] .floating-details-panel {
     width: 100%;
   }
 }
+
+/* Strategic Planning layout polish */
+.main-content .sp-shell {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: hidden;
+  padding-inline: clamp(18px, 2.2vw, 28px);
+}
+
+.main-content .sp-hero {
+  width: 100%;
+  min-width: 0;
+  align-items: center;
+  overflow: hidden;
+  background:
+    linear-gradient(135deg, rgba(0, 108, 53, 0.09), rgba(255, 255, 255, 0.72) 58%),
+    #f7fbf8;
+  box-shadow: 0 14px 34px rgba(15, 23, 42, 0.055);
+}
+
+.main-content .sp-hero > div:first-child {
+  min-width: 0;
+}
+
+.main-content .sp-hero h1 {
+  font-size: clamp(26px, 2.4vw, 38px);
+  letter-spacing: 0;
+}
+
+.main-content .sp-hero p {
+  max-width: 980px;
+}
+
+.main-content .sp-hero-actions {
+  flex: 0 0 auto;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+html[dir="rtl"] .main-content .sp-hero {
+  text-align: right;
+}
+
+html[dir="rtl"] .main-content .sp-hero-actions {
+  justify-content: flex-start;
+}
+
+.main-content .sp-tabs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 10px;
+  overflow: visible;
+  padding: 0;
+}
+
+.main-content .sp-tabs button {
+  width: 100%;
+  min-width: 0;
+  min-height: 48px;
+  justify-content: center;
+  border-radius: 8px;
+  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.035);
+}
+
+.main-content .sp-tabs button i {
+  flex: 0 0 auto;
+}
+
+.main-content .sp-news-ticker {
+  width: 100%;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.main-content .sp-news-ticker marquee {
+  min-width: 0;
+  white-space: nowrap;
+}
+
+.main-content .sp-metric-grid {
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+}
+
+.main-content .sp-metric {
+  min-width: 0;
+  min-height: 126px;
+}
+
+.main-content .sp-two-col,
+.main-content .sp-three-col,
+.main-content .sp-card-grid,
+.main-content .sp-pestel-grid,
+.main-content .sp-method-grid,
+.main-content .sp-swot-grid {
+  min-width: 0;
+}
+
+.main-content .sp-panel {
+  min-width: 0;
+  overflow: hidden;
+}
+
+.main-content .sp-panel-head {
+  flex-wrap: wrap;
+}
+
+.main-content .sp-risk-matrix {
+  grid-template-columns: repeat(5, minmax(64px, 1fr));
+}
+
+.main-content .sp-table-shell,
+.main-content .sp-gantt,
+.main-content .sp-matrix {
+  max-width: 100%;
+}
+
+@media (max-width: 1280px) {
+  .main-content .sp-hero {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .main-content .sp-hero-actions,
+  html[dir="rtl"] .main-content .sp-hero-actions {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 760px) {
+  .main-content .sp-tabs {
+    grid-template-columns: 1fr;
+  }
+
+  .main-content .sp-hero-actions .btn-primary,
+  .main-content .sp-hero-actions .btn-outline {
+    width: 100%;
+    justify-content: center;
+  }
+}
