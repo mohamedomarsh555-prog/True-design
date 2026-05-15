@@ -12,9 +12,11 @@ import AllProgramsReportPage from './pages/AllProgramsReportPage';
 import ModulePage from './pages/ModulePage';
 import InstitutionalAccreditationPage from './pages/InstitutionalAccreditationPage';
 import QualityModulesPage from './pages/QualityModulesPage';
+import StrategicPlanningModulePage from './pages/StrategicPlanningModulePage';
 import ProjectDetailsPage from './pages/ProjectManagement/ProjectDetailsPage';
 import StrategicPlanDetailsPage from './pages/ProjectManagement/StrategicPlanDetailsPage';
 import StrategicObjectiveDetailsPage from './pages/ProjectManagement/StrategicObjectiveDetailsPage';
+import StrategicProjectDetailsPage from './pages/ProjectManagement/StrategicProjectDetailsPage';
 import LoginPage from './pages/LoginPage';
 import { useI18n } from './i18n';
 import './login.css';
@@ -68,10 +70,12 @@ export default function App() {
             />
             <Route path="/accreditation" element={<QualityModulesPage moduleType="accreditation" />} />
             <Route path="/accreditation/:section" element={<QualityModulesPage moduleType="accreditation" />} />
-            <Route path="/strategic-planning" element={<QualityModulesPage moduleType="strategic" />} />
-            <Route path="/strategic-planning/:section" element={<QualityModulesPage moduleType="strategic" />} />
+            <Route path="/strategic-planning" element={<StrategicPlanningModulePage />} />
+            <Route path="/strategic-planning/:section" element={<StrategicPlanningModulePage />} />
             <Route path="/strategic-planning/plans/:planId" element={<StrategicPlanDetailsPage />} />
             <Route path="/strategic-planning/plans/:planId/:tab" element={<StrategicPlanDetailsPage />} />
+            <Route path="/strategic-planning/projects/:projectId" element={<StrategicProjectDetailsPage />} />
+            <Route path="/strategic-planning/projects/:projectId/:tab" element={<StrategicProjectDetailsPage />} />
             <Route path="/strategic-planning/objectives/:objectiveId" element={<StrategicObjectiveDetailsPage />} />
             <Route path="/strategic-planning/objectives/:objectiveId/:tab" element={<StrategicObjectiveDetailsPage />} />
             <Route path="/quality-projects" element={<QualityModulesPage moduleType="quality" />} />

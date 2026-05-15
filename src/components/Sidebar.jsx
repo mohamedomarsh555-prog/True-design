@@ -7,74 +7,28 @@ export default function Sidebar() {
   const location = useLocation();
   const { language, t } = useI18n();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [coursesOpen, setCoursesOpen] = useState(true);
-  const [programsOpen, setProgramsOpen] = useState(true);
-  const [accreditationOpen, setAccreditationOpen] = useState(true);
-  const [strategicOpen, setStrategicOpen] = useState(false);
-  const [qualityProjectsOpen, setQualityProjectsOpen] = useState(false);
 
-  const isCoursesListActive = location.pathname === '/courses';
-  const isProgramsListActive = location.pathname === '/programs';
   const qualityNav = [
     {
       base: '/accreditation',
+      path: '/accreditation/dashboard',
       icon: 'ti-certificate',
       label: 'Academic Accreditation',
       labelAr: 'إدارة الاعتماد الأكاديمي',
-      open: accreditationOpen,
-      setOpen: setAccreditationOpen,
-      items: [
-        ['Dashboard', 'لوحة التحكم', '/accreditation/dashboard'],
-        ['Master Data', 'البيانات الأساسية', '/accreditation/master-data'],
-        ['Academic Programs', 'البرامج الأكاديمية', '/accreditation/programs'],
-        ['Accreditation Projects', 'مشاريع الاعتماد', '/accreditation/projects'],
-        ['Requirements', 'متطلبات الاعتماد', '/accreditation/requirements'],
-        ['Self Study & Gaps', 'الدراسة الذاتية والثغرات', '/accreditation/self-study'],
-        ['Evidence Repository', 'مستودع الشواهد', '/accreditation/evidence'],
-        ['Reviews & Visits', 'المراجعات والزيارات', '/accreditation/reviews'],
-        ['Submission & Decision', 'الرفع والقرار', '/accreditation/submission'],
-        ['Action Log', 'سجل الإجراءات', '/accreditation/actions'],
-        ['Post Accreditation', 'ما بعد الاعتماد', '/accreditation/post-accreditation'],
-        ['Governance', 'الحوكمة والصلاحيات', '/accreditation/governance'],
-      ],
     },
     {
       base: '/strategic-planning',
+      path: '/strategic-planning/dashboard',
       icon: 'ti-chart-arrows-vertical',
       label: 'Strategic Planning',
       labelAr: 'التخطيط الاستراتيجي',
-      open: strategicOpen,
-      setOpen: setStrategicOpen,
-      items: [
-        ['Dashboard', 'لوحة التحكم', '/strategic-planning/dashboard'],
-        ['Strategic Projects', 'المشاريع الاستراتيجية', '/strategic-planning/projects'],
-        ['Objectives', 'الأهداف', '/strategic-planning/objectives'],
-        ['Reports', 'التقارير', '/strategic-planning/reports'],
-      ],
     },
     {
       base: '/quality-projects',
+      path: '/quality-projects/dashboard',
       icon: 'ti-rosette-discount-check',
       label: 'Quality Projects',
       labelAr: 'مشاريع الجودة',
-      open: qualityProjectsOpen,
-      setOpen: setQualityProjectsOpen,
-      items: [
-        ['Dashboard', 'لوحة التحكم', '/quality-projects/dashboard'],
-        ['Projects Management', 'إدارة المشاريع', '/quality-projects/projects-management'],
-        ['Milestones', 'المراحل', '/quality-projects/milestones'],
-        ['Tasks Management', 'إدارة المهام', '/quality-projects/tasks'],
-        ['Time Plan', 'الخطة الزمنية', '/quality-projects/time-plan'],
-        ['Teams & Resources', 'الموارد والفرق', '/quality-projects/teams'],
-        ['Risks & Issues', 'المخاطر والقضايا', '/quality-projects/risks'],
-        ['Notifications', 'التنبيهات والإشعارات', '/quality-projects/notifications'],
-        ['Collaboration', 'التعاون والتواصل', '/quality-projects/collaboration'],
-        ['Institutional', 'الاعتماد المؤسسي', '/quality-projects/institutional'],
-        ['Program Review', 'مراجعة البرامج', '/quality-projects/program-review'],
-        ['Learning Outcomes', 'مخرجات التعلم', '/quality-projects/learning-outcomes'],
-        ['Gap Analysis', 'تحليل الثغرات', '/quality-projects/gap-analysis'],
-        ['Reports', 'التقارير', '/quality-projects/reports'],
-      ],
     },
   ];
 
@@ -85,167 +39,116 @@ export default function Sidebar() {
 
   return (
     <>
-    <div className="mobile-shellbar">
-      <button
-        className="mobile-menu-btn"
-        type="button"
-        onClick={() => setMobileOpen(true)}
-        aria-label={language === 'ar' ? 'فتح القائمة' : 'Open menu'}
-      >
-        <i className="ti ti-menu-2" />
-      </button>
-      <div className="mobile-brand" onClick={() => goTo('/')}>
-        <div className="logo-icon">
-          <svg width="20" height="20" viewBox="0 0 20 20">
-            <polyline points="3,10 8,15 17,5" fill="none" stroke="#006c35" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </div>
-        <span className="logo-text">CPTIT TRUE</span>
-      </div>
-    </div>
-    {mobileOpen && <div className="sidebar-backdrop" onClick={() => setMobileOpen(false)} />}
-    <div className={`sidebar ${mobileOpen ? 'mobile-open' : ''}`}>
-      <div className="sidebar-mobile-head">
-        <span>{language === 'ar' ? 'القائمة' : 'Menu'}</span>
+      <div className="mobile-shellbar">
         <button
           className="mobile-menu-btn"
           type="button"
-          onClick={() => setMobileOpen(false)}
-          aria-label={language === 'ar' ? 'إغلاق القائمة' : 'Close menu'}
+          onClick={() => setMobileOpen(true)}
+          aria-label={language === 'ar' ? 'فتح القائمة' : 'Open menu'}
         >
-          <i className="ti ti-x" />
+          <i className="ti ti-menu-2" />
         </button>
-      </div>
-      <div className="sidebar-logo" style={{ cursor: 'pointer' }} onClick={() => goTo('/')}>
-        <div className="logo-icon">
-          <svg width="20" height="20" viewBox="0 0 20 20">
-            <polyline points="3,10 8,15 17,5" fill="none" stroke="#006c35" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </div>
-        <span className="logo-text">CPTIT TRUE</span>
-      </div>
-
-      <div className="nav-section">
-        <div
-          className={`nav-item ${location.pathname === '/' ? 'active' : ''}`}
-          onClick={() => goTo('/')}
-        >
-          <i className="ti ti-layout-dashboard" />
-          {t('dashboard')}
+        <div className="mobile-brand" onClick={() => goTo('/')}>
+          <div className="logo-icon">
+            <svg width="20" height="20" viewBox="0 0 20 20">
+              <polyline points="3,10 8,15 17,5" fill="none" stroke="#006c35" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </div>
+          <span className="logo-text">CPTIT TRUE</span>
         </div>
       </div>
 
-      <div className="nav-divider" />
-      <div className="nav-label">{t('academic')}</div>
+      {mobileOpen && <div className="sidebar-backdrop" onClick={() => setMobileOpen(false)} />}
 
-      <div
-        className={`nav-item ${location.pathname.startsWith('/courses') ? 'active' : ''}`}
-        onClick={() => {
-          setCoursesOpen(true);
-          goTo('/courses');
-        }}
-      >
-        <i className="ti ti-book" />
-        {t('courses')}
-        <i
-          className={`ti ti-chevron-down nav-chevron ${coursesOpen ? 'open' : ''}`}
-          onClick={(event) => {
-            event.stopPropagation();
-            setCoursesOpen(o => !o);
-          }}
-        />
-      </div>
-      <div className={`sub-list ${coursesOpen ? 'open' : ''}`}>
-        <div
-          className={`sub-item ${isCoursesListActive ? 'active' : ''}`}
+      <div className={`sidebar ${mobileOpen ? 'mobile-open' : ''}`}>
+        <div className="sidebar-mobile-head">
+          <span>{language === 'ar' ? 'القائمة' : 'Menu'}</span>
+          <button
+            className="mobile-menu-btn"
+            type="button"
+            onClick={() => setMobileOpen(false)}
+            aria-label={language === 'ar' ? 'إغلاق القائمة' : 'Close menu'}
+          >
+            <i className="ti ti-x" />
+          </button>
+        </div>
+
+        <div className="sidebar-logo" style={{ cursor: 'pointer' }} onClick={() => goTo('/')}>
+          <div className="logo-icon">
+            <svg width="20" height="20" viewBox="0 0 20 20">
+              <polyline points="3,10 8,15 17,5" fill="none" stroke="#006c35" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </div>
+          <span className="logo-text">CPTIT TRUE</span>
+        </div>
+
+        <div className="nav-section">
+          <button
+            className={`nav-item ${location.pathname === '/' ? 'active' : ''}`}
+            type="button"
+            onClick={() => goTo('/')}
+          >
+            <i className="ti ti-layout-dashboard" />
+            {t('dashboard')}
+          </button>
+        </div>
+
+        <div className="nav-divider" />
+        <div className="nav-label">{t('academic')}</div>
+
+        <button
+          className={`nav-item ${location.pathname.startsWith('/courses') ? 'active' : ''}`}
+          type="button"
           onClick={() => goTo('/courses')}
         >
-          <div className="ci-dot course-dot" />
-          {t('allCourses')}
-        </div>
-      </div>
+          <i className="ti ti-book" />
+          {t('courses')}
+        </button>
 
-      <div
-        className={`nav-item ${location.pathname.startsWith('/programs') ? 'active' : ''}`}
-        onClick={() => {
-          setProgramsOpen(true);
-          goTo('/programs');
-        }}
-      >
-        <i className="ti ti-award" />
-        {t('programs')}
-        <i
-          className={`ti ti-chevron-down nav-chevron ${programsOpen ? 'open' : ''}`}
-          onClick={(event) => {
-            event.stopPropagation();
-            setProgramsOpen(o => !o);
-          }}
-        />
-      </div>
-      <div className={`sub-list ${programsOpen ? 'open' : ''}`}>
-        <div
-          className={`sub-item ${isProgramsListActive ? 'active' : ''}`}
+        <button
+          className={`nav-item ${location.pathname.startsWith('/programs') ? 'active' : ''}`}
+          type="button"
           onClick={() => goTo('/programs')}
         >
-          <div className="ci-dot program-dot" />
-          {t('allPrograms')}
-        </div>
-      </div>
+          <i className="ti ti-award" />
+          {t('programs')}
+        </button>
 
-      <div className="nav-divider" />
+        <div className="nav-divider" />
+        <div className="nav-label">{language === 'ar' ? 'الجودة والاعتماد' : 'Quality & Accreditation'}</div>
 
-      <div className="nav-label">{language === 'ar' ? 'الجودة والاعتماد' : 'Quality & Accreditation'}</div>
-      {qualityNav.map((group) => (
-        <div key={group.base}>
-          <div
+        {qualityNav.map((group) => (
+          <button
+            key={group.base}
             className={`nav-item ${location.pathname.startsWith(group.base) ? 'active' : ''}`}
-            onClick={() => {
-              group.setOpen(true);
-              goTo(`${group.base}/dashboard`);
-            }}
+            type="button"
+            onClick={() => goTo(group.path)}
           >
             <i className={`ti ${group.icon}`} />
             {language === 'ar' ? group.labelAr : group.label}
-            <i
-              className={`ti ti-chevron-down nav-chevron ${group.open ? 'open' : ''}`}
-              onClick={(event) => {
-                event.stopPropagation();
-                group.setOpen(open => !open);
-              }}
-            />
-          </div>
-          <div className={`sub-list ${group.open ? 'open' : ''}`}>
-            {group.items.map(([label, labelAr, path]) => (
-              <div
-                key={path}
-                className={`sub-item ${location.pathname === path ? 'active' : ''}`}
-                onClick={() => goTo(path)}
-              >
-                <div className="ci-dot program-dot" />
-                {language === 'ar' ? labelAr : label}
-              </div>
-            ))}
-          </div>
-        </div>
-      ))}
+          </button>
+        ))}
 
-      <div className="nav-divider" />
+        <div className="nav-divider" />
 
-      <div
-        className={`nav-item ${location.pathname.startsWith('/clo-plo-management') ? 'active' : ''}`}
-        onClick={() => goTo('/clo-plo-management')}
-      >
-        <i className="ti ti-sitemap" />
-        {t('cloPloManagement')}
+        <button
+          className={`nav-item ${location.pathname.startsWith('/clo-plo-management') ? 'active' : ''}`}
+          type="button"
+          onClick={() => goTo('/clo-plo-management')}
+        >
+          <i className="ti ti-sitemap" />
+          {t('cloPloManagement')}
+        </button>
+
+        <button
+          className={`nav-item ${location.pathname.startsWith('/institutional-accreditation') ? 'active' : ''}`}
+          type="button"
+          onClick={() => goTo('/institutional-accreditation')}
+        >
+          <i className="ti ti-certificate" />
+          {t('institutionalAccreditation')}
+        </button>
       </div>
-      <div
-        className={`nav-item ${location.pathname.startsWith('/institutional-accreditation') ? 'active' : ''}`}
-        onClick={() => goTo('/institutional-accreditation')}
-      >
-        <i className="ti ti-certificate" />
-        {t('institutionalAccreditation')}
-      </div>
-    </div>
     </>
   );
 }
