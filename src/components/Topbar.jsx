@@ -29,6 +29,10 @@ export default function Topbar({ breadcrumbs }) {
       if (index === 0) return '/quality-projects';
     }
 
+    if (segments[0] === 'strategic-planning') {
+      if (index === 0) return '/strategic-planning/dashboard';
+    }
+
     if (index === 0 && location.pathname !== '/') return '/';
     return null;
   };
@@ -49,12 +53,17 @@ export default function Topbar({ breadcrumbs }) {
           </span>
         ))}
       </div>
+
       <div className="topbar-right">
-        <div className="language-switch" aria-label={language === 'ar' ? 'تبديل اللغة' : 'Language switch'}>
+        <div className="language-switch" role="group" aria-label={language === 'ar' ? 'تبديل اللغة' : 'Language switch'}>
+          <span className="language-switch-icon" aria-hidden="true">
+            <i className="ti ti-language" />
+          </span>
           <button
             className={`language-option ${language === 'en' ? 'active' : ''}`}
             onClick={() => setLanguage('en')}
             type="button"
+            aria-pressed={language === 'en'}
           >
             EN
           </button>
@@ -62,10 +71,12 @@ export default function Topbar({ breadcrumbs }) {
             className={`language-option ${language === 'ar' ? 'active' : ''}`}
             onClick={() => setLanguage('ar')}
             type="button"
+            aria-pressed={language === 'ar'}
           >
             عربي
           </button>
         </div>
+
         <span className="role-badge">{t('role')}</span>
         <button className="signout-btn" type="button" onClick={handleSignOut} title={language === 'ar' ? 'تسجيل الخروج' : 'Sign out'}>
           <i className="ti ti-logout" />

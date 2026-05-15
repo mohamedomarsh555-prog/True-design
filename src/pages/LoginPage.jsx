@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useI18n } from '../i18n';
 
@@ -20,7 +19,6 @@ export default function LoginPage({ onAuthenticated }) {
 
   const authText = {
     en: {
-      signInAria: 'TRUE sign in',
       brandSub: 'Quality assurance system',
       portal: 'Academic Quality Portal',
       welcome: 'Welcome back',
@@ -36,19 +34,18 @@ export default function LoginPage({ onAuthenticated }) {
       otpCode: 'OTP Code',
       usernamePlaceholder: 'Enter username',
       passwordPlaceholder: 'Enter password',
-      otpPlaceholder: 'Enter 6-digit OTP',
       continue: 'Continue',
       verify: 'Verify and enter',
       back: 'Back to sign in',
-      loginForm: 'Login form',
-      otpForm: 'OTP verification',
+      remember: 'Remember me',
+      forgot: 'Forgot password?',
+      otpSent: 'Code sent to your email',
     },
     ar: {
-      signInAria: 'تسجيل الدخول إلى TRUE',
       brandSub: 'نظام ضمان الجودة',
       portal: 'بوابة الجودة الأكاديمية',
       welcome: 'مرحباً بعودتك',
-      intro: 'سجّل الدخول للمتابعة إلى التقارير وأدلة الاعتماد ولوحات المتابعة وجودة البرامج.',
+      intro: 'سجل الدخول للمتابعة إلى التقارير وأدلة الاعتماد ولوحات المتابعة وجودة البرامج.',
       signIn: 'تسجيل الدخول',
       signInHint: 'أدخل بيانات حسابك.',
       verifyOtp: 'التحقق من رمز OTP',
@@ -60,12 +57,12 @@ export default function LoginPage({ onAuthenticated }) {
       otpCode: 'رمز OTP',
       usernamePlaceholder: 'أدخل اسم المستخدم',
       passwordPlaceholder: 'أدخل كلمة المرور',
-      otpPlaceholder: 'أدخل رمز التحقق من 6 أرقام',
       continue: 'متابعة',
       verify: 'تحقق وادخل',
       back: 'العودة لتسجيل الدخول',
-      loginForm: 'نموذج تسجيل الدخول',
-      otpForm: 'التحقق من OTP',
+      remember: 'تذكرني',
+      forgot: 'نسيت كلمة المرور؟',
+      otpSent: 'تم إرسال الرمز إلى بريدك الإلكتروني',
     },
   }[language];
 
@@ -74,7 +71,6 @@ export default function LoginPage({ onAuthenticated }) {
     setIsLoading(true);
     setError('');
 
-    // Simulate network delay
     setTimeout(() => {
       if (username.trim() === STATIC_AUTH.username && password === STATIC_AUTH.password) {
         setStep('otp');
@@ -104,15 +100,15 @@ export default function LoginPage({ onAuthenticated }) {
 
   return (
     <div className={`enhanced-login-page ${isRtl ? 'rtl' : 'ltr'}`}>
-      <div className="login-background"></div>
-      
+      <div className="login-background" />
+
       <div className="login-container">
         <div className="login-side-info">
           <div className="brand-header">
             <div className="brand-logo-circle">
-                <svg width="32" height="32" viewBox="0 0 20 20" aria-hidden="true">
-                    <polyline points="3,10 8,15 17,5" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
+              <svg width="32" height="32" viewBox="0 0 20 20" aria-hidden="true">
+                <polyline points="3,10 8,15 17,5" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
             </div>
             <div className="brand-text">
               <h1>CPTIT TRUE</h1>
@@ -120,16 +116,26 @@ export default function LoginPage({ onAuthenticated }) {
             </div>
           </div>
 
-          <div className="language-selector-login">
-            <button 
-              className={language === 'ar' ? 'active' : ''} 
+          <div className="language-selector-login" role="group" aria-label={language === 'ar' ? 'تبديل اللغة' : 'Language switch'}>
+            <span className="login-language-icon" aria-hidden="true">
+              <i className="ti ti-language" />
+            </span>
+            <button
+              type="button"
+              className={language === 'ar' ? 'active' : ''}
               onClick={() => setLanguage('ar')}
-            >العربية</button>
-            <span className="divider"></span>
-            <button 
-              className={language === 'en' ? 'active' : ''} 
+              aria-pressed={language === 'ar'}
+            >
+              عربي
+            </button>
+            <button
+              type="button"
+              className={language === 'en' ? 'active' : ''}
               onClick={() => setLanguage('en')}
-            >English</button>
+              aria-pressed={language === 'en'}
+            >
+              EN
+            </button>
           </div>
 
           <div className="hero-content">
@@ -167,7 +173,7 @@ export default function LoginPage({ onAuthenticated }) {
                       <input
                         type="text"
                         value={username}
-                        onChange={(e) => setUsername(e.target.value)}
+                        onChange={(event) => setUsername(event.target.value)}
                         placeholder={authText.usernamePlaceholder}
                         required
                       />
@@ -179,16 +185,17 @@ export default function LoginPage({ onAuthenticated }) {
                     <div className="input-wrapper">
                       <i className="ti ti-key" />
                       <input
-                        type={showPassword ? "text" : "password"}
+                        type={showPassword ? 'text' : 'password'}
                         value={password}
-                        onChange={(e) => setPassword(e.target.value)}
+                        onChange={(event) => setPassword(event.target.value)}
                         placeholder={authText.passwordPlaceholder}
                         required
                       />
-                      <button 
-                        type="button" 
+                      <button
+                        type="button"
                         className="toggle-password"
                         onClick={() => setShowPassword(!showPassword)}
+                        aria-label={showPassword ? 'Hide password' : 'Show password'}
                       >
                         <i className={`ti ${showPassword ? 'ti-eye-off' : 'ti-eye'}`} />
                       </button>
@@ -198,14 +205,14 @@ export default function LoginPage({ onAuthenticated }) {
                   <div className="form-options">
                     <label className="remember-me">
                       <input type="checkbox" />
-                      <span>{language === 'ar' ? 'تذكرني' : 'Remember me'}</span>
+                      <span>{authText.remember}</span>
                     </label>
-                    <a href="#forgot" className="forgot-link">{language === 'ar' ? 'نسيت كلمة المرور؟' : 'Forgot password?'}</a>
+                    <a href="#forgot" className="forgot-link">{authText.forgot}</a>
                   </div>
 
                   <button className="submit-btn" type="submit" disabled={isLoading}>
                     {isLoading ? (
-                      <span className="loader"></span>
+                      <span className="loader" />
                     ) : (
                       <>
                         <span>{authText.continue}</span>
@@ -219,22 +226,24 @@ export default function LoginPage({ onAuthenticated }) {
                   <div className="input-group">
                     <label>{authText.otpCode}</label>
                     <div className="otp-wrapper">
-                       <input
-                        type="text"
+                      <input
+                        type="password"
                         maxLength="6"
                         value={otp}
-                        onChange={(e) => setOtp(e.target.value)}
+                        onChange={(event) => setOtp(event.target.value.replace(/\D/g, '').slice(0, 6))}
                         placeholder="••••••"
                         className="otp-input"
+                        inputMode="numeric"
+                        autoComplete="one-time-code"
                         autoFocus
                       />
                     </div>
-                    <p className="otp-help">{language === 'ar' ? 'تم إرسال الرمز إلى بريدك الإلكتروني' : 'Code sent to your email'}</p>
+                    <p className="otp-help">{authText.otpSent}</p>
                   </div>
 
                   <button className="submit-btn" type="submit" disabled={isLoading}>
                     {isLoading ? (
-                      <span className="loader"></span>
+                      <span className="loader" />
                     ) : (
                       <>
                         <span>{authText.verify}</span>
@@ -243,12 +252,12 @@ export default function LoginPage({ onAuthenticated }) {
                     )}
                   </button>
 
-                  <button 
-                    type="button" 
+                  <button
+                    type="button"
                     className="back-btn"
                     onClick={() => {
-                        setStep('login');
-                        setError('');
+                      setStep('login');
+                      setError('');
                     }}
                   >
                     <i className={`ti ${isRtl ? 'ti-chevron-right' : 'ti-chevron-left'}`} />

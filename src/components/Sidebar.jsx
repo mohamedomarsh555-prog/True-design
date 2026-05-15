@@ -26,7 +26,7 @@ export default function Sidebar() {
     {
       base: '/quality-projects',
       path: '/quality-projects/dashboard',
-      icon: 'ti-rosette-discount-check',
+      icon: 'ti-briefcase',
       label: 'Quality Projects',
       labelAr: 'مشاريع الجودة',
     },
