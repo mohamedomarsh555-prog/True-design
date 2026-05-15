@@ -4,6 +4,7 @@ import { useI18n } from '../i18n';
 
 const navItems = [
   { base: '/', path: '/', icon: 'ti-layout-dashboard', label: 'Dashboard', labelAr: 'لوحة التحكم', exact: true },
+  { base: '/courses', path: '/courses', icon: 'ti-book-2', label: 'Courses', labelAr: 'المقررات' },
   { base: '/colleges', path: '/colleges', icon: 'ti-building-community', label: 'Colleges', labelAr: 'الكليات' },
   { base: '/programs', path: '/programs', icon: 'ti-award', label: 'Programs', labelAr: 'البرامج' },
   { base: '/accreditation', path: '/accreditation/dashboard', icon: 'ti-certificate', label: 'Academic Accreditation', labelAr: 'الاعتماد الأكاديمي' },
