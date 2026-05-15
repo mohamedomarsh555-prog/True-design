@@ -5092,3 +5092,899 @@ html[dir="rtl"] .quality-table td {
     font-size: 14px;
   }
 }
+
+/* Institutional academic hierarchy */
+.hierarchy-page {
+  padding-top: 30px;
+}
+
+.hierarchy-layout {
+  display: grid;
+  grid-template-columns: 320px minmax(0, 1fr);
+  gap: 22px;
+  align-items: start;
+}
+
+.hierarchy-main {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.academic-tree-panel {
+  position: sticky;
+  top: 96px;
+  max-height: calc(100vh - 122px);
+  overflow: auto;
+  padding: 14px;
+  border: 1px solid rgba(210, 214, 219, 0.86);
+  border-radius: 8px;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fbf9 100%);
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.06);
+}
+
+.tree-search {
+  height: 44px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 12px;
+  padding: 0 12px;
+  border: 1px solid var(--dga-neutral-200);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--dga-neutral-500);
+}
+
+.tree-search input {
+  width: 100%;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--dga-neutral-900);
+  font: inherit;
+  font-size: 13px;
+}
+
+.tree-list {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.tree-node {
+  width: 100%;
+  min-height: 38px;
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 9px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--dga-neutral-700);
+  font: inherit;
+  font-size: 13px;
+  text-align: start;
+}
+
+.tree-node button {
+  width: 24px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 6px;
+  background: rgba(0, 108, 53, 0.08);
+  color: var(--dga-green);
+  cursor: pointer;
+}
+
+.tree-node span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.tree-node em {
+  padding: 2px 6px;
+  border-radius: 999px;
+  background: #edf7f1;
+  color: var(--dga-green-800);
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 800;
+}
+
+.tree-node.university {
+  margin-bottom: 8px;
+  border-color: rgba(0, 108, 53, 0.18);
+  background: #f2faf5;
+  cursor: pointer;
+}
+
+.tree-node.department {
+  margin-inline-start: 18px;
+}
+
+.tree-node.program {
+  margin-inline-start: 42px;
+  cursor: pointer;
+}
+
+.tree-node.active,
+.tree-node:hover {
+  border-color: rgba(0, 108, 53, 0.2);
+  background: linear-gradient(90deg, rgba(0, 108, 53, 0.13), rgba(255, 255, 255, 0.82));
+  color: var(--dga-green-900);
+}
+
+.hier-hero,
+.detail-header,
+.home-hierarchy-section,
+.hier-panel {
+  border: 1px solid rgba(210, 214, 219, 0.78);
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.06);
+}
+
+.hier-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 420px;
+  gap: 24px;
+  align-items: center;
+  padding: 24px;
+  overflow: hidden;
+  background: linear-gradient(120deg, rgba(0, 108, 53, 0.08), rgba(255, 255, 255, 0.94) 42%), #fff;
+}
+
+.hier-hero.compact {
+  grid-template-columns: 1fr;
+}
+
+.hier-hero span,
+.home-hierarchy-head span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  color: var(--dga-green-800);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.hier-hero h1,
+.detail-header h1,
+.home-hierarchy-head h2 {
+  margin: 0;
+  color: #0f172a;
+  font-size: clamp(26px, 2.4vw, 36px);
+  line-height: 1.15;
+  letter-spacing: 0;
+}
+
+.hier-hero p,
+.detail-header p,
+.home-hierarchy-head p,
+.hier-panel-head p {
+  margin-top: 8px;
+  color: var(--dga-neutral-500);
+  line-height: 1.55;
+}
+
+.hier-metric-grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.hier-metric {
+  min-height: 108px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px;
+  border: 1px solid rgba(210, 214, 219, 0.78);
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.045);
+}
+
+.hier-metric i {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  background: #e9f6ee;
+  color: var(--dga-green);
+  font-size: 19px;
+}
+
+.hier-metric strong {
+  color: #0f172a;
+  font-size: 26px;
+  line-height: 1;
+}
+
+.hier-metric span {
+  color: var(--dga-neutral-500);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.hier-panel-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--dga-neutral-200);
+}
+
+.hier-panel-head h2 {
+  margin: 0;
+  color: #0f172a;
+  font-size: 20px;
+}
+
+.hier-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.hier-filters label {
+  min-width: 260px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 12px;
+  border: 1px solid var(--dga-neutral-200);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--dga-neutral-500);
+}
+
+.hier-filters input,
+.hier-filters select {
+  height: 42px;
+  border: 1px solid var(--dga-neutral-200);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--dga-neutral-900);
+  font: inherit;
+  font-size: 13px;
+  outline: 0;
+}
+
+.hier-filters label input {
+  width: 100%;
+  height: auto;
+  border: 0;
+  background: transparent;
+}
+
+.hier-filters select {
+  min-width: 190px;
+  padding: 0 12px;
+}
+
+.hier-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: max-content;
+  min-height: 28px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.tone-green { background: #dff5e8; color: #006c35; }
+.tone-yellow { background: #fff3cd; color: #9a6200; }
+.tone-orange { background: #fff0df; color: #a44b00; }
+.tone-red { background: #fde7e7; color: #b42318; }
+.tone-neutral { background: #eef2f6; color: #475467; }
+
+.hier-progress {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.hier-progress > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  color: var(--dga-neutral-500);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.hier-progress strong {
+  color: var(--dga-green-800);
+}
+
+.hier-progress i {
+  height: 8px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #edf1f3;
+}
+
+.hier-progress b {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #006c35, #22a06b);
+}
+
+.progress-ring {
+  width: 92px;
+  height: 92px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: conic-gradient(#006c35 var(--value), #e8eef0 0deg);
+}
+
+.progress-ring > div {
+  width: 70px;
+  height: 70px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #fff;
+  text-align: center;
+}
+
+.progress-ring strong {
+  color: #0f172a;
+  font-size: 18px;
+  line-height: 1;
+}
+
+.progress-ring span {
+  color: var(--dga-neutral-500);
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.org-map {
+  padding: 16px;
+  border: 1px solid rgba(0, 108, 53, 0.13);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.76);
+}
+
+.org-node {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  min-height: 42px;
+  padding: 10px 12px;
+  border: 1px solid rgba(210, 214, 219, 0.86);
+  border-radius: 8px;
+  background: #fff;
+  color: #0f172a;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.org-node span,
+.org-node em {
+  color: var(--dga-green);
+  font-style: normal;
+  font-weight: 900;
+}
+
+.org-node.university {
+  background: var(--dga-green);
+  color: #fff;
+}
+
+.org-node.university span {
+  color: #dff5e8;
+}
+
+.org-branches {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.org-children {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+  padding-inline-start: 10px;
+  border-inline-start: 2px solid #dcefe5;
+}
+
+.org-node.department {
+  min-height: 34px;
+  font-size: 12px;
+}
+
+.college-card-grid,
+.program-h-grid,
+.department-grid,
+.standards-grid,
+.hier-report-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  padding: 20px;
+}
+
+.college-card,
+.program-h-card,
+.department-card,
+.standard-card,
+.hier-report-card {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 16px;
+  border: 1px solid rgba(210, 214, 219, 0.86);
+  border-radius: 8px;
+  background: linear-gradient(180deg, #fff 0%, #fbfcfd 100%);
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.035);
+}
+
+.college-card-head,
+.program-h-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.college-card-head {
+  justify-content: flex-start;
+}
+
+.college-icon {
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  border-radius: 8px;
+  background: #e9f6ee;
+  color: var(--dga-green);
+  font-size: 22px;
+}
+
+.college-card span,
+.program-h-card span,
+.department-card span,
+.standard-card span,
+.hier-report-card span {
+  color: var(--dga-neutral-500);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.college-card h3,
+.program-h-card h3,
+.department-card h3,
+.standard-card h3,
+.hier-report-card h3 {
+  margin: 4px 0;
+  color: #0f172a;
+  font-size: 18px;
+  line-height: 1.25;
+}
+
+.college-card p,
+.program-h-card p,
+.department-card p,
+.hier-report-card p {
+  color: var(--dga-neutral-500);
+  font-size: 13px;
+}
+
+.college-stats,
+.program-h-stats,
+.department-meta {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.program-h-stats {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.department-meta {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.college-stats div,
+.program-h-stats div,
+.department-meta span {
+  padding: 10px;
+  border-radius: 8px;
+  background: #f6f8f9;
+}
+
+.college-stats strong,
+.program-h-stats strong {
+  display: block;
+  color: #0f172a;
+  font-size: 18px;
+}
+
+.college-card-foot,
+.report-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding-top: 4px;
+}
+
+.college-card-foot button,
+.hier-open-btn,
+.department-card button,
+.standard-card button,
+.report-actions button {
+  min-height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 0 12px;
+  border: 1px solid rgba(0, 108, 53, 0.18);
+  border-radius: 8px;
+  background: #f2faf5;
+  color: var(--dga-green-800);
+  cursor: pointer;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.detail-header {
+  position: sticky;
+  top: 84px;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 18px 20px;
+}
+
+.detail-header-side {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.academic-breadcrumbs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 8px;
+  color: var(--dga-neutral-500);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.academic-breadcrumbs span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.nested-tabs {
+  position: sticky;
+  top: 196px;
+  z-index: 3;
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--dga-neutral-200);
+  background: rgba(255, 255, 255, 0.94);
+}
+
+.nested-tabs button {
+  flex: 0 0 auto;
+  min-height: 38px;
+  padding: 0 12px;
+  border: 1px solid var(--dga-neutral-200);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--dga-neutral-700);
+  cursor: pointer;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.nested-tabs button.active {
+  border-color: var(--dga-green);
+  background: var(--dga-green);
+  color: #fff;
+}
+
+.overview-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 360px;
+  gap: 16px;
+  padding: 20px;
+}
+
+.overview-main-panel,
+.status-visual-panel {
+  padding: 18px;
+  border: 1px solid var(--dga-neutral-200);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.status-visual-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+  justify-content: center;
+}
+
+.overview-main-panel p {
+  color: var(--dga-neutral-500);
+  line-height: 1.6;
+}
+
+.drill-card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.drill-card {
+  min-height: 96px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 6px;
+  padding: 14px;
+  border: 1px solid rgba(0, 108, 53, 0.14);
+  border-radius: 8px;
+  background: #f7fbf8;
+  color: #0f172a;
+  cursor: pointer;
+  font: inherit;
+  text-align: start;
+}
+
+.drill-card strong {
+  color: var(--dga-green);
+  font-size: 24px;
+}
+
+.drill-card em {
+  color: var(--dga-neutral-500);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 800;
+}
+
+.hier-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px;
+}
+
+.hier-list-row {
+  min-height: 66px;
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid var(--dga-neutral-200);
+  border-radius: 8px;
+  background: #fff;
+  cursor: pointer;
+  font: inherit;
+  text-align: start;
+}
+
+.hier-list-row > i {
+  color: var(--dga-green);
+}
+
+.hier-list-row strong {
+  display: block;
+  color: #0f172a;
+}
+
+.hier-list-row span {
+  color: var(--dga-neutral-500);
+  font-size: 12px;
+}
+
+.hier-table {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px;
+}
+
+.hier-table-row {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr 1.4fr;
+  align-items: center;
+  gap: 16px;
+  padding: 14px;
+  border: 1px solid var(--dga-neutral-200);
+  border-radius: 8px;
+}
+
+.hier-table-row span {
+  color: var(--dga-neutral-500);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.floating-details-panel {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 60;
+  width: min(420px, calc(100vw - 48px));
+  border: 1px solid rgba(210, 214, 219, 0.9);
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 24px 70px rgba(15, 23, 42, 0.22);
+}
+
+html[dir="rtl"] .floating-details-panel {
+  right: auto;
+  left: 24px;
+}
+
+.floating-panel-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px;
+  border-bottom: 1px solid var(--dga-neutral-200);
+}
+
+.floating-panel-head span {
+  color: var(--dga-green);
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.floating-panel-head h3 {
+  margin-top: 4px;
+  font-size: 18px;
+}
+
+.floating-panel-head button {
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--dga-neutral-200);
+  border-radius: 8px;
+  background: #fff;
+  cursor: pointer;
+}
+
+.floating-panel-body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  color: var(--dga-neutral-500);
+  line-height: 1.6;
+}
+
+.home-hierarchy-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 22px 0;
+  padding: 20px;
+}
+
+.home-hierarchy-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.empty-state.compact {
+  padding: 22px;
+  border: 1px dashed var(--dga-neutral-300);
+  border-radius: 8px;
+  background: #fbfcfd;
+  color: var(--dga-neutral-500);
+  text-align: center;
+}
+
+@media (max-width: 1300px) {
+  .hierarchy-layout {
+    grid-template-columns: 280px minmax(0, 1fr);
+  }
+
+  .hier-metric-grid,
+  .college-card-grid,
+  .program-h-grid,
+  .department-grid,
+  .standards-grid,
+  .hier-report-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .hier-hero {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 980px) {
+  .hierarchy-layout,
+  .overview-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .academic-tree-panel,
+  .detail-header,
+  .nested-tabs {
+    position: relative;
+    top: auto;
+  }
+
+  .academic-tree-panel {
+    max-height: none;
+  }
+
+  .hier-metric-grid,
+  .college-card-grid,
+  .program-h-grid,
+  .department-grid,
+  .standards-grid,
+  .hier-report-grid,
+  .drill-card-grid,
+  .org-branches {
+    grid-template-columns: 1fr;
+  }
+
+  .hier-panel-head,
+  .home-hierarchy-head,
+  .detail-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hier-filters,
+  .hier-filters label,
+  .hier-filters select {
+    width: 100%;
+  }
+}
