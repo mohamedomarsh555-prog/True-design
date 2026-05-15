@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import authorityLogo from '../assets/authority-logo.svg';
+import trueLogo from '../assets/true-logo.svg';
 import taifLogo from '../assets/taif-university-logo.svg';
 import { useI18n } from '../i18n';
 
@@ -25,6 +25,7 @@ export default function Topbar({ breadcrumbs = [] }) {
   const segments = location.pathname.split('/').filter(Boolean);
   const [role, setRole] = useState(roles[0].en);
   const [userOpen, setUserOpen] = useState(false);
+  const showBreadcrumbs = breadcrumbs.length > 1;
 
   const roleLabel = roles.find((item) => item.en === role)?.[language] || role;
 
@@ -67,7 +68,7 @@ export default function Topbar({ breadcrumbs = [] }) {
     <>
       <div className="topbar">
         <div className="topbar-brand-strip" aria-label={language === 'ar' ? 'شعارات المنصة' : 'Platform logos'}>
-          <img className="authority-logo" src={authorityLogo} alt={language === 'ar' ? 'شعار هيئة تقويم التعليم والتدريب' : 'Education and Training Evaluation Commission'} />
+          <img className="platform-logo" src={trueLogo} alt="CPTIT TRUE" />
           <span className="topbar-logo-divider" />
           <img className="taif-logo" src={taifLogo} alt={language === 'ar' ? 'شعار جامعة الطائف' : 'Taif University'} />
         </div>
@@ -146,7 +147,7 @@ export default function Topbar({ breadcrumbs = [] }) {
         </div>
       </div>
 
-      {breadcrumbs.length > 0 && (
+      {showBreadcrumbs && (
         <div className="page-breadcrumb-strip">
           <div className="breadcrumb">
             {breadcrumbs.map((crumb, i) => (

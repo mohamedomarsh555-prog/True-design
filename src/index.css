@@ -6166,9 +6166,9 @@ html[dir="rtl"] .main-content .sp-hero-actions {
   object-fit: contain;
 }
 
-.topbar-brand-strip .authority-logo {
-  height: 48px;
-  max-width: min(36vw, 304px);
+.topbar-brand-strip .platform-logo {
+  height: 46px;
+  max-width: min(25vw, 174px);
 }
 
 .topbar-brand-strip .taif-logo {
@@ -6440,7 +6440,7 @@ html[dir="rtl"] .user-dropdown {
     justify-content: space-between;
   }
 
-  .topbar-brand-strip .authority-logo,
+  .topbar-brand-strip .platform-logo,
   .topbar-brand-strip .taif-logo {
     max-width: 44vw;
     height: 40px;
@@ -6465,7 +6465,7 @@ html[dir="rtl"] .user-dropdown {
     display: none;
   }
 
-  .topbar-brand-strip .authority-logo,
+  .topbar-brand-strip .platform-logo,
   .topbar-brand-strip .taif-logo {
     max-width: 48%;
     height: 34px;
@@ -6483,5 +6483,154 @@ html[dir="rtl"] .user-dropdown {
 
   .page-breadcrumb-strip {
     margin-inline: 16px;
+  }
+}
+
+/* Compact global spacing pass */
+.topbar {
+  min-height: 62px;
+  gap: 14px;
+  padding: 8px 22px;
+}
+
+.topbar-brand-strip {
+  gap: 12px;
+}
+
+.topbar-brand-strip .platform-logo {
+  height: 40px;
+  max-width: min(23vw, 158px);
+}
+
+.topbar-brand-strip .taif-logo {
+  height: 40px;
+  max-width: min(29vw, 238px);
+}
+
+.topbar-logo-divider {
+  height: 30px;
+}
+
+.language-switch {
+  min-height: 40px;
+}
+
+.language-switch-icon,
+.language-option {
+  height: 30px;
+}
+
+.language-switch-icon {
+  width: 30px;
+}
+
+.role-select {
+  min-height: 40px;
+}
+
+.user-trigger {
+  min-height: 42px;
+}
+
+.page-breadcrumb-strip {
+  min-height: 34px;
+  margin: 10px 24px 0;
+}
+
+.page-content {
+  padding: 18px 28px 22px;
+}
+
+.page-title {
+  margin-bottom: 4px;
+}
+
+.page-subtitle {
+  margin-bottom: 14px;
+}
+
+.home-hierarchy-section {
+  gap: 12px;
+  margin: 12px 0 18px;
+  padding: 16px 18px;
+}
+
+.home-hierarchy-head {
+  gap: 14px;
+}
+
+.home-hierarchy-head span {
+  margin-bottom: 6px;
+}
+
+.home-hierarchy-head h2 {
+  font-size: clamp(24px, 2.1vw, 32px);
+}
+
+.home-hierarchy-head p {
+  margin-top: 6px;
+}
+
+.home-hierarchy-section .hier-metric {
+  min-height: 96px;
+  padding: 14px;
+}
+
+.home-hierarchy-section .org-map {
+  padding: 14px;
+}
+
+.dashboard-grid {
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.dashboard-details {
+  margin-bottom: 18px;
+  padding: 22px;
+}
+
+.dashboard-details-head {
+  margin-bottom: 18px;
+}
+
+.dashboard-tabs {
+  gap: 10px;
+  padding-bottom: 18px;
+}
+
+.dashboard-tab {
+  min-height: 42px;
+  padding: 0 14px;
+}
+
+.dashboard-detail-grid {
+  gap: 18px;
+  margin-bottom: 18px;
+}
+
+@media (max-width: 980px) {
+  .topbar {
+    min-height: 58px;
+    padding: 8px 16px;
+  }
+
+  .page-content {
+    padding: 16px 20px 20px;
+  }
+
+  .home-hierarchy-section {
+    margin-top: 8px;
+  }
+}
+
+@media (max-width: 560px) {
+  .page-content {
+    padding: 14px 14px 18px;
+  }
+
+  .topbar-brand-strip .platform-logo,
+  .topbar-brand-strip .taif-logo {
+    height: 32px;
   }
 }

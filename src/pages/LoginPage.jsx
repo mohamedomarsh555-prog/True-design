@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { useI18n } from '../i18n';
+import trueLogoWhite from '../assets/true-logo-white.svg';
+import taifLogo from '../assets/taif-university-logo.svg';
 
 const STATIC_AUTH = {
   username: 'Gouda',
@@ -104,11 +106,12 @@ export default function LoginPage({ onAuthenticated }) {
 
       <div className="login-container">
         <div className="login-side-info">
-          <div className="brand-header">
-            <div className="brand-logo-circle">
-              <svg width="32" height="32" viewBox="0 0 20 20" aria-hidden="true">
-                <polyline points="3,10 8,15 17,5" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
+          <div className="brand-header login-brand-logos">
+            <div className="login-logo-card true-logo-card dark-logo-card">
+              <img src={trueLogoWhite} alt="CPTIT TRUE" />
+            </div>
+            <div className="login-logo-card taif-logo-card">
+              <img src={taifLogo} alt={language === 'ar' ? 'جامعة الطائف' : 'Taif University'} />
             </div>
             <div className="brand-text">
               <h1>CPTIT TRUE</h1>
