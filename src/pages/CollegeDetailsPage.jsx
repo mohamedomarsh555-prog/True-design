@@ -27,7 +27,7 @@ const tabs = [
   'Overview',
   'Departments',
   'Programs',
-  'Accreditation',
+  'Accreditation Summary',
   'KPIs',
   'Risks',
   'Reports',
@@ -113,7 +113,7 @@ export default function CollegeDetailsPage() {
                 <span>{department.recommendations} {language === 'ar' ? 'توصيات' : 'Recommendations'}</span>
                 <span>{department.openTasks} {language === 'ar' ? 'مهام مفتوحة' : 'Open Tasks'}</span>
               </div>
-              <button type="button" onClick={() => navigate(`/colleges/${college.id}/departments/${department.id}`)}>
+              <button type="button" onClick={() => navigate(`/academic-accreditation/colleges/${college.id}/departments/${department.id}`)}>
                 {language === 'ar' ? 'فتح القسم' : 'Open Department'}
                 <i className="ti ti-arrow-right" />
               </button>
@@ -127,7 +127,7 @@ export default function CollegeDetailsPage() {
       return <div className="program-h-grid">{programs.map((program) => <ProgramHierarchyCard key={program.id} program={program} />)}</div>;
     }
 
-    if (activeTab === 'Accreditation') {
+    if (activeTab === 'Accreditation Summary') {
       return (
         <div className="standards-grid">
           {programs.map((program) => (
@@ -190,7 +190,7 @@ export default function CollegeDetailsPage() {
           <p>{language === 'ar' ? 'تجميع مباشر لحالة الاعتماد والجاهزية من الأقسام والبرامج والمخاطر والأدلة.' : 'A live rollup of accreditation readiness from departments, programs, risks, and evidence.'}</p>
           <div className="drill-card-grid">
             {departments.map((department) => (
-              <button type="button" className="drill-card" key={department.id} onClick={() => navigate(`/colleges/${college.id}/departments/${department.id}`)}>
+              <button type="button" className="drill-card" key={department.id} onClick={() => navigate(`/academic-accreditation/colleges/${college.id}/departments/${department.id}`)}>
                 <span>{localName(department, 'name', language)}</span>
                 <strong>{department.readiness}%</strong>
                 <em>{department.programsCount} {language === 'ar' ? 'برامج' : 'Programs'}</em>
@@ -205,16 +205,16 @@ export default function CollegeDetailsPage() {
 
   return (
     <>
-      <Topbar breadcrumbs={[language === 'ar' ? 'الكليات' : 'Colleges', college.code]} />
+      <Topbar breadcrumbs={[language === 'ar' ? 'إدارة الاعتماد الأكاديمي' : 'Academic Accreditation Management', college.code]} />
       <div className="page-content hierarchy-page">
         <div className="hierarchy-layout">
           <AcademicTree
             activeType="college"
             activeId={college.id}
             onSelect={(type, id) => {
-              if (type === 'college') navigate(`/colleges/${id}`);
-              if (type === 'department') navigate(`/colleges/${academicPrograms.find((program) => program.departmentId === id)?.collegeId || college.id}/departments/${id}`);
-              if (type === 'program') navigate(`/programs/${id}`);
+              if (type === 'college') navigate(`/academic-accreditation/colleges/${id}`);
+              if (type === 'department') navigate(`/academic-accreditation/colleges/${academicPrograms.find((program) => program.departmentId === id)?.collegeId || college.id}/departments/${id}`);
+              if (type === 'program') navigate(`/academic-accreditation/programs/${id}`);
             }}
           />
           <main className="hierarchy-main">

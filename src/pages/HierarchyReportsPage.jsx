@@ -32,7 +32,7 @@ export default function HierarchyReportsPage({ mode = 'reports' }) {
             onSelect={(type, id) => {
               if (type === 'college') setCollegeId(id);
               if (type === 'department') setDepartmentId(id);
-              if (type === 'program') navigate(`/programs/${id}`);
+              if (type === 'program') navigate(`/academic-accreditation/programs/${id}`);
             }}
           />
           <main className="hierarchy-main">
@@ -91,7 +91,7 @@ export default function HierarchyReportsPage({ mode = 'reports' }) {
                       <StatusChip status={program.accreditationStatus} />
                       <HierProgress value={isKpi ? program.kpiAchievement : program.readiness} label={isKpi ? 'KPI Achievement' : 'Readiness'} />
                       <div className="report-actions">
-                        <button type="button" onClick={() => navigate(`/programs/${program.id}`)}><i className="ti ti-eye" /> View</button>
+                        <button type="button" onClick={() => navigate(`/academic-accreditation/programs/${program.id}`)}><i className="ti ti-eye" /> View</button>
                         <button type="button"><i className="ti ti-file-type-pdf" /> PDF</button>
                         <button type="button"><i className="ti ti-file-spreadsheet" /> Excel</button>
                       </div>

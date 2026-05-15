@@ -87,6 +87,9 @@ export const academicPrograms = [
     degree: 'Bachelor',
     accreditationStatus: 'Accredited',
     accreditationBody: 'NCAAA',
+    accreditationStartDate: '2024-09-01',
+    accreditationEndDate: '2028-08-31',
+    coordinator: 'Dr. Ahmed Al-Zahrani',
     readiness: 88,
     evidenceCount: 38,
     standardsCompleted: 7,
@@ -107,6 +110,9 @@ export const academicPrograms = [
     degree: 'Bachelor',
     accreditationStatus: 'In Progress',
     accreditationBody: 'NCAAA',
+    accreditationStartDate: '2025-01-15',
+    accreditationEndDate: '2027-12-31',
+    coordinator: 'Dr. Sara Al-Qahtani',
     readiness: 74,
     evidenceCount: 29,
     standardsCompleted: 5,
@@ -127,6 +133,9 @@ export const academicPrograms = [
     degree: 'Bachelor',
     accreditationStatus: 'Under Review',
     accreditationBody: 'NCAAA',
+    accreditationStartDate: '2026-02-01',
+    accreditationEndDate: '2028-01-31',
+    coordinator: 'Dr. Noura Al-Fahad',
     readiness: 69,
     evidenceCount: 24,
     standardsCompleted: 4,
@@ -147,6 +156,9 @@ export const academicPrograms = [
     degree: 'Bachelor',
     accreditationStatus: 'Conditional',
     accreditationBody: 'NCAAA',
+    accreditationStartDate: '2024-10-01',
+    accreditationEndDate: '2026-09-30',
+    coordinator: 'Dr. Reem Al-Anzi',
     readiness: 68,
     evidenceCount: 27,
     standardsCompleted: 5,
@@ -167,6 +179,9 @@ export const academicPrograms = [
     degree: 'Bachelor',
     accreditationStatus: 'Accredited',
     accreditationBody: 'NCAAA',
+    accreditationStartDate: '2024-09-01',
+    accreditationEndDate: '2028-08-31',
+    coordinator: 'Dr. Sami Al-Yousef',
     readiness: 84,
     evidenceCount: 31,
     standardsCompleted: 7,
@@ -187,6 +202,9 @@ export const academicPrograms = [
     degree: 'Bachelor',
     accreditationStatus: 'Conditional',
     accreditationBody: 'NCAAA',
+    accreditationStartDate: '2024-03-01',
+    accreditationEndDate: '2026-02-28',
+    coordinator: 'Dr. Lina Al-Mutairi',
     readiness: 61,
     evidenceCount: 22,
     standardsCompleted: 4,
@@ -207,6 +225,9 @@ export const academicPrograms = [
     degree: 'Bachelor',
     accreditationStatus: 'In Progress',
     accreditationBody: 'AACSB',
+    accreditationStartDate: '2025-09-01',
+    accreditationEndDate: '2028-08-31',
+    coordinator: 'Dr. Yasser Al-Rashid',
     readiness: 67,
     evidenceCount: 25,
     standardsCompleted: 5,
@@ -227,6 +248,9 @@ export const academicPrograms = [
     degree: 'Bachelor',
     accreditationStatus: 'Expired',
     accreditationBody: 'NCAAA',
+    accreditationStartDate: '2022-09-01',
+    accreditationEndDate: '2025-08-31',
+    coordinator: 'Dr. Abeer Al-Dossari',
     readiness: 54,
     evidenceCount: 18,
     standardsCompleted: 3,
@@ -247,6 +271,9 @@ export const academicPrograms = [
     degree: 'Bachelor',
     accreditationStatus: 'Accredited',
     accreditationBody: 'ABET',
+    accreditationStartDate: '2024-09-01',
+    accreditationEndDate: '2029-08-31',
+    coordinator: 'Dr. Khaled Al-Amri',
     readiness: 91,
     evidenceCount: 36,
     standardsCompleted: 8,
@@ -267,6 +294,9 @@ export const academicPrograms = [
     degree: 'Bachelor',
     accreditationStatus: 'Accredited',
     accreditationBody: 'ABET',
+    accreditationStartDate: '2024-09-01',
+    accreditationEndDate: '2029-08-31',
+    coordinator: 'Dr. Huda Al-Ghamdi',
     readiness: 87,
     evidenceCount: 33,
     standardsCompleted: 7,
@@ -287,6 +317,9 @@ export const academicPrograms = [
     degree: 'Bachelor',
     accreditationStatus: 'Accredited',
     accreditationBody: 'ABET',
+    accreditationStartDate: '2024-09-01',
+    accreditationEndDate: '2029-08-31',
+    coordinator: 'Dr. Turki Al-Otaibi',
     readiness: 86,
     evidenceCount: 32,
     standardsCompleted: 7,
@@ -299,6 +332,15 @@ export const academicPrograms = [
   },
 ];
 
+export const accreditationRequirements = [
+  { id: 'req-1', programId: 'cs', title: 'Approved program mission and goals', description: 'Mission alignment with university strategy.', status: 'Approved', owner: 'Program Coordinator', dueDate: '2026-06-15', progress: 100, evidence: 2, reviewerNotes: 'Ready for final submission.' },
+  { id: 'req-2', programId: 'cs', title: 'PLO assessment cycle evidence', description: 'Annual direct and indirect PLO measurement cycle.', status: 'Under Review', owner: 'Assessment Lead', dueDate: '2026-06-30', progress: 82, evidence: 4, reviewerNotes: 'Add trend explanation.' },
+  { id: 'req-3', programId: 'se', title: 'Industry advisory committee package', description: 'Committee membership, minutes, and action tracking.', status: 'In Progress', owner: 'Program Coordinator', dueDate: '2026-07-01', progress: 64, evidence: 1, reviewerNotes: 'Need signed attendance.' },
+  { id: 'req-4', programId: 'ai', title: 'Benchmarking data', description: 'Local and international benchmarking evidence.', status: 'Missing', owner: 'Quality Officer', dueDate: '2026-06-20', progress: 32, evidence: 0, reviewerNotes: 'Critical before mock visit.' },
+  { id: 'req-5', programId: 'it', title: 'Conditional recommendation closure', description: 'Closure file for previous conditional items.', status: 'In Progress', owner: 'Department Head', dueDate: '2026-05-30', progress: 73, evidence: 3, reviewerNotes: 'Reviewer confirmation pending.' },
+  { id: 'req-6', programId: 'mgt', title: 'Faculty workload evidence', description: 'Updated faculty workload and qualification matrix.', status: 'Missing', owner: 'Department Head', dueDate: '2026-06-01', progress: 28, evidence: 0, reviewerNotes: 'High priority evidence gap.' },
+];
+
 export const accreditationStandards = [
   { id: 'std-1', programId: 'cs', code: 'S1', title: 'Mission and Goals', completion: 100, criteria: [{ id: 'c1-1', code: '1.1', title: 'Mission alignment', evidence: ['Strategic alignment matrix', 'Program mission approval'] }] },
   { id: 'std-2', programId: 'cs', code: 'S2', title: 'Program Management', completion: 92, criteria: [{ id: 'c2-1', code: '2.1', title: 'Governance roles', evidence: ['Committee minutes', 'Role matrix'] }] },
@@ -306,6 +348,15 @@ export const accreditationStandards = [
   { id: 'std-4', programId: 'se', code: 'S3', title: 'Teaching and Learning', completion: 71, criteria: [{ id: 'c4-1', code: '3.1', title: 'Curriculum mapping', evidence: ['Curriculum map', 'Advisory committee notes'] }] },
   { id: 'std-5', programId: 'it', code: 'S4', title: 'Students', completion: 66, criteria: [{ id: 'c5-1', code: '4.1', title: 'Student support', evidence: ['Student handbook', 'Advising records'] }] },
   { id: 'std-6', programId: 'mgt', code: 'S5', title: 'Faculty', completion: 48, criteria: [{ id: 'c6-1', code: '5.1', title: 'Faculty workload', evidence: ['Faculty CVs', 'Workload report'] }] },
+];
+
+export const accreditationCriteria = [
+  { id: 'crit-1', standardId: 'std-1', title: 'Mission alignment', description: 'Program mission is aligned with Taif University mission.', evaluationScore: 92, status: 'Approved' },
+  { id: 'crit-2', standardId: 'std-2', title: 'Governance roles', description: 'Program committees and responsibilities are documented.', evaluationScore: 86, status: 'Under Review' },
+  { id: 'crit-3', standardId: 'std-3', title: 'Learning outcomes assessment', description: 'Assessment cycle and improvement actions are complete.', evaluationScore: 78, status: 'In Progress' },
+  { id: 'crit-4', standardId: 'std-4', title: 'Curriculum mapping', description: 'Course to PLO mapping is verified.', evaluationScore: 69, status: 'In Progress' },
+  { id: 'crit-5', standardId: 'std-5', title: 'Student support', description: 'Advising, appeal, and support services are evidenced.', evaluationScore: 66, status: 'Conditional' },
+  { id: 'crit-6', standardId: 'std-6', title: 'Faculty workload', description: 'Faculty workload and staffing levels are sufficient.', evaluationScore: 48, status: 'Missing' },
 ];
 
 export const accreditationOperationalItems = {
@@ -341,6 +392,13 @@ export const accreditationOperationalItems = {
   ],
 };
 
+export const accreditationMilestones = [
+  { id: 'ms-1', programId: 'cs', title: 'Self-study finalization', status: 'Under Review', progress: 88, due: '2026-06-20' },
+  { id: 'ms-2', programId: 'se', title: 'Evidence collection', status: 'In Progress', progress: 67, due: '2026-07-10' },
+  { id: 'ms-3', programId: 'it', title: 'Recommendation closure', status: 'In Progress', progress: 73, due: '2026-05-30' },
+  { id: 'ms-4', programId: 'mgt', title: 'Eligibility recovery', status: 'Delayed', progress: 42, due: '2026-06-01' },
+];
+
 export function getCollegeDepartments(collegeId) {
   return departments.filter((department) => department.collegeId === collegeId);
 }
@@ -362,6 +420,56 @@ export function getProgramStandards(programId) {
     programId,
     completion: Math.max(35, standard.completion - index * 7),
   }));
+}
+
+export function getProgramCriteria(programId) {
+  const standards = getProgramStandards(programId);
+  return standards.flatMap((standard) => {
+    const linked = accreditationCriteria.filter((criterion) => criterion.standardId === standard.id);
+    if (linked.length) return linked;
+    return [{
+      id: `${standard.id}-criterion`,
+      standardId: standard.id,
+      title: `${standard.code} readiness criterion`,
+      description: `Criterion evidence for ${standard.title}.`,
+      evaluationScore: standard.completion,
+      status: standard.completion > 80 ? 'Approved' : standard.completion > 60 ? 'In Progress' : 'Missing',
+    }];
+  });
+}
+
+export function getProgramAccreditationItems(programId) {
+  return {
+    requirements: accreditationRequirements.filter((item) => item.programId === programId),
+    standards: getProgramStandards(programId),
+    criteria: getProgramCriteria(programId),
+    evidence: accreditationOperationalItems.evidence.filter((item) => item.programId === programId),
+    risks: accreditationOperationalItems.risks.filter((item) => item.programId === programId),
+    recommendations: accreditationOperationalItems.recommendations.filter((item) => item.programId === programId),
+    visits: accreditationOperationalItems.visits.filter((item) => item.programId === programId),
+    tasks: accreditationOperationalItems.tasks.filter((item) => item.programId === programId),
+    improvementPlans: accreditationOperationalItems.improvementPlans.filter((item) => item.programId === programId),
+    milestones: accreditationMilestones.filter((item) => item.programId === programId),
+  };
+}
+
+export function getAccreditationSummary() {
+  const base = getHierarchySummary();
+  const conditional = academicPrograms.filter((program) => program.accreditationStatus === 'Conditional').length;
+  const unaccredited = academicPrograms.filter((program) => ['Expired'].includes(program.accreditationStatus)).length;
+  const openRecommendations = accreditationOperationalItems.recommendations.filter((item) => item.status !== 'Closed').length;
+  const upcomingVisits = accreditationOperationalItems.visits.filter((item) => ['Scheduled', 'Critical'].includes(item.status)).length;
+  const missingEvidence = accreditationOperationalItems.evidence.filter((item) => ['Missing'].includes(item.status)).length
+    + accreditationRequirements.filter((item) => item.status === 'Missing').length;
+  return {
+    ...base,
+    conditional,
+    unaccredited,
+    averageReadiness: base.universityProgress,
+    openRecommendations,
+    upcomingVisits,
+    missingEvidence,
+  };
 }
 
 export function getHierarchySummary() {

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Navigate, Routes, Route } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
 import Dashboard from './pages/Dashboard';
 import CoursesPage from './pages/CoursesPage';
@@ -11,6 +11,7 @@ import ProgramPage from './pages/ProgramPage';
 import CollegesPage from './pages/CollegesPage';
 import CollegeDetailsPage from './pages/CollegeDetailsPage';
 import DepartmentDetailsPage from './pages/DepartmentDetailsPage';
+import ProgramAccreditationDetailsPage from './pages/ProgramAccreditationDetailsPage';
 import HierarchyReportsPage from './pages/HierarchyReportsPage';
 import AllProgramsReportPage from './pages/AllProgramsReportPage';
 import ModulePage from './pages/ModulePage';
@@ -58,9 +59,13 @@ export default function App() {
             <Route path="/programs/reports/:reportId" element={<AllProgramsReportPage />} />
             <Route path="/programs/:programId" element={<ProgramPage />} />
             <Route path="/programs/:programId/reports/:reportId" element={<ProgramPage />} />
-            <Route path="/colleges" element={<CollegesPage />} />
-            <Route path="/colleges/:collegeId" element={<CollegeDetailsPage />} />
-            <Route path="/colleges/:collegeId/departments/:departmentId" element={<DepartmentDetailsPage />} />
+            <Route path="/academic-accreditation" element={<CollegesPage />} />
+            <Route path="/academic-accreditation/colleges/:collegeId" element={<CollegeDetailsPage />} />
+            <Route path="/academic-accreditation/colleges/:collegeId/departments/:departmentId" element={<DepartmentDetailsPage />} />
+            <Route path="/academic-accreditation/programs/:programId" element={<ProgramAccreditationDetailsPage />} />
+            <Route path="/colleges" element={<Navigate to="/academic-accreditation" replace />} />
+            <Route path="/colleges/:collegeId" element={<Navigate to="/academic-accreditation" replace />} />
+            <Route path="/colleges/:collegeId/departments/:departmentId" element={<Navigate to="/academic-accreditation" replace />} />
             <Route path="/kpis" element={<HierarchyReportsPage mode="kpis" />} />
             <Route path="/reports" element={<HierarchyReportsPage mode="reports" />} />
             <Route
@@ -77,8 +82,8 @@ export default function App() {
               path="/institutional-accreditation"
               element={<InstitutionalAccreditationPage />}
             />
-            <Route path="/accreditation" element={<QualityModulesPage moduleType="accreditation" />} />
-            <Route path="/accreditation/:section" element={<QualityModulesPage moduleType="accreditation" />} />
+            <Route path="/accreditation" element={<Navigate to="/academic-accreditation" replace />} />
+            <Route path="/accreditation/:section" element={<Navigate to="/academic-accreditation" replace />} />
             <Route path="/strategic-planning" element={<StrategicPlanningModulePage />} />
             <Route path="/strategic-planning/:section" element={<StrategicPlanningModulePage />} />
             <Route path="/strategic-planning/plans/:planId" element={<StrategicPlanDetailsPage />} />

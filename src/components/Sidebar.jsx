@@ -4,10 +4,9 @@ import { useI18n } from '../i18n';
 
 const navItems = [
   { base: '/', path: '/', icon: 'ti-layout-dashboard', label: 'Dashboard', labelAr: 'لوحة التحكم', exact: true },
-  { base: '/colleges', path: '/colleges', icon: 'ti-building-community', label: 'Colleges', labelAr: 'الكليات' },
   { base: '/programs', path: '/programs', icon: 'ti-award', label: 'Programs', labelAr: 'البرامج' },
   { base: '/courses', path: '/courses', icon: 'ti-book-2', label: 'Courses', labelAr: 'المقررات' },
-  { base: '/accreditation', path: '/accreditation/dashboard', icon: 'ti-certificate', label: 'Academic Accreditation', labelAr: 'الاعتماد الأكاديمي' },
+  { base: '/academic-accreditation', path: '/academic-accreditation', icon: 'ti-certificate', label: 'Academic Accreditation Management', labelAr: 'إدارة الاعتماد الأكاديمي' },
   { base: '/institutional-accreditation', path: '/institutional-accreditation', icon: 'ti-building-bank', label: 'Institutional Accreditation', labelAr: 'الاعتماد المؤسسي' },
   { base: '/strategic-planning', path: '/strategic-planning/dashboard', icon: 'ti-chart-arrows-vertical', label: 'Strategic Planning', labelAr: 'التخطيط الاستراتيجي' },
   { base: '/quality-projects', path: '/quality-projects/dashboard', icon: 'ti-briefcase', label: 'Quality Projects', labelAr: 'مشاريع الجودة' },

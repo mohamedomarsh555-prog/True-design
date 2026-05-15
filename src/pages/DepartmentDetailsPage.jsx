@@ -21,7 +21,7 @@ import {
 } from '../data/academicHierarchyData';
 import { useI18n } from '../i18n';
 
-const tabs = ['Overview', 'Programs', 'Standards', 'Evidence', 'Risks', 'Recommendations', 'Tasks', 'Visits', 'Activity Log'];
+const tabs = ['Overview', 'Programs', 'Accreditation Progress', 'Evidence', 'Risks', 'Recommendations', 'Tasks', 'Visits', 'Activity Log'];
 
 function filterByDepartment(collection, departmentId) {
   return collection.filter((item) => item.departmentId === departmentId);
@@ -89,7 +89,7 @@ export default function DepartmentDetailsPage() {
         ...tasks,
       ], 'Activity');
     }
-    if (activeTab === 'Standards') {
+    if (activeTab === 'Accreditation Progress') {
       return (
         <div className="standards-grid">
           {programs.flatMap((program) => getProgramStandards(program.id).map((standard) => (
@@ -97,7 +97,7 @@ export default function DepartmentDetailsPage() {
               <span>{program.code} · {standard.code}</span>
               <h3>{standard.title}</h3>
               <HierProgress value={standard.completion} label={language === 'ar' ? 'الاكتمال' : 'Completion'} />
-              <button type="button" onClick={() => navigate(`/programs/${program.id}`)}>
+              <button type="button" onClick={() => navigate(`/academic-accreditation/programs/${program.id}`)}>
                 {language === 'ar' ? 'فتح البرنامج' : 'Open Program'}
                 <i className="ti ti-arrow-right" />
               </button>
@@ -114,7 +114,7 @@ export default function DepartmentDetailsPage() {
           <p>{language === 'ar' ? 'يعرض هذا المستوى البرامج والمعايير والأدلة والمهام المتراكمة داخل القسم.' : 'This level shows programs, standards, evidence, and operational workload inside the department.'}</p>
           <div className="drill-card-grid">
             {programs.map((program) => (
-              <button type="button" className="drill-card" key={program.id} onClick={() => navigate(`/programs/${program.id}`)}>
+              <button type="button" className="drill-card" key={program.id} onClick={() => navigate(`/academic-accreditation/programs/${program.id}`)}>
                 <span>{localName(program, 'name', language)}</span>
                 <strong>{program.readiness}%</strong>
                 <em>{program.accreditationStatus}</em>
@@ -133,16 +133,16 @@ export default function DepartmentDetailsPage() {
 
   return (
     <>
-      <Topbar breadcrumbs={[language === 'ar' ? 'الكليات' : 'Colleges', college.code, localName(department, 'name', language)]} />
+      <Topbar breadcrumbs={[language === 'ar' ? 'إدارة الاعتماد الأكاديمي' : 'Academic Accreditation Management', college.code, localName(department, 'name', language)]} />
       <div className="page-content hierarchy-page">
         <div className="hierarchy-layout">
           <AcademicTree
             activeType="department"
             activeId={department.id}
             onSelect={(type, id) => {
-              if (type === 'college') navigate(`/colleges/${id}`);
-              if (type === 'department') navigate(`/colleges/${college.id}/departments/${id}`);
-              if (type === 'program') navigate(`/programs/${id}`);
+              if (type === 'college') navigate(`/academic-accreditation/colleges/${id}`);
+              if (type === 'department') navigate(`/academic-accreditation/colleges/${college.id}/departments/${id}`);
+              if (type === 'program') navigate(`/academic-accreditation/programs/${id}`);
             }}
           />
           <main className="hierarchy-main">

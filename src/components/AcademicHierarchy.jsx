@@ -104,28 +104,28 @@ export function AcademicTree({ activeType, activeId, onSelect }) {
       <div className="tree-list">
         {visibleColleges.map((college) => (
           <div key={college.id}>
-            <div className={`tree-node college ${activeType === 'college' && activeId === college.id ? 'active' : ''}`}>
+            <div className={`tree-node college tone-${statusTone(college.accreditationStatus)} ${activeType === 'college' && activeId === college.id ? 'active' : ''}`}>
               <button type="button" onClick={() => toggle(college.id)}><i className={`ti ${open.has(college.id) ? 'ti-chevron-down' : 'ti-chevron-right'}`} /></button>
               <span onClick={() => onSelect?.('college', college.id)}>{localName(college, 'name', language)}</span>
-              <em>{college.readiness}%</em>
+              <em>{college.readiness}% · {college.programsCount}</em>
             </div>
             {open.has(college.id) && getCollegeDepartments(college.id).map((department) => (
               <div key={department.id}>
-                <div className={`tree-node department ${activeType === 'department' && activeId === department.id ? 'active' : ''}`}>
+                <div className={`tree-node department tone-${statusTone(department.accreditationStatus)} ${activeType === 'department' && activeId === department.id ? 'active' : ''}`}>
                   <button type="button" onClick={() => toggle(department.id)}><i className={`ti ${open.has(department.id) ? 'ti-chevron-down' : 'ti-chevron-right'}`} /></button>
                   <span onClick={() => onSelect?.('department', department.id)}>{localName(department, 'name', language)}</span>
-                  <em>{department.readiness}%</em>
+                  <em>{department.readiness}% · {department.openTasks}</em>
                 </div>
                 {open.has(department.id) && getDepartmentPrograms(department.id).map((program) => (
                   <button
                     key={program.id}
                     type="button"
-                    className={`tree-node program ${activeType === 'program' && activeId === program.id ? 'active' : ''}`}
+                    className={`tree-node program tone-${statusTone(program.accreditationStatus)} ${activeType === 'program' && activeId === program.id ? 'active' : ''}`}
                     onClick={() => onSelect?.('program', program.id)}
                   >
                     <i className="ti ti-award" />
                     <span>{localName(program, 'name', language)}</span>
-                    <em>{program.readiness}%</em>
+                    <em>{program.readiness}% · {program.accreditationStatus}</em>
                   </button>
                 ))}
               </div>
@@ -179,7 +179,7 @@ export function ProgramHierarchyCard({ program }) {
         <div><strong>{program.nextVisit}</strong><span>{language === 'ar' ? 'زيارة' : 'Next Visit'}</span></div>
       </div>
       <HierProgress value={program.readiness} label={language === 'ar' ? 'الجاهزية' : 'Readiness'} />
-      <button type="button" className="hier-open-btn" onClick={() => navigate(`/programs/${program.id}`)}>
+      <button type="button" className="hier-open-btn" onClick={() => navigate(`/academic-accreditation/programs/${program.id}`)}>
         {language === 'ar' ? 'فتح البرنامج' : 'Open Program'}
         <i className="ti ti-arrow-right" />
       </button>
