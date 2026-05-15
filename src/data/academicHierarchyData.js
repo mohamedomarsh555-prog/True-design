@@ -1,7 +1,7 @@
 export const universityNode = {
   id: 'TRUE',
-  name: 'CPTIT TRUE University',
-  nameAr: 'جامعة CPTIT TRUE',
+  name: 'Taif University',
+  nameAr: 'جامعة الطائف',
   readiness: 73,
   standardsCompletion: 76,
   evidenceCompletion: 69,
