@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="304" height="72" viewBox="0 0 304 72" role="img" aria-label="Education and Training Evaluation Commission">
+  <rect width="304" height="72" rx="12" fill="none"/>
+  <g transform="translate(10 12)">
+    <circle cx="24" cy="24" r="21" fill="#e6f4ec" stroke="#006c35" stroke-width="2.4"/>
+    <path d="M14.5 24.5l7.2 7.3 14.8-17.5" fill="none" stroke="#006c35" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M24 4v7M24 37v7M4 24h7M37 24h7" stroke="#006c35" stroke-width="2.4" stroke-linecap="round"/>
+  </g>
+  <text x="66" y="31" font-family="Arial, Tahoma, sans-serif" font-size="19" font-weight="900" fill="#064e3b">هيئة تقويم التعليم والتدريب</text>
+  <text x="66" y="52" font-family="Arial, sans-serif" font-size="13" font-weight="800" fill="#6c737f">Education & Training Evaluation Commission</text>
+</svg>

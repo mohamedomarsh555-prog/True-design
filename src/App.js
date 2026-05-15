@@ -23,6 +23,7 @@ import StrategicPlanDetailsPage from './pages/ProjectManagement/StrategicPlanDet
 import StrategicObjectiveDetailsPage from './pages/ProjectManagement/StrategicObjectiveDetailsPage';
 import StrategicProjectDetailsPage from './pages/ProjectManagement/StrategicProjectDetailsPage';
 import LoginPage from './pages/LoginPage';
+import ProfilePage from './pages/ProfilePage';
 import { useI18n } from './i18n';
 import './login.css';
 
@@ -50,6 +51,7 @@ export default function App() {
         <div className="main-content">
           <Routes>
             <Route path="/" element={<Dashboard />} />
+            <Route path="/profile" element={<ProfilePage />} />
             <Route path="/courses" element={<CoursesPage />} />
             <Route path="/courses/reports/:reportId" element={<AllCoursesReportPage />} />
             <Route path="/courses/:courseId/reports/course-specification/view" element={<CourseSpecificationViewPage />} />

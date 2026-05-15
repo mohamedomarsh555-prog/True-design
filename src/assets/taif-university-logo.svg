@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="330" height="76" viewBox="0 0 330 76" role="img" aria-label="Taif University">
+  <rect width="330" height="76" rx="12" fill="none"/>
+  <path d="M7 9h192M7 67h192" stroke="#d4b04f" stroke-width="5" stroke-linecap="square"/>
+  <text x="10" y="35" font-family="Arial, Tahoma, sans-serif" font-size="28" font-weight="900" fill="#d4b04f">جامعة الطائف</text>
+  <text x="10" y="58" font-family="Arial, sans-serif" font-size="19" font-weight="900" fill="#d4b04f">TAIF UNIVERSITY</text>
+  <text x="205" y="67" font-family="Arial, sans-serif" font-size="72" font-weight="900" fill="#d4b04f">TU</text>
+</svg>

@@ -5,6 +5,14 @@ import { useI18n } from '../i18n';
 
 export const localName = (item, key, language) => (language === 'ar' ? item?.[`${key}Ar`] || item?.[key] : item?.[key]);
 
+const statusLabels = {
+  Accredited: { en: 'Accredited', ar: 'معتمد' },
+  Conditional: { en: 'Conditional', ar: 'مشروط' },
+  'Under Review': { en: 'Under Review', ar: 'تحت المراجعة' },
+  'In Progress': { en: 'In Progress', ar: 'قيد التنفيذ' },
+  Expired: { en: 'Expired', ar: 'منتهي' },
+};
+
 export function statusTone(status = '') {
   const value = status.toLowerCase();
   if (value.includes('accredited') && !value.includes('conditional')) return 'green';
@@ -14,8 +22,13 @@ export function statusTone(status = '') {
   return 'neutral';
 }
 
+export function statusLabel(status, language) {
+  return statusLabels[status]?.[language] || status;
+}
+
 export function StatusChip({ status }) {
-  return <span className={`hier-status tone-${statusTone(status)}`}>{status}</span>;
+  const { language } = useI18n();
+  return <span className={`hier-status tone-${statusTone(status)}`}>{statusLabel(status, language)}</span>;
 }
 
 export function HierProgress({ value, label }) {
@@ -107,14 +120,14 @@ export function AcademicTree({ activeType, activeId, onSelect }) {
             <div className={`tree-node college tone-${statusTone(college.accreditationStatus)} ${activeType === 'college' && activeId === college.id ? 'active' : ''}`}>
               <button type="button" onClick={() => toggle(college.id)}><i className={`ti ${open.has(college.id) ? 'ti-chevron-down' : 'ti-chevron-right'}`} /></button>
               <span onClick={() => onSelect?.('college', college.id)}>{localName(college, 'name', language)}</span>
-              <em>{college.readiness}% · {college.programsCount}</em>
+              <em>{college.programsCount} · {college.readiness}%</em>
             </div>
             {open.has(college.id) && getCollegeDepartments(college.id).map((department) => (
               <div key={department.id}>
                 <div className={`tree-node department tone-${statusTone(department.accreditationStatus)} ${activeType === 'department' && activeId === department.id ? 'active' : ''}`}>
                   <button type="button" onClick={() => toggle(department.id)}><i className={`ti ${open.has(department.id) ? 'ti-chevron-down' : 'ti-chevron-right'}`} /></button>
                   <span onClick={() => onSelect?.('department', department.id)}>{localName(department, 'name', language)}</span>
-                  <em>{department.readiness}% · {department.openTasks}</em>
+                  <em>{department.openTasks} · {department.readiness}%</em>
                 </div>
                 {open.has(department.id) && getDepartmentPrograms(department.id).map((program) => (
                   <button
@@ -125,7 +138,7 @@ export function AcademicTree({ activeType, activeId, onSelect }) {
                   >
                     <i className="ti ti-award" />
                     <span>{localName(program, 'name', language)}</span>
-                    <em>{program.readiness}% · {program.accreditationStatus}</em>
+                    <em>{program.readiness}% · {statusLabel(program.accreditationStatus, language)}</em>
                   </button>
                 ))}
               </div>

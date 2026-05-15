@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import trueLogo from '../assets/true-logo.svg';
 import { useI18n } from '../i18n';
 
 const navItems = [
@@ -37,12 +38,7 @@ export default function Sidebar() {
           <i className="ti ti-menu-2" />
         </button>
         <div className="mobile-brand" onClick={() => goTo('/')}>
-          <div className="logo-icon">
-            <svg width="20" height="20" viewBox="0 0 20 20">
-              <polyline points="3,10 8,15 17,5" fill="none" stroke="#006c35" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </div>
-          <span className="logo-text">CPTIT TRUE</span>
+          <img className="brand-logo-img" src={trueLogo} alt="CPTIT TRUE" />
         </div>
       </div>
 
@@ -62,12 +58,7 @@ export default function Sidebar() {
         </div>
 
         <div className="sidebar-logo" style={{ cursor: 'pointer' }} onClick={() => goTo('/')}>
-          <div className="logo-icon">
-            <svg width="20" height="20" viewBox="0 0 20 20">
-              <polyline points="3,10 8,15 17,5" fill="none" stroke="#006c35" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </div>
-          <span className="logo-text">CPTIT TRUE</span>
+          <img className="brand-logo-img" src={trueLogo} alt="CPTIT TRUE" />
         </div>
 
         <div className="nav-section">

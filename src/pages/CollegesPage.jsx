@@ -43,6 +43,21 @@ export default function CollegesPage() {
     system: language === 'ar' ? 'نظام الاعتماد الأكاديمي الهرمي' : 'Academic Accreditation Hierarchy System',
   };
 
+  const metrics = [
+    { icon: 'ti-building-community', value: summary.colleges, label: language === 'ar' ? 'الكليات' : 'Colleges' },
+    { icon: 'ti-sitemap', value: summary.departments, label: language === 'ar' ? 'الأقسام' : 'Departments' },
+    { icon: 'ti-award', value: summary.programs, label: language === 'ar' ? 'البرامج' : 'Programs' },
+    { icon: 'ti-rosette-discount-check', value: summary.accredited, label: language === 'ar' ? 'البرامج المعتمدة' : 'Accredited Programs' },
+    { icon: 'ti-progress-check', value: summary.underAccreditation, label: language === 'ar' ? 'تحت الاعتماد' : 'Under Accreditation' },
+    { icon: 'ti-adjustments-check', value: summary.conditional, label: language === 'ar' ? 'مشروطة' : 'Conditional' },
+    { icon: 'ti-ban', value: summary.unaccredited, label: language === 'ar' ? 'غير معتمدة' : 'Unaccredited' },
+    { icon: 'ti-alert-triangle', value: summary.critical, label: language === 'ar' ? 'برامج حرجة' : 'Critical Programs' },
+    { icon: 'ti-gauge', value: `${summary.averageReadiness}%`, label: language === 'ar' ? 'متوسط الجاهزية' : 'Avg Readiness' },
+    { icon: 'ti-message-report', value: summary.openRecommendations, label: language === 'ar' ? 'توصيات مفتوحة' : 'Open Recommendations' },
+    { icon: 'ti-calendar-event', value: summary.upcomingVisits, label: language === 'ar' ? 'زيارات قادمة' : 'Upcoming Visits' },
+    { icon: 'ti-folder-question', value: summary.missingEvidence, label: language === 'ar' ? 'أدلة ناقصة' : 'Missing Evidence' },
+  ];
+
   return (
     <>
       <Topbar breadcrumbs={[labels.title]} />
@@ -55,6 +70,7 @@ export default function CollegesPage() {
               if (type === 'program') navigate(`${accreditationPath}/programs/${id}`);
             }}
           />
+
           <main className="hierarchy-main">
             <section className="hier-hero">
               <div>
@@ -65,20 +81,7 @@ export default function CollegesPage() {
               <OrganizationMap compact />
             </section>
 
-            <HierarchyMetricGrid metrics={[
-              { icon: 'ti-building-community', value: summary.colleges, label: language === 'ar' ? 'الكليات' : 'Colleges' },
-              { icon: 'ti-sitemap', value: summary.departments, label: language === 'ar' ? 'الأقسام' : 'Departments' },
-              { icon: 'ti-award', value: summary.programs, label: language === 'ar' ? 'البرامج' : 'Programs' },
-              { icon: 'ti-rosette-discount-check', value: summary.accredited, label: language === 'ar' ? 'البرامج المعتمدة' : 'Accredited Programs' },
-              { icon: 'ti-progress-check', value: summary.underAccreditation, label: language === 'ar' ? 'تحت الاعتماد' : 'Under Accreditation' },
-              { icon: 'ti-adjustments-check', value: summary.conditional, label: language === 'ar' ? 'مشروطة' : 'Conditional' },
-              { icon: 'ti-ban', value: summary.unaccredited, label: language === 'ar' ? 'غير معتمدة' : 'Unaccredited' },
-              { icon: 'ti-alert-triangle', value: summary.critical, label: language === 'ar' ? 'برامج حرجة' : 'Critical Programs' },
-              { icon: 'ti-gauge', value: `${summary.averageReadiness}%`, label: language === 'ar' ? 'متوسط الجاهزية' : 'Avg Readiness' },
-              { icon: 'ti-message-report', value: summary.openRecommendations, label: language === 'ar' ? 'توصيات مفتوحة' : 'Open Recommendations' },
-              { icon: 'ti-calendar-event', value: summary.upcomingVisits, label: language === 'ar' ? 'زيارات قادمة' : 'Upcoming Visits' },
-              { icon: 'ti-folder-question', value: summary.missingEvidence, label: language === 'ar' ? 'أدلة ناقصة' : 'Missing Evidence' },
-            ]} />
+            <HierarchyMetricGrid metrics={metrics} />
 
             <section className="hier-panel">
               <div className="hier-panel-head">
@@ -87,12 +90,15 @@ export default function CollegesPage() {
                   <p>{language === 'ar' ? 'اعرض حالة الاعتماد والجاهزية والزيارات والتوصيات لكل كلية وبرنامج.' : 'View accreditation status, readiness, visits, and recommendations for each college and program.'}</p>
                 </div>
                 <div className="hier-filters">
-                  <label><i className="ti ti-search" /><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder={language === 'ar' ? 'بحث عن كلية' : 'Search colleges'} /></label>
+                  <label>
+                    <i className="ti ti-search" />
+                    <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder={language === 'ar' ? 'بحث عن كلية' : 'Search colleges'} />
+                  </label>
                   <select value={status} onChange={(event) => setStatus(event.target.value)}>
-                    <option>All</option>
-                    <option>Accredited</option>
-                    <option>Conditional</option>
-                    <option>In Progress</option>
+                    <option value="All">{language === 'ar' ? 'الكل' : 'All'}</option>
+                    <option value="Accredited">{language === 'ar' ? 'معتمد' : 'Accredited'}</option>
+                    <option value="Conditional">{language === 'ar' ? 'مشروط' : 'Conditional'}</option>
+                    <option value="In Progress">{language === 'ar' ? 'قيد التنفيذ' : 'In Progress'}</option>
                   </select>
                 </div>
               </div>
@@ -126,7 +132,7 @@ export default function CollegesPage() {
                         <span>{language === 'ar' ? 'آخر تحديث' : 'Updated'} {college.lastUpdate}</span>
                         <button type="button" onClick={() => navigate(`${accreditationPath}/colleges/${college.id}`)}>
                           {language === 'ar' ? 'فتح الاعتماد' : 'Open Accreditation'}
-                          <i className="ti ti-arrow-right" />
+                          <i className={`ti ${language === 'ar' ? 'ti-arrow-left' : 'ti-arrow-right'}`} />
                         </button>
                       </div>
                     </article>
