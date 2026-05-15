@@ -247,7 +247,7 @@ html[dir="rtl"] body {
 
 .sidebar {
   width: 240px;
-  background: var(--dga-green-900);
+  background: var(--dga-neutral-50);
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
@@ -257,6 +257,19 @@ html[dir="rtl"] body {
   height: 100vh;
   overflow-y: auto;
   z-index: 100;
+}
+
+.sidebar::after {
+  content: "";
+  position: fixed;
+  top: -8vh;
+  left: 226px;
+  width: 72px;
+  height: 116vh;
+  border-right: 2px solid var(--dga-green);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 101;
 }
 
 .sidebar-logo {
@@ -286,7 +299,7 @@ html[dir="rtl"] body {
 }
 
 .logo-text {
-  color: white;
+  color: var(--dga-green-900);
   font-size: 15px;
   font-weight: 600;
   letter-spacing: 0.02em;
@@ -301,11 +314,11 @@ html[dir="rtl"] body {
   font-size: 10px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.35);
+  color: var(--dga-neutral-500);
 }
 
 .nav-divider {
-  border-top: 1px solid rgba(255,255,255,0.08);
+  border-top: 1px solid var(--dga-neutral-200);
   margin: 4px 0;
 }
 
@@ -318,7 +331,7 @@ html[dir="rtl"] body {
   border: 0;
   background: transparent;
   cursor: pointer;
-  color: rgba(255,255,255,0.65);
+  color: var(--dga-neutral-700);
   font: inherit;
   font-size: 13px;
   text-align: start;
@@ -328,13 +341,13 @@ html[dir="rtl"] body {
 }
 
 .nav-item:hover {
-  background: rgba(255,255,255,0.08);
-  color: white;
+  background: var(--dga-green-soft);
+  color: var(--dga-green-900);
 }
 
 .nav-item.active {
-  background: rgba(255,255,255,0.12);
-  color: white;
+  background: linear-gradient(90deg, rgba(0, 108, 53, 0.12), rgba(0, 108, 53, 0.04));
+  color: var(--dga-green-900);
 }
 
 .nav-item i {
@@ -416,6 +429,13 @@ html[dir="rtl"] body {
 html[dir="rtl"] .sidebar {
   left: auto;
   right: 0;
+}
+
+html[dir="rtl"] .sidebar::after {
+  left: auto;
+  right: 226px;
+  border-right: 0;
+  border-left: 2px solid var(--dga-green);
 }
 
 html[dir="rtl"] .main-content {
@@ -1488,14 +1508,15 @@ a:focus-visible,
 }
 
 .sidebar {
-  background: var(--dga-green-900);
-  border-inline-end: 1px solid rgba(255, 255, 255, 0.12);
+  background: var(--dga-neutral-50);
+  border-inline-end: 0;
+  box-shadow: 12px 0 36px rgba(22, 22, 22, 0.035);
 }
 
 .sidebar-logo {
   min-height: 72px;
   padding: 18px 18px;
-  border-bottom-color: rgba(255, 255, 255, 0.14);
+  border-bottom-color: var(--dga-neutral-200);
 }
 
 .logo-icon {
@@ -1514,43 +1535,27 @@ a:focus-visible,
 }
 
 .nav-label {
-  color: rgba(255, 255, 255, 0.52);
+  color: var(--dga-neutral-500);
   letter-spacing: 0.08em;
 }
 
-.nav-item,
-.sub-item {
-  color: rgba(255, 255, 255, 0.72);
+.nav-item {
+  color: var(--dga-neutral-700);
 }
 
-.nav-item:hover,
-.sub-item:hover {
-  background: rgba(255, 255, 255, 0.08);
-  color: #fff;
+.nav-item:hover {
+  background: var(--dga-green-soft);
+  color: var(--dga-green-900);
 }
 
 .nav-item.active {
-  background: rgba(255, 255, 255, 0.16);
-  color: #fff;
-  box-shadow: inset 4px 0 0 var(--dga-warning);
+  background: linear-gradient(90deg, rgba(0, 108, 53, 0.13), rgba(0, 108, 53, 0.035));
+  color: var(--dga-green-900);
+  box-shadow: inset 4px 0 0 var(--dga-green);
 }
 
 html[dir="rtl"] .nav-item.active {
-  box-shadow: inset -4px 0 0 var(--dga-warning);
-}
-
-.sub-list {
-  background: rgba(0, 0, 0, 0.16);
-}
-
-.sub-item.active {
-  background: rgba(255, 255, 255, 0.1);
-  color: #fff;
-}
-
-.sub-item.active .ci-dot.course-dot,
-.sub-item.active .ci-dot.program-dot {
-  background: #54c08a;
+  box-shadow: inset -4px 0 0 var(--dga-green);
 }
 
 .topbar {
