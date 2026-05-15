@@ -1,36 +1,24 @@
 import { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useI18n } from '../i18n';
+
+const navItems = [
+  { base: '/', path: '/', icon: 'ti-layout-dashboard', label: 'Dashboard', labelAr: 'لوحة التحكم', exact: true },
+  { base: '/colleges', path: '/colleges', icon: 'ti-building-community', label: 'Colleges', labelAr: 'الكليات' },
+  { base: '/programs', path: '/programs', icon: 'ti-award', label: 'Programs', labelAr: 'البرامج' },
+  { base: '/accreditation', path: '/accreditation/dashboard', icon: 'ti-certificate', label: 'Academic Accreditation', labelAr: 'الاعتماد الأكاديمي' },
+  { base: '/institutional-accreditation', path: '/institutional-accreditation', icon: 'ti-building-bank', label: 'Institutional Accreditation', labelAr: 'الاعتماد المؤسسي' },
+  { base: '/strategic-planning', path: '/strategic-planning/dashboard', icon: 'ti-chart-arrows-vertical', label: 'Strategic Planning', labelAr: 'التخطيط الاستراتيجي' },
+  { base: '/quality-projects', path: '/quality-projects/dashboard', icon: 'ti-briefcase', label: 'Quality Projects', labelAr: 'مشاريع الجودة' },
+  { base: '/kpis', path: '/kpis', icon: 'ti-target-arrow', label: 'KPIs', labelAr: 'المؤشرات' },
+  { base: '/reports', path: '/reports', icon: 'ti-report-analytics', label: 'Reports', labelAr: 'التقارير' },
+];
 
 export default function Sidebar() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { language, t } = useI18n();
+  const { language } = useI18n();
   const [mobileOpen, setMobileOpen] = useState(false);
-
-  const qualityNav = [
-    {
-      base: '/accreditation',
-      path: '/accreditation/dashboard',
-      icon: 'ti-certificate',
-      label: 'Academic Accreditation',
-      labelAr: 'إدارة الاعتماد الأكاديمي',
-    },
-    {
-      base: '/strategic-planning',
-      path: '/strategic-planning/dashboard',
-      icon: 'ti-chart-arrows-vertical',
-      label: 'Strategic Planning',
-      labelAr: 'التخطيط الاستراتيجي',
-    },
-    {
-      base: '/quality-projects',
-      path: '/quality-projects/dashboard',
-      icon: 'ti-briefcase',
-      label: 'Quality Projects',
-      labelAr: 'مشاريع الجودة',
-    },
-  ];
 
   const goTo = (path) => {
     navigate(path);
@@ -83,71 +71,21 @@ export default function Sidebar() {
         </div>
 
         <div className="nav-section">
-          <button
-            className={`nav-item ${location.pathname === '/' ? 'active' : ''}`}
-            type="button"
-            onClick={() => goTo('/')}
-          >
-            <i className="ti ti-layout-dashboard" />
-            {t('dashboard')}
-          </button>
+          {navItems.map((item) => {
+            const active = item.exact ? location.pathname === item.base : location.pathname.startsWith(item.base);
+            return (
+              <button
+                key={item.base}
+                className={`nav-item ${active ? 'active' : ''}`}
+                type="button"
+                onClick={() => goTo(item.path)}
+              >
+                <i className={`ti ${item.icon}`} />
+                {language === 'ar' ? item.labelAr : item.label}
+              </button>
+            );
+          })}
         </div>
-
-        <div className="nav-divider" />
-        <div className="nav-label">{t('academic')}</div>
-
-        <button
-          className={`nav-item ${location.pathname.startsWith('/courses') ? 'active' : ''}`}
-          type="button"
-          onClick={() => goTo('/courses')}
-        >
-          <i className="ti ti-book" />
-          {t('courses')}
-        </button>
-
-        <button
-          className={`nav-item ${location.pathname.startsWith('/programs') ? 'active' : ''}`}
-          type="button"
-          onClick={() => goTo('/programs')}
-        >
-          <i className="ti ti-award" />
-          {t('programs')}
-        </button>
-
-        <div className="nav-divider" />
-        <div className="nav-label">{language === 'ar' ? 'الجودة والاعتماد' : 'Quality & Accreditation'}</div>
-
-        {qualityNav.map((group) => (
-          <button
-            key={group.base}
-            className={`nav-item ${location.pathname.startsWith(group.base) ? 'active' : ''}`}
-            type="button"
-            onClick={() => goTo(group.path)}
-          >
-            <i className={`ti ${group.icon}`} />
-            {language === 'ar' ? group.labelAr : group.label}
-          </button>
-        ))}
-
-        <div className="nav-divider" />
-
-        <button
-          className={`nav-item ${location.pathname.startsWith('/clo-plo-management') ? 'active' : ''}`}
-          type="button"
-          onClick={() => goTo('/clo-plo-management')}
-        >
-          <i className="ti ti-sitemap" />
-          {t('cloPloManagement')}
-        </button>
-
-        <button
-          className={`nav-item ${location.pathname.startsWith('/institutional-accreditation') ? 'active' : ''}`}
-          type="button"
-          onClick={() => goTo('/institutional-accreditation')}
-        >
-          <i className="ti ti-certificate" />
-          {t('institutionalAccreditation')}
-        </button>
       </div>
     </>
   );

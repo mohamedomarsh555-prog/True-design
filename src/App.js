@@ -8,6 +8,10 @@ import AllCoursesReportPage from './pages/AllCoursesReportPage';
 import CourseSpecificationViewPage from './pages/CourseSpecificationViewPage';
 import ProgramsPage from './pages/ProgramsPage';
 import ProgramPage from './pages/ProgramPage';
+import CollegesPage from './pages/CollegesPage';
+import CollegeDetailsPage from './pages/CollegeDetailsPage';
+import DepartmentDetailsPage from './pages/DepartmentDetailsPage';
+import HierarchyReportsPage from './pages/HierarchyReportsPage';
 import AllProgramsReportPage from './pages/AllProgramsReportPage';
 import ModulePage from './pages/ModulePage';
 import InstitutionalAccreditationPage from './pages/InstitutionalAccreditationPage';
@@ -54,6 +58,11 @@ export default function App() {
             <Route path="/programs/reports/:reportId" element={<AllProgramsReportPage />} />
             <Route path="/programs/:programId" element={<ProgramPage />} />
             <Route path="/programs/:programId/reports/:reportId" element={<ProgramPage />} />
+            <Route path="/colleges" element={<CollegesPage />} />
+            <Route path="/colleges/:collegeId" element={<CollegeDetailsPage />} />
+            <Route path="/colleges/:collegeId/departments/:departmentId" element={<DepartmentDetailsPage />} />
+            <Route path="/kpis" element={<HierarchyReportsPage mode="kpis" />} />
+            <Route path="/reports" element={<HierarchyReportsPage mode="reports" />} />
             <Route
               path="/clo-plo-management"
               element={

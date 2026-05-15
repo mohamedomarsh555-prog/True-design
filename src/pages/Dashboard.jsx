@@ -1,6 +1,8 @@
 import { useMemo, useState } from 'react';
 import Topbar from '../components/Topbar';
+import { HierProgress, HierarchyMetricGrid, OrganizationMap } from '../components/AcademicHierarchy';
 import { courses, programs } from '../data';
+import { getHierarchySummary, universityNode } from '../data/academicHierarchyData';
 import { useI18n } from '../i18n';
 
 const statusMeta = {
@@ -314,6 +316,7 @@ export default function Dashboard() {
     (sum, tab) => sum + tab.rows.filter((row) => row.status !== 'approved').length,
     0
   );
+  const hierarchySummary = getHierarchySummary();
 
   const stats = [
     { num: String(courses.length), lbl: labels.activeCourses, change: `${t('firstSemester')} 2025` },
@@ -334,6 +337,25 @@ export default function Dashboard() {
       <div className="page-content">
         <div className="page-title">{t('welcome')}</div>
         <div className="page-subtitle">{t('academicYear')} 2025/2026 - {t('firstSemester')}</div>
+        <section className="home-hierarchy-section">
+          <div className="home-hierarchy-head">
+            <div>
+              <span><i className="ti ti-building-bank" /> {language === 'ar' ? 'الهيكل المؤسسي الأكاديمي' : 'Institutional Academic Hierarchy'}</span>
+              <h2>{language === 'ar' ? 'من الجامعة إلى البرنامج والاعتماد' : 'From university to program accreditation'}</h2>
+              <p>{language === 'ar' ? 'ملخص تنفيذي مترابط للكليات والأقسام والبرامج وحالة الاعتماد.' : 'An executive rollup for colleges, departments, programs, and accreditation status.'}</p>
+            </div>
+            <HierProgress value={universityNode.readiness} label={language === 'ar' ? 'جاهزية الجامعة' : 'University Readiness'} />
+          </div>
+          <HierarchyMetricGrid metrics={[
+            { icon: 'ti-building-community', value: hierarchySummary.colleges, label: language === 'ar' ? 'الكليات' : 'Colleges' },
+            { icon: 'ti-sitemap', value: hierarchySummary.departments, label: language === 'ar' ? 'الأقسام' : 'Departments' },
+            { icon: 'ti-award', value: hierarchySummary.programs, label: language === 'ar' ? 'البرامج' : 'Programs' },
+            { icon: 'ti-rosette-discount-check', value: hierarchySummary.accredited, label: language === 'ar' ? 'برامج معتمدة' : 'Accredited' },
+            { icon: 'ti-progress-check', value: hierarchySummary.underAccreditation, label: language === 'ar' ? 'تحت الاعتماد' : 'Under Accreditation' },
+            { icon: 'ti-alert-triangle', value: hierarchySummary.critical, label: language === 'ar' ? 'حرجة' : 'Critical' },
+          ]} />
+          <OrganizationMap compact />
+        </section>
         <div className="dashboard-grid">
           {stats.map((s, i) => (
             <div key={i} className="dash-stat-card">
