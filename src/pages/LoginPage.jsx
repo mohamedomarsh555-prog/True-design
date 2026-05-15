@@ -11,10 +11,10 @@ const STATIC_AUTH = {
 
 const authCopy = {
   en: {
-    brandSub: 'Quality assurance system',
-    portal: 'Academic Quality Portal',
+    brandSub: 'Quality, Strategic Planning & Academic Accreditation Platform',
+    portal: 'Institutional Excellence Portal',
     welcome: 'Welcome back',
-    intro: 'Sign in to continue to accreditation reports, evidence repositories, executive dashboards, and program quality tracking.',
+    intro: 'Sign in to manage quality, strategic planning, academic accreditation, reports, evidence, and executive dashboards.',
     signIn: 'Sign in',
     signInHint: 'Enter your account credentials.',
     verifyOtp: 'Verify OTP',
@@ -32,13 +32,13 @@ const authCopy = {
     remember: 'Remember me',
     forgot: 'Forgot password?',
     otpSent: 'Code sent to your email',
-    features: ['Accreditation reports', 'Evidence tracking', 'Program dashboards'],
+    features: ['Quality management', 'Strategic planning', 'Academic accreditation'],
   },
   ar: {
-    brandSub: 'نظام ضمان الجودة',
-    portal: 'بوابة الجودة الأكاديمية',
+    brandSub: 'منصة إدارة الجودة والتخطيط الاستراتيجي والاعتمادات الأكاديمية',
+    portal: 'بوابة التميز المؤسسي',
     welcome: 'مرحباً بعودتك',
-    intro: 'سجل الدخول للمتابعة إلى تقارير الاعتماد ومستودع الشواهد ولوحات المتابعة التنفيذية وجودة البرامج.',
+    intro: 'سجل الدخول لإدارة الجودة والتخطيط الاستراتيجي والاعتمادات الأكاديمية والتقارير والشواهد ولوحات المتابعة التنفيذية.',
     signIn: 'تسجيل الدخول',
     signInHint: 'أدخل بيانات حسابك.',
     verifyOtp: 'التحقق من رمز OTP',
@@ -56,7 +56,7 @@ const authCopy = {
     remember: 'تذكرني',
     forgot: 'نسيت كلمة المرور؟',
     otpSent: 'تم إرسال الرمز إلى بريدك الإلكتروني',
-    features: ['تقارير الاعتماد', 'متابعة الشواهد', 'لوحات جودة البرامج'],
+    features: ['إدارة الجودة', 'التخطيط الاستراتيجي', 'الاعتمادات الأكاديمية'],
   },
 };
 
