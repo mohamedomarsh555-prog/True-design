@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import trueLogo from '../assets/true-logo.svg';
 import taifLogo from '../assets/taif-university-logo.svg';
 import { useI18n } from '../i18n';
 
@@ -68,8 +67,6 @@ export default function Topbar({ breadcrumbs = [] }) {
     <>
       <div className="topbar">
         <div className="topbar-brand-strip" aria-label={language === 'ar' ? 'شعارات المنصة' : 'Platform logos'}>
-          <img className="platform-logo" src={trueLogo} alt="CPTIT TRUE" />
-          <span className="topbar-logo-divider" />
           <img className="taif-logo" src={taifLogo} alt={language === 'ar' ? 'شعار جامعة الطائف' : 'Taif University'} />
         </div>
 

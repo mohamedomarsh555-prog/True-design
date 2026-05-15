@@ -6166,20 +6166,9 @@ html[dir="rtl"] .main-content .sp-hero-actions {
   object-fit: contain;
 }
 
-.topbar-brand-strip .platform-logo {
-  height: 46px;
-  max-width: min(25vw, 174px);
-}
-
 .topbar-brand-strip .taif-logo {
   height: 46px;
   max-width: min(32vw, 260px);
-}
-
-.topbar-logo-divider {
-  width: 1px;
-  height: 34px;
-  background: var(--dga-neutral-200);
 }
 
 .page-breadcrumb-strip {
@@ -6440,7 +6429,6 @@ html[dir="rtl"] .user-dropdown {
     justify-content: space-between;
   }
 
-  .topbar-brand-strip .platform-logo,
   .topbar-brand-strip .taif-logo {
     max-width: 44vw;
     height: 40px;
@@ -6461,11 +6449,6 @@ html[dir="rtl"] .user-dropdown {
     gap: 8px;
   }
 
-  .topbar-logo-divider {
-    display: none;
-  }
-
-  .topbar-brand-strip .platform-logo,
   .topbar-brand-strip .taif-logo {
     max-width: 48%;
     height: 34px;
@@ -6497,18 +6480,9 @@ html[dir="rtl"] .user-dropdown {
   gap: 12px;
 }
 
-.topbar-brand-strip .platform-logo {
-  height: 40px;
-  max-width: min(23vw, 158px);
-}
-
 .topbar-brand-strip .taif-logo {
-  height: 40px;
-  max-width: min(29vw, 238px);
-}
-
-.topbar-logo-divider {
-  height: 30px;
+  height: 42px;
+  max-width: min(34vw, 270px);
 }
 
 .language-switch {
@@ -6629,8 +6603,168 @@ html[dir="rtl"] .user-dropdown {
     padding: 14px 14px 18px;
   }
 
-  .topbar-brand-strip .platform-logo,
   .topbar-brand-strip .taif-logo {
-    height: 32px;
+    height: 34px;
+  }
+}
+
+/* Compact mobile top area */
+@media (max-width: 900px) {
+  .mobile-shellbar {
+    min-height: 58px;
+    padding: 8px 14px;
+    border-bottom: 1px solid rgba(210, 214, 219, 0.78);
+    box-shadow: 0 10px 26px rgba(15, 23, 42, 0.055);
+  }
+
+  .mobile-brand .brand-logo-img {
+    width: 146px;
+    height: 42px;
+  }
+
+  .mobile-menu-btn {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+  }
+
+  .topbar {
+    position: static;
+    min-height: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 12px 14px;
+    border-bottom: 1px solid rgba(210, 214, 219, 0.78);
+    background: rgba(255, 255, 255, 0.96);
+  }
+
+  .topbar-brand-strip {
+    width: 100%;
+    min-height: 44px;
+    justify-content: center;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(210, 214, 219, 0.54);
+  }
+
+  .topbar-brand-strip .taif-logo {
+    width: auto;
+    max-width: min(64vw, 250px);
+    height: 42px;
+  }
+
+  .topbar-right {
+    width: 100%;
+    display: grid;
+    grid-template-columns: minmax(180px, 1.2fr) minmax(150px, 0.9fr) auto;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .user-menu,
+  .user-trigger,
+  .role-select,
+  .language-switch {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .user-trigger,
+  .role-select,
+  .language-switch {
+    min-height: 42px;
+    border-radius: 12px;
+  }
+
+  .user-trigger {
+    justify-content: space-between;
+  }
+
+  .role-select {
+    justify-content: space-between;
+  }
+
+  .role-select select {
+    min-width: 0;
+    width: 100%;
+    text-align: center;
+  }
+
+  .language-switch {
+    justify-content: center;
+    width: auto;
+    min-width: 164px;
+  }
+
+  .language-option {
+    min-width: 50px;
+  }
+}
+
+@media (max-width: 700px) {
+  .topbar-right {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .role-select {
+    order: 3;
+    grid-column: 1 / -1;
+  }
+
+  .language-switch {
+    width: 100%;
+    min-width: 0;
+  }
+}
+
+@media (max-width: 520px) {
+  .mobile-shellbar {
+    min-height: 54px;
+    padding: 7px 12px;
+  }
+
+  .mobile-brand .brand-logo-img {
+    width: 124px;
+    height: 36px;
+  }
+
+  .mobile-menu-btn {
+    width: 38px;
+    height: 38px;
+  }
+
+  .topbar {
+    padding: 10px 12px;
+  }
+
+  .topbar-brand-strip {
+    min-height: 38px;
+    padding-bottom: 6px;
+  }
+
+  .topbar-brand-strip .taif-logo {
+    max-width: 78vw;
+    height: 36px;
+  }
+
+  .topbar-right {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .role-select {
+    order: 2;
+  }
+
+  .language-switch {
+    order: 3;
+  }
+
+  .user-trigger-copy {
+    display: flex;
+  }
+
+  .user-trigger-copy strong {
+    max-width: 160px;
   }
 }

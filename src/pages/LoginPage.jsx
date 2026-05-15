@@ -9,6 +9,57 @@ const STATIC_AUTH = {
   otp: '010011',
 };
 
+const authCopy = {
+  en: {
+    brandSub: 'Quality assurance system',
+    portal: 'Academic Quality Portal',
+    welcome: 'Welcome back',
+    intro: 'Sign in to continue to accreditation reports, evidence repositories, executive dashboards, and program quality tracking.',
+    signIn: 'Sign in',
+    signInHint: 'Enter your account credentials.',
+    verifyOtp: 'Verify OTP',
+    otpHint: 'Enter the one-time passcode to access TRUE.',
+    invalidLogin: 'Invalid username or password.',
+    invalidOtp: 'Invalid OTP code.',
+    username: 'Username',
+    password: 'Password',
+    otpCode: 'OTP Code',
+    usernamePlaceholder: 'Enter username',
+    passwordPlaceholder: 'Enter password',
+    continue: 'Continue',
+    verify: 'Verify and enter',
+    back: 'Back to sign in',
+    remember: 'Remember me',
+    forgot: 'Forgot password?',
+    otpSent: 'Code sent to your email',
+    features: ['Accreditation reports', 'Evidence tracking', 'Program dashboards'],
+  },
+  ar: {
+    brandSub: 'نظام ضمان الجودة',
+    portal: 'بوابة الجودة الأكاديمية',
+    welcome: 'مرحباً بعودتك',
+    intro: 'سجل الدخول للمتابعة إلى تقارير الاعتماد ومستودع الشواهد ولوحات المتابعة التنفيذية وجودة البرامج.',
+    signIn: 'تسجيل الدخول',
+    signInHint: 'أدخل بيانات حسابك.',
+    verifyOtp: 'التحقق من رمز OTP',
+    otpHint: 'أدخل رمز التحقق لمتابعة الدخول إلى TRUE.',
+    invalidLogin: 'اسم المستخدم أو كلمة المرور غير صحيحة.',
+    invalidOtp: 'رمز التحقق غير صحيح.',
+    username: 'اسم المستخدم',
+    password: 'كلمة المرور',
+    otpCode: 'رمز OTP',
+    usernamePlaceholder: 'أدخل اسم المستخدم',
+    passwordPlaceholder: 'أدخل كلمة المرور',
+    continue: 'متابعة',
+    verify: 'تحقق وادخل',
+    back: 'العودة لتسجيل الدخول',
+    remember: 'تذكرني',
+    forgot: 'نسيت كلمة المرور؟',
+    otpSent: 'تم إرسال الرمز إلى بريدك الإلكتروني',
+    features: ['تقارير الاعتماد', 'متابعة الشواهد', 'لوحات جودة البرامج'],
+  },
+};
+
 export default function LoginPage({ onAuthenticated }) {
   const { language, setLanguage, isRtl } = useI18n();
   const [step, setStep] = useState('login');
@@ -18,55 +69,7 @@ export default function LoginPage({ onAuthenticated }) {
   const [otp, setOtp] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-
-  const authText = {
-    en: {
-      brandSub: 'Quality assurance system',
-      portal: 'Academic Quality Portal',
-      welcome: 'Welcome back',
-      intro: 'Sign in to continue to reports, accreditation evidence, dashboards, and program quality tracking.',
-      signIn: 'Sign in',
-      signInHint: 'Enter your account credentials.',
-      verifyOtp: 'Verify OTP',
-      otpHint: 'Enter the one-time passcode to access TRUE.',
-      invalidLogin: 'Invalid username or password.',
-      invalidOtp: 'Invalid OTP code.',
-      username: 'Username',
-      password: 'Password',
-      otpCode: 'OTP Code',
-      usernamePlaceholder: 'Enter username',
-      passwordPlaceholder: 'Enter password',
-      continue: 'Continue',
-      verify: 'Verify and enter',
-      back: 'Back to sign in',
-      remember: 'Remember me',
-      forgot: 'Forgot password?',
-      otpSent: 'Code sent to your email',
-    },
-    ar: {
-      brandSub: 'نظام ضمان الجودة',
-      portal: 'بوابة الجودة الأكاديمية',
-      welcome: 'مرحباً بعودتك',
-      intro: 'سجل الدخول للمتابعة إلى التقارير وأدلة الاعتماد ولوحات المتابعة وجودة البرامج.',
-      signIn: 'تسجيل الدخول',
-      signInHint: 'أدخل بيانات حسابك.',
-      verifyOtp: 'التحقق من رمز OTP',
-      otpHint: 'أدخل رمز التحقق لمتابعة الدخول إلى TRUE.',
-      invalidLogin: 'اسم المستخدم أو كلمة المرور غير صحيحة.',
-      invalidOtp: 'رمز التحقق غير صحيح.',
-      username: 'اسم المستخدم',
-      password: 'كلمة المرور',
-      otpCode: 'رمز OTP',
-      usernamePlaceholder: 'أدخل اسم المستخدم',
-      passwordPlaceholder: 'أدخل كلمة المرور',
-      continue: 'متابعة',
-      verify: 'تحقق وادخل',
-      back: 'العودة لتسجيل الدخول',
-      remember: 'تذكرني',
-      forgot: 'نسيت كلمة المرور؟',
-      otpSent: 'تم إرسال الرمز إلى بريدك الإلكتروني',
-    },
-  }[language];
+  const authText = authCopy[language];
 
   const handleLogin = (event) => {
     event.preventDefault();
@@ -106,16 +109,19 @@ export default function LoginPage({ onAuthenticated }) {
 
       <div className="login-container">
         <div className="login-side-info">
-          <div className="brand-header login-brand-logos">
-            <div className="login-logo-card true-logo-card dark-logo-card">
-              <img src={trueLogoWhite} alt="CPTIT TRUE" />
+          <div className="login-info-top">
+            <div className="brand-header login-brand-logos">
+              <div className="login-logo-card taif-logo-card">
+                <img src={taifLogo} alt={language === 'ar' ? 'جامعة الطائف' : 'Taif University'} />
+              </div>
+              <div className="login-logo-card true-logo-card dark-logo-card">
+                <img src={trueLogoWhite} alt="CPTIT TRUE" />
+              </div>
             </div>
-            <div className="login-logo-card taif-logo-card">
-              <img src={taifLogo} alt={language === 'ar' ? 'جامعة الطائف' : 'Taif University'} />
-            </div>
-            <div className="brand-text">
-              <h1>CPTIT TRUE</h1>
-              <p>{authText.brandSub}</p>
+
+            <div className="login-brand-card">
+              <strong>CPTIT TRUE</strong>
+              <span>{authText.brandSub}</span>
             </div>
           </div>
 
@@ -145,6 +151,14 @@ export default function LoginPage({ onAuthenticated }) {
             <span className="portal-badge">{authText.portal}</span>
             <h2>{authText.welcome}</h2>
             <p>{authText.intro}</p>
+            <div className="login-feature-list">
+              {authText.features.map((feature) => (
+                <span key={feature}>
+                  <i className="ti ti-check" />
+                  {feature}
+                </span>
+              ))}
+            </div>
           </div>
 
           <div className="hero-footer">
