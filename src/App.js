@@ -4,6 +4,8 @@ import Sidebar from './components/Sidebar';
 import Dashboard from './pages/Dashboard';
 import CoursesPage from './pages/CoursesPage';
 import CoursePage from './pages/CoursePage';
+import CourseCrnRoutePage from './pages/CourseCrnRoutePage';
+import CourseCrnDetailsPage from './pages/CourseCrnDetailsPage';
 import AllCoursesReportPage from './pages/AllCoursesReportPage';
 import CourseSpecificationViewPage from './pages/CourseSpecificationViewPage';
 import ProgramsPage from './pages/ProgramsPage';
@@ -55,8 +57,10 @@ export default function App() {
             <Route path="/courses" element={<CoursesPage />} />
             <Route path="/courses/reports/:reportId" element={<AllCoursesReportPage />} />
             <Route path="/courses/:courseId/reports/course-specification/view" element={<CourseSpecificationViewPage />} />
+            <Route path="/courses/:courseId/reports/crns/:crnId" element={<CourseCrnDetailsPage />} />
             <Route path="/courses/:courseId" element={<CoursePage />} />
             <Route path="/courses/:courseId/reports/:reportId" element={<CoursePage />} />
+            <Route path="/course/all-courses/crn/:courseCode" element={<CourseCrnRoutePage />} />
             <Route path="/programs" element={<ProgramsPage />} />
             <Route path="/programs/reports/:reportId" element={<AllProgramsReportPage />} />
             <Route path="/programs/:programId" element={<ProgramPage />} />

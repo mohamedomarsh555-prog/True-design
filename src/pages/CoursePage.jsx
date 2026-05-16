@@ -2,6 +2,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import Topbar from '../components/Topbar';
 import ReportCard from '../components/ReportCard';
 import HistoryScreen from '../components/HistoryScreen';
+import CourseCrnScreen from '../components/CourseCrnScreen';
 import { courses, courseReportTypes } from '../data';
 import { useI18n } from '../i18n';
 
@@ -79,14 +80,21 @@ export default function CoursePage() {
             </div>
           </>
         ) : (
-          <HistoryScreen
-            entityCode={course.code}
-            entityId={course.id}
-            reportId={activeReport.id}
-            reportTitle={text(activeReport, 'title')}
-            type="course"
-            onBack={() => navigate(`/courses/${course.id}`)}
-          />
+          activeReport.id === 'crns' ? (
+            <CourseCrnScreen
+              course={course}
+              onBack={() => navigate(`/courses/${course.id}`)}
+            />
+          ) : (
+            <HistoryScreen
+              entityCode={course.code}
+              entityId={course.id}
+              reportId={activeReport.id}
+              reportTitle={text(activeReport, 'title')}
+              type="course"
+              onBack={() => navigate(`/courses/${course.id}`)}
+            />
+          )
         )}
       </div>
     </>

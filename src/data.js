@@ -584,3 +584,242 @@ export const historyItems = [
   { year: '2023/2024', date: 'Approved 8 Feb 2024',   status: 's-done',    statusLabel: 'Approved',       action: 'view' },
   { year: '2022/2023', date: 'Archived',               status: 's-archived',statusLabel: 'Archived',       action: 'view' },
 ];
+
+const baseCrnApprovals = [
+  { username: 'Mohamed Helal', job: 'Instructor', status: 'Submit', reason: '', date: '5/12/26, 12:32 PM' },
+  { username: 'coordinator coordinator', job: 'Coordinator', status: 'Approve', reason: '', date: '5/12/26, 12:35 PM' },
+  { username: 'QualityAssistant qualityAssistant', job: 'Quality Assistant', status: 'Approve', reason: '', date: '5/12/26, 12:37 PM' },
+];
+
+export const courseCrnReportDetails = {
+  'crn-cs12-1': {
+    submittedAt: '2026-05-12T12:37:00',
+    academicYear: '2026-2027',
+    semester: 'First Semester',
+    location: 'Main Campus',
+    noOfStudentsStarting: 40,
+    noOfStudentsCompleting: 35,
+    topicsNotCovered: [
+      {
+        topic: 'Introduction to databases and data management',
+        reason: 'One lab session was replaced by the midterm review and advising period.',
+        impact: 'Low impact; core concepts were covered through readings and examples.',
+        action: 'Add a supervised database lab in week 13 and include a short LMS activity.',
+      },
+      {
+        topic: 'Advanced internet protocols overview',
+        reason: 'Course pacing prioritized problem-solving workshops for first-year students.',
+        impact: 'No effect on core CLO achievement; topic is enrichment for this level.',
+        action: 'Move the overview to a recorded micro-lecture with a formative quiz.',
+      },
+    ],
+    grades: { 'A+': 3, A: 4, 'B+': 6, B: 8, 'C+': 9, C: 8, 'D+': 6, D: 7, F: 7 },
+    statusDistribution: { 'Denied Entry': 0, 'In Progress': 0, Incomplete: 0, Pass: 35, Fail: 7, Withdrawn: 4, Withdraw: 4 },
+    resultsComment: 'Most students met the expected foundation level. More practice is needed on data representation and basic network concepts.',
+    outcomes: [
+      { group: 'Knowledge and Understanding', clo: 'Explain fundamental computing concepts and terminology.', plo: 'PLO1', assessment: 'Exit Exam', targetLevel: 70, actualLevel: 76, comment: 'Target met; students showed solid understanding of computing vocabulary and concepts.' },
+      { group: 'Skills', clo: 'Apply structured problem-solving steps to simple computing tasks.', plo: 'PLO2', assessment: 'Practical lab assessment', targetLevel: 70, actualLevel: 72, comment: 'Target met with a small margin; more guided lab drills are recommended.' },
+      { group: 'Values', clo: 'Demonstrate responsibility, collaboration, and ethical use of computing resources.', plo: 'PLO3', assessment: 'Peer and alumni survey', targetLevel: 75, actualLevel: 78, comment: 'Students participated well in group activities and followed lab conduct expectations.' },
+    ],
+    cloRecommendation: 'Keep the current assessment mix and add early diagnostic exercises for problem solving before week 4.',
+    improvementPlans: [
+      { recommendation: 'Increase formative practice for data representation and networking basics.', action: 'Publish weekly auto-graded quizzes with immediate feedback.', support: 'LMS question bank support from the quality unit.' },
+      { recommendation: 'Strengthen practical problem-solving confidence before the final exam.', action: 'Add two supervised lab review sessions before week 14.', support: 'Lab availability and teaching assistant coverage.' },
+    ],
+    improvementActions: [
+      { action: 'Weekly auto-graded quiz package', achievement: 80, comments: 'Question bank created for six topics; remaining topics scheduled for next offering.' },
+      { action: 'Additional lab review sessions', achievement: 70, comments: 'One session completed and the second added to the next delivery plan.' },
+    ],
+    overallComment: 'The CRN is approved. Improvement actions should focus on early practice and documented lab support.',
+    approvals: baseCrnApprovals,
+  },
+  'crn-cs12-ds-clo': {
+    submittedAt: '2026-05-12T12:42:00',
+    academicYear: '2026-2027',
+    semester: 'First Semester',
+    location: 'Main Campus',
+    noOfStudentsStarting: 38,
+    noOfStudentsCompleting: 34,
+    topicsNotCovered: [
+      { topic: 'Introduction to databases and data management', reason: 'Lab equipment maintenance reduced available practical time.', impact: 'Moderate impact on hands-on confidence, with theory still covered.', action: 'Schedule one make-up lab and add a recorded walkthrough.' },
+    ],
+    grades: { 'A+': 2, A: 5, 'B+': 7, B: 8, 'C+': 8, C: 6, 'D+': 4, D: 3, F: 2 },
+    statusDistribution: { 'Denied Entry': 0, 'In Progress': 0, Incomplete: 1, Pass: 34, Fail: 2, Withdrawn: 2, Withdraw: 2 },
+    resultsComment: 'The section achieved the main CLO targets, with practical lab continuity identified as the main improvement area.',
+    outcomes: [
+      { group: 'Knowledge and Understanding', clo: 'Explain fundamental computing concepts and terminology.', plo: 'PLO1', assessment: 'Exit Exam', targetLevel: 70, actualLevel: 74, comment: 'Target achieved.' },
+      { group: 'Skills', clo: 'Apply structured problem-solving steps to simple computing tasks.', plo: 'PLO2', assessment: 'Lab performance', targetLevel: 70, actualLevel: 71, comment: 'Target achieved with limited margin.' },
+      { group: 'Values', clo: 'Demonstrate responsibility, collaboration, and ethical use of computing resources.', plo: 'PLO3', assessment: 'Group activity rubric', targetLevel: 75, actualLevel: 77, comment: 'Target achieved.' },
+    ],
+    cloRecommendation: 'Protect scheduled lab time and prepare fallback online exercises for any cancelled lab.',
+    improvementPlans: [
+      { recommendation: 'Reduce impact of lab interruptions.', action: 'Prepare online backup labs for each practical topic.', support: 'Instructional technology support.' },
+    ],
+    improvementActions: [
+      { action: 'Online backup lab templates', achievement: 60, comments: 'Templates started for three topics.' },
+    ],
+    overallComment: 'Approved with follow-up on backup lab readiness.',
+    approvals: baseCrnApprovals,
+  },
+  'crn-it1231-1': {
+    submittedAt: '2026-05-13T09:20:00',
+    academicYear: '2026-2027',
+    semester: 'First Semester',
+    location: 'Main Campus',
+    noOfStudentsStarting: 42,
+    noOfStudentsCompleting: 39,
+    topicsNotCovered: [],
+    grades: { 'A+': 4, A: 6, 'B+': 8, B: 9, 'C+': 7, C: 6, 'D+': 3, D: 2, F: 1 },
+    statusDistribution: { 'Denied Entry': 0, 'In Progress': 0, Incomplete: 0, Pass: 39, Fail: 1, Withdrawn: 2, Withdraw: 2 },
+    resultsComment: 'Student achievement is aligned with the course target, especially in IT infrastructure and applications topics.',
+    outcomes: [
+      { group: 'Knowledge and Understanding', clo: 'Identify major IT components and services.', plo: 'PLO1', assessment: 'Exit Exam', targetLevel: 70, actualLevel: 79, comment: 'Target achieved.' },
+      { group: 'Skills', clo: 'Use common productivity and network concepts.', plo: 'PLO2', assessment: 'Practical task', targetLevel: 70, actualLevel: 75, comment: 'Target achieved.' },
+      { group: 'Values', clo: 'Explain responsible use of information systems.', plo: 'PLO3', assessment: 'Participation rubric', targetLevel: 75, actualLevel: 80, comment: 'Target achieved.' },
+    ],
+    cloRecommendation: 'Continue using practical IT scenarios and add one cybersecurity awareness case study.',
+    improvementPlans: [
+      { recommendation: 'Strengthen cybersecurity awareness.', action: 'Add a case study to week 8.', support: 'Cybersecurity faculty reviewer.' },
+    ],
+    improvementActions: [
+      { action: 'Cybersecurity case study', achievement: 50, comments: 'Draft case prepared for review.' },
+    ],
+    overallComment: 'Approved with one enhancement for the next delivery.',
+    approvals: baseCrnApprovals,
+  },
+  'crn-it1231-2': {
+    submittedAt: '2026-05-13T10:05:00',
+    academicYear: '2026-2027',
+    semester: 'First Semester',
+    location: 'Branch',
+    noOfStudentsStarting: 36,
+    noOfStudentsCompleting: 33,
+    topicsNotCovered: [],
+    grades: { 'A+': 3, A: 4, 'B+': 6, B: 8, 'C+': 7, C: 5, 'D+': 4, D: 2, F: 2 },
+    statusDistribution: { 'Denied Entry': 0, 'In Progress': 0, Incomplete: 0, Pass: 33, Fail: 2, Withdrawn: 1, Withdraw: 1 },
+    resultsComment: 'Achievement is acceptable, with branch students requesting more guided lab examples.',
+    outcomes: [
+      { group: 'Knowledge and Understanding', clo: 'Identify major IT components and services.', plo: 'PLO1', assessment: 'Exit Exam', targetLevel: 70, actualLevel: 73, comment: 'Target achieved.' },
+      { group: 'Skills', clo: 'Use common productivity and network concepts.', plo: 'PLO2', assessment: 'Practical task', targetLevel: 70, actualLevel: 71, comment: 'Target achieved with limited margin.' },
+      { group: 'Values', clo: 'Explain responsible use of information systems.', plo: 'PLO3', assessment: 'Participation rubric', targetLevel: 75, actualLevel: 76, comment: 'Target achieved.' },
+    ],
+    cloRecommendation: 'Add branch-specific lab office hours before practical assessments.',
+    improvementPlans: [
+      { recommendation: 'Improve practical confidence at branch delivery.', action: 'Schedule remote lab office hours.', support: 'Virtual lab access.' },
+    ],
+    improvementActions: [
+      { action: 'Remote lab office hours', achievement: 45, comments: 'Schedule drafted for next semester.' },
+    ],
+    overallComment: 'Approved with action required for practical support.',
+    approvals: baseCrnApprovals,
+  },
+  'crn-c180-1': {
+    submittedAt: '2026-05-14T11:10:00',
+    academicYear: '2026-2027',
+    semester: 'First Semester',
+    location: 'Main Campus',
+    noOfStudentsStarting: 44,
+    noOfStudentsCompleting: 41,
+    topicsNotCovered: [
+      { topic: 'Functions, arrays, and debugging practice', reason: 'Additional time was used for control structures remediation.', impact: 'Moderate impact on advanced practice readiness.', action: 'Add two focused debugging labs in the next offering.' },
+    ],
+    grades: { 'A+': 2, A: 5, 'B+': 8, B: 10, 'C+': 8, C: 6, 'D+': 5, D: 3, F: 4 },
+    statusDistribution: { 'Denied Entry': 0, 'In Progress': 0, Incomplete: 0, Pass: 41, Fail: 4, Withdrawn: 3, Withdraw: 3 },
+    resultsComment: 'Students performed well in algorithms and basic control structures, while functions and debugging need reinforcement.',
+    outcomes: [
+      { group: 'Knowledge and Understanding', clo: 'Describe basic programming constructs.', plo: 'PLO1', assessment: 'Midterm and final exam', targetLevel: 70, actualLevel: 74, comment: 'Target achieved.' },
+      { group: 'Skills', clo: 'Implement basic programs and test code.', plo: 'PLO2', assessment: 'Programming lab', targetLevel: 70, actualLevel: 69, comment: 'Below target by one point; improvement plan required.' },
+      { group: 'Values', clo: 'Demonstrate academic integrity in coding tasks.', plo: 'PLO3', assessment: 'Lab conduct rubric', targetLevel: 75, actualLevel: 78, comment: 'Target achieved.' },
+    ],
+    cloRecommendation: 'Increase supervised coding drills for functions and debugging.',
+    improvementPlans: [
+      { recommendation: 'Raise skills CLO achievement above target.', action: 'Add weekly coding drill sheets and live debugging demonstrations.', support: 'Teaching assistant and lab reservation.' },
+    ],
+    improvementActions: [
+      { action: 'Coding drill sheets', achievement: 65, comments: 'Four drill sheets drafted.' },
+    ],
+    overallComment: 'Approved with skills CLO improvement follow-up.',
+    approvals: baseCrnApprovals,
+  },
+  'crn-c180-ds-clo': {
+    submittedAt: '2026-05-14T11:18:00',
+    academicYear: '2026-2027',
+    semester: 'First Semester',
+    location: 'Main Campus',
+    noOfStudentsStarting: 40,
+    noOfStudentsCompleting: 37,
+    topicsNotCovered: [],
+    grades: { 'A+': 3, A: 6, 'B+': 7, B: 8, 'C+': 7, C: 5, 'D+': 3, D: 2, F: 2 },
+    statusDistribution: { 'Denied Entry': 0, 'In Progress': 0, Incomplete: 0, Pass: 37, Fail: 2, Withdrawn: 1, Withdraw: 1 },
+    resultsComment: 'Direct CLO assessment shows acceptable achievement with a need for more debugging examples.',
+    outcomes: [
+      { group: 'Knowledge and Understanding', clo: 'Describe basic programming constructs.', plo: 'PLO1', assessment: 'Direct CLO exam items', targetLevel: 70, actualLevel: 76, comment: 'Target achieved.' },
+      { group: 'Skills', clo: 'Implement basic programs and test code.', plo: 'PLO2', assessment: 'Direct lab rubric', targetLevel: 70, actualLevel: 72, comment: 'Target achieved.' },
+      { group: 'Values', clo: 'Demonstrate academic integrity in coding tasks.', plo: 'PLO3', assessment: 'Lab conduct rubric', targetLevel: 75, actualLevel: 79, comment: 'Target achieved.' },
+    ],
+    cloRecommendation: 'Keep direct CLO assessment and add one debugging practice checkpoint.',
+    improvementPlans: [
+      { recommendation: 'Improve debugging evidence.', action: 'Add a marked debugging checkpoint.', support: 'Lab instructor review.' },
+    ],
+    improvementActions: [
+      { action: 'Debugging checkpoint design', achievement: 55, comments: 'Rubric draft completed.' },
+    ],
+    overallComment: 'Approved with minor enhancement.',
+    approvals: baseCrnApprovals,
+  },
+};
+
+export const courseCrnSubmissions = {
+  cs12: {
+    courseCode: 'CS12',
+    courseTitle: 'Computer Science Fundamentals',
+    courseTitleAr: 'أساسيات علوم الحاسب',
+    term: 'First Semester',
+    termAr: 'الفصل الدراسي الأول',
+    coordinator: 'Mohamed Ali Mohamed Helal',
+    submissions: [
+      {
+        id: 'crn-cs12-1',
+        crn: '1',
+        title: 'First Semester',
+        titleAr: 'الفصل الدراسي الأول',
+        instructor: 'Mohamed Ali Mohamed Helal',
+        status: 'Approved',
+        statusAr: 'معتمد',
+      },
+      {
+        id: 'crn-cs12-ds-clo',
+        crn: 'DS CLO',
+        title: 'First Semester',
+        titleAr: 'الفصل الدراسي الأول',
+        instructor: 'Mohamed Ali Mohamed Helal',
+        status: 'Approved',
+        statusAr: 'معتمد',
+      },
+    ],
+  },
+  it1231: {
+    courseCode: 'IT1231',
+    courseTitle: 'Information Technology Fundamentals',
+    courseTitleAr: 'أساسيات تقنية المعلومات',
+    term: 'First Semester',
+    termAr: 'الفصل الدراسي الأول',
+    coordinator: 'Mohamed Ali Mohamed Helal',
+    submissions: [
+      { id: 'crn-it1231-1', crn: '1', title: 'First Semester', titleAr: 'الفصل الدراسي الأول', instructor: 'Mohamed Ali Mohamed Helal', status: 'Approved', statusAr: 'معتمد' },
+      { id: 'crn-it1231-2', crn: '2', title: 'First Semester', titleAr: 'الفصل الدراسي الأول', instructor: 'Mohamed Ali Mohamed Helal', status: 'Approved', statusAr: 'معتمد' },
+    ],
+  },
+  c180: {
+    courseCode: 'C180',
+    courseTitle: 'Programming Basic',
+    courseTitleAr: 'أساسيات البرمجة',
+    term: 'First Semester',
+    termAr: 'الفصل الدراسي الأول',
+    coordinator: 'Mohamed Ali Mohamed Helal',
+    submissions: [
+      { id: 'crn-c180-1', crn: '1', title: 'First Semester', titleAr: 'الفصل الدراسي الأول', instructor: 'Mohamed Ali Mohamed Helal', status: 'Approved', statusAr: 'معتمد' },
+      { id: 'crn-c180-ds-clo', crn: 'DS CLO', title: 'First Semester', titleAr: 'الفصل الدراسي الأول', instructor: 'Mohamed Ali Mohamed Helal', status: 'Approved', statusAr: 'معتمد' },
+    ],
+  },
+};
