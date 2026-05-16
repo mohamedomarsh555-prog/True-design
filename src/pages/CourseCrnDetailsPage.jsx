@@ -21,10 +21,46 @@ const sections = [
 
 const gradeColumns = ['A+', 'A', 'B+', 'B', 'C+', 'C', 'D+', 'D', 'F'];
 const statusColumns = ['Denied Entry', 'In Progress', 'Incomplete', 'Pass', 'Fail', 'Withdrawn', 'Withdraw'];
+const gradeQuestionNumbers = Array.from({ length: 30 }, (_, index) => index + 1);
 
 function findSubmission(courseId, crnId) {
   const crnGroup = courseCrnSubmissions[courseId];
   return crnGroup?.submissions.find((submission) => submission.id === crnId);
+}
+
+function createQuestionSetup(report) {
+  const outcomeCodes = report.outcomes.map((outcome) => outcome.plo);
+  return gradeQuestionNumbers.map((number, index) => ({
+    id: `question-${number}`,
+    assessmentItem: index < 10 ? 'Exit Exam' : '',
+    questionNumber: number,
+    outcomeCode: outcomeCodes[index % outcomeCodes.length] || '',
+    questionScore: '',
+    learningOutcome: report.outcomes[index % report.outcomes.length]?.clo || '',
+  }));
+}
+
+function createStudentGradeRows(count = 5) {
+  return Array.from({ length: count }, (_, index) => ({
+    id: `student-${Date.now()}-${index}`,
+    studentNo: index + 1,
+    universityId: '',
+    studentName: '',
+    grades: Object.fromEntries(gradeQuestionNumbers.map((number) => [number, ''])),
+  }));
+}
+
+function GradeInput({ value, onChange, ariaLabel }) {
+  return (
+    <input
+      type="number"
+      min="0"
+      step="0.25"
+      value={value}
+      aria-label={ariaLabel}
+      onChange={(event) => onChange(event.target.value)}
+    />
+  );
 }
 
 function CrnWorkflow() {
@@ -220,7 +256,7 @@ function ResultsSection({ report }) {
   );
 }
 
-function OutcomesSection({ report }) {
+function OutcomesSection({ report, onAddGrades }) {
   const groups = [...new Set(report.outcomes.map((item) => item.group))];
 
   return (
@@ -228,6 +264,7 @@ function OutcomesSection({ report }) {
       <div className="crn-section-tools">
         <button type="button" className="crn-btn soft"><i className="ti ti-file-download" /> Download CLO Excel</button>
         <button type="button" className="crn-btn soft"><i className="ti ti-file-upload" /> Upload CLO Excel</button>
+        <button type="button" className="crn-btn primary" onClick={onAddGrades}><i className="ti ti-table-plus" /> Add Grades</button>
       </div>
       <h2 className="spec-section-title">(CLOs)</h2>
       {groups.map((group) => (
@@ -308,10 +345,160 @@ function ApprovalsHistory({ report }) {
   );
 }
 
-function SectionContent({ activeSection, course, crnGroup, submission, report, specification }) {
+function GradesModal({
+  course,
+  submission,
+  report,
+  questionSetup,
+  setQuestionSetup,
+  studentRows,
+  setStudentRows,
+  onClose,
+}) {
+  const updateQuestion = (rowId, key, value) => {
+    setQuestionSetup((rows) => rows.map((row) => row.id === rowId ? { ...row, [key]: value } : row));
+  };
+
+  const updateStudent = (rowId, key, value) => {
+    setStudentRows((rows) => rows.map((row) => row.id === rowId ? { ...row, [key]: value } : row));
+  };
+
+  const updateStudentGrade = (rowId, questionNumber, value) => {
+    setStudentRows((rows) => rows.map((row) => (
+      row.id === rowId
+        ? { ...row, grades: { ...row.grades, [questionNumber]: value } }
+        : row
+    )));
+  };
+
+  const addStudentRow = () => {
+    setStudentRows((rows) => [
+      ...rows,
+      {
+        ...createStudentGradeRows(1)[0],
+        studentNo: rows.length + 1,
+      },
+    ]);
+  };
+
+  const outcomeOptions = [...new Set(report.outcomes.flatMap((outcome) => [outcome.plo, outcome.clo]))];
+
+  return (
+    <div className="crn-modal-backdrop" role="presentation">
+      <section className="crn-modal" role="dialog" aria-modal="true" aria-labelledby="grades-modal-title">
+        <header className="crn-modal-head">
+          <div>
+            <h2 id="grades-modal-title">Add Grades</h2>
+            <p>Fields follow the attached Excel template: learning outcomes, question setup, and student grade recording.</p>
+          </div>
+          <button type="button" className="crn-icon-btn" onClick={onClose} aria-label="Close add grades form">
+            <i className="ti ti-x" />
+          </button>
+        </header>
+
+        <div className="crn-modal-body">
+          <section className="crn-form-section">
+            <h3>Course Information</h3>
+            <div className="crn-form-grid">
+              <label>Academic Year and Semester<input readOnly value={`${report.academicYear} / ${report.semester}`} /></label>
+              <label>Course Code and Name<input readOnly value={`${course.code} - ${course.name}`} /></label>
+              <label>CRN Number<input readOnly value={submission.crn} /></label>
+              <label>Instructor Name<input readOnly value={submission.instructor} /></label>
+            </div>
+          </section>
+
+          <section className="crn-form-section">
+            <div className="crn-form-section-head">
+              <h3>Question Setup</h3>
+              <span>Assessment item, question number, CLO/PLO code, question score, and learning outcome.</span>
+            </div>
+            <div className="crn-grade-scroll">
+              <table className="crn-grade-table setup">
+                <thead>
+                  <tr>
+                    <th>Assessment Item</th>
+                    <th>Question Number</th>
+                    <th>Outcome Code</th>
+                    <th>Question Score</th>
+                    <th>Learning Outcome</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {questionSetup.map((row) => (
+                    <tr key={row.id}>
+                      <td><input value={row.assessmentItem} onChange={(event) => updateQuestion(row.id, 'assessmentItem', event.target.value)} /></td>
+                      <td><input readOnly value={row.questionNumber} /></td>
+                      <td>
+                        <select value={row.outcomeCode} onChange={(event) => updateQuestion(row.id, 'outcomeCode', event.target.value)}>
+                          <option value="">Select</option>
+                          {outcomeOptions.map((option) => <option key={option} value={option}>{option}</option>)}
+                        </select>
+                      </td>
+                      <td><GradeInput value={row.questionScore} onChange={(value) => updateQuestion(row.id, 'questionScore', value)} ariaLabel={`Question ${row.questionNumber} score`} /></td>
+                      <td><textarea value={row.learningOutcome} onChange={(event) => updateQuestion(row.id, 'learningOutcome', event.target.value)} /></td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section className="crn-form-section">
+            <div className="crn-form-section-head">
+              <h3>Student Grades</h3>
+              <button type="button" className="crn-btn soft" onClick={addStudentRow}><i className="ti ti-user-plus" /> Add Student</button>
+            </div>
+            <div className="crn-grade-scroll">
+              <table className="crn-grade-table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>University ID</th>
+                    <th>Student Name</th>
+                    <th>Total</th>
+                    {gradeQuestionNumbers.map((number) => <th key={number}>Q{number}</th>)}
+                  </tr>
+                </thead>
+                <tbody>
+                  {studentRows.map((row) => {
+                    const total = gradeQuestionNumbers.reduce((sum, number) => sum + Number(row.grades[number] || 0), 0);
+                    return (
+                      <tr key={row.id}>
+                        <td>{row.studentNo}</td>
+                        <td><input value={row.universityId} onChange={(event) => updateStudent(row.id, 'universityId', event.target.value)} /></td>
+                        <td><input value={row.studentName} onChange={(event) => updateStudent(row.id, 'studentName', event.target.value)} /></td>
+                        <td><strong>{total || ''}</strong></td>
+                        {gradeQuestionNumbers.map((number) => (
+                          <td key={number}>
+                            <GradeInput
+                              value={row.grades[number]}
+                              onChange={(value) => updateStudentGrade(row.id, number, value)}
+                              ariaLabel={`Student ${row.studentNo} question ${number} grade`}
+                            />
+                          </td>
+                        ))}
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+
+        <footer className="crn-modal-actions">
+          <button type="button" className="btn-outline" onClick={onClose}>Cancel</button>
+          <button type="button" className="act-btn primary" onClick={onClose}>Save Grades</button>
+        </footer>
+      </section>
+    </div>
+  );
+}
+
+function SectionContent({ activeSection, course, crnGroup, submission, report, specification, onAddGrades }) {
   if (activeSection === 'delivery') return <DeliverySection report={report} />;
   if (activeSection === 'results') return <ResultsSection report={report} />;
-  if (activeSection === 'outcomes') return <OutcomesSection report={report} />;
+  if (activeSection === 'outcomes') return <OutcomesSection report={report} onAddGrades={onAddGrades} />;
   if (activeSection === 'improvement') return <ImprovementSection report={report} />;
   return <InformationSection course={course} crnGroup={crnGroup} submission={submission} report={report} specification={specification} />;
 }
@@ -322,11 +509,14 @@ export default function CourseCrnDetailsPage() {
   const { t } = useI18n();
   const [activeTab, setActiveTab] = useState('program');
   const [activeSection, setActiveSection] = useState('information');
+  const [isGradesModalOpen, setIsGradesModalOpen] = useState(false);
   const course = courses.find((item) => item.id === courseId);
   const crnGroup = courseCrnSubmissions[courseId];
   const submission = findSubmission(courseId, crnId);
   const report = courseCrnReportDetails[crnId];
   const specification = useMemo(() => getCourseSpecification(course), [course]);
+  const [questionSetup, setQuestionSetup] = useState(() => createQuestionSetup(report || { outcomes: [] }));
+  const [studentRows, setStudentRows] = useState(() => createStudentGradeRows());
   const activeIndex = sections.findIndex((section) => section.id === activeSection);
 
   if (!course || !crnGroup || !submission || !report) {
@@ -363,6 +553,7 @@ export default function CourseCrnDetailsPage() {
                   submission={submission}
                   report={report}
                   specification={specification}
+                  onAddGrades={() => setIsGradesModalOpen(true)}
                 />
                 <div className="spec-actions">
                   <button type="button" className="btn-outline" onClick={() => activeIndex === 0 ? navigate(`/courses/${course.id}/reports/crns`) : goToRelativeSection(-1)}>
@@ -378,6 +569,18 @@ export default function CourseCrnDetailsPage() {
             </div>
           )}
         </div>
+        {isGradesModalOpen && (
+          <GradesModal
+            course={course}
+            submission={submission}
+            report={report}
+            questionSetup={questionSetup}
+            setQuestionSetup={setQuestionSetup}
+            studentRows={studentRows}
+            setStudentRows={setStudentRows}
+            onClose={() => setIsGradesModalOpen(false)}
+          />
+        )}
       </div>
     </>
   );

@@ -2770,6 +2770,18 @@ html[dir="rtl"] .status-row-label {
   color: var(--dga-green-800);
 }
 
+.crn-btn.primary {
+  border-color: var(--dga-green);
+  background: var(--dga-green);
+  color: #fff;
+}
+
+.crn-btn.primary:hover {
+  border-color: var(--dga-green-800);
+  background: var(--dga-green-800);
+  color: #fff;
+}
+
 .crn-course-panel {
   overflow: hidden;
   border: 1px solid var(--dga-neutral-200);
@@ -2923,6 +2935,188 @@ html[dir="rtl"] .status-row-label {
   font-weight: 800;
 }
 
+.crn-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  display: grid;
+  place-items: center;
+  padding: 22px;
+  background: rgba(15, 23, 42, 0.48);
+}
+
+.crn-modal {
+  width: min(1280px, 100%);
+  max-height: min(88vh, 920px);
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  overflow: hidden;
+  border: 1px solid var(--dga-neutral-200);
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 28px 80px rgba(15, 23, 42, 0.28);
+}
+
+.crn-modal-head,
+.crn-modal-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 18px;
+  border-bottom: 1px solid var(--dga-neutral-200);
+}
+
+.crn-modal-actions {
+  border-top: 1px solid var(--dga-neutral-200);
+  border-bottom: 0;
+}
+
+.crn-modal-head h2 {
+  color: var(--dga-neutral-900);
+  font-size: 20px;
+}
+
+.crn-modal-head p,
+.crn-form-section-head span {
+  margin-top: 4px;
+  color: var(--dga-neutral-500);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.crn-icon-btn {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  border: 1px solid var(--dga-neutral-300);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--dga-neutral-700);
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.crn-icon-btn:hover {
+  background: var(--dga-neutral-100);
+}
+
+.crn-modal-body {
+  display: grid;
+  gap: 16px;
+  overflow: auto;
+  padding: 18px;
+}
+
+.crn-form-section {
+  display: grid;
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid var(--dga-neutral-200);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.crn-form-section h3 {
+  color: var(--dga-green-800);
+  font-size: 15px;
+}
+
+.crn-form-section-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.crn-form-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(180px, 1fr));
+  gap: 12px;
+}
+
+.crn-form-grid label {
+  display: grid;
+  gap: 6px;
+  color: var(--dga-neutral-700);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.crn-form-grid input,
+.crn-grade-table input,
+.crn-grade-table select,
+.crn-grade-table textarea {
+  width: 100%;
+  min-height: 34px;
+  border: 1px solid var(--dga-neutral-300);
+  border-radius: 6px;
+  padding: 6px 8px;
+  background: #fff;
+  color: var(--dga-neutral-900);
+  font: inherit;
+  font-size: 12px;
+}
+
+.crn-form-grid input[readonly],
+.crn-grade-table input[readonly] {
+  background: var(--dga-neutral-50);
+  color: var(--dga-neutral-700);
+}
+
+.crn-grade-scroll {
+  overflow: auto;
+  border: 1px solid var(--dga-neutral-200);
+  border-radius: 8px;
+}
+
+.crn-grade-table {
+  width: 100%;
+  min-width: 1680px;
+  border-collapse: collapse;
+  background: #fff;
+}
+
+.crn-grade-table.setup {
+  min-width: 980px;
+}
+
+.crn-grade-table th,
+.crn-grade-table td {
+  min-width: 78px;
+  padding: 8px;
+  border-bottom: 1px solid var(--dga-neutral-100);
+  border-inline-end: 1px solid var(--dga-neutral-100);
+  color: var(--dga-neutral-700);
+  font-size: 12px;
+  text-align: center;
+  vertical-align: top;
+}
+
+.crn-grade-table th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: var(--dga-neutral-100);
+  color: var(--dga-neutral-900);
+  font-weight: 900;
+}
+
+.crn-grade-table td:nth-child(2),
+.crn-grade-table td:nth-child(3),
+.crn-grade-table th:nth-child(2),
+.crn-grade-table th:nth-child(3) {
+  min-width: 150px;
+}
+
+.crn-grade-table textarea {
+  min-width: 300px;
+  min-height: 48px;
+  resize: vertical;
+}
+
 @media (max-width: 900px) {
   .crn-page-head {
     flex-direction: column;
@@ -2940,6 +3134,17 @@ html[dir="rtl"] .status-row-label {
   .crn-head-actions .crn-btn,
   .crn-submission-actions .crn-btn {
     width: 100%;
+  }
+
+  .crn-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .crn-form-section-head,
+  .crn-modal-head,
+  .crn-modal-actions {
+    flex-direction: column;
+    align-items: stretch;
   }
 }
 
