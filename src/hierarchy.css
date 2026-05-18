@@ -619,19 +619,19 @@ html[dir="rtl"] .page-content.hierarchy-page .hierarchy-layout {
 }
 
 .page-content.hierarchy-page .nested-tabs {
-  position: sticky;
-  top: 196px;
-  z-index: 3;
+  position: relative;
+  z-index: 1;
   display: flex;
+  flex-wrap: wrap;
   gap: 8px;
-  overflow-x: auto;
+  overflow: visible;
   padding: 14px 16px;
   border-bottom: 1px solid var(--dga-neutral-200);
   background: rgba(255, 255, 255, 0.94);
 }
 
 .page-content.hierarchy-page .nested-tabs button {
-  flex: 0 0 auto;
+  flex: 0 1 auto;
   min-height: 38px;
   padding: 0 12px;
   border: 1px solid var(--dga-neutral-200);
@@ -642,12 +642,140 @@ html[dir="rtl"] .page-content.hierarchy-page .hierarchy-layout {
   font: inherit;
   font-size: 12px;
   font-weight: 900;
+  white-space: nowrap;
 }
 
 .page-content.hierarchy-page .nested-tabs button.active {
   border-color: var(--dga-green);
   background: var(--dga-green);
   color: #fff;
+}
+
+.page-content.hierarchy-page .tab-body {
+  min-width: 0;
+}
+
+.page-content.hierarchy-page .accreditation-bodies-panel {
+  padding: 20px;
+}
+
+.page-content.hierarchy-page .accreditation-bodies-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.page-content.hierarchy-page .accreditation-bodies-head span {
+  color: var(--dga-green);
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.page-content.hierarchy-page .accreditation-bodies-head h2 {
+  margin-top: 4px;
+  color: #0f172a;
+  font-size: 22px;
+}
+
+.page-content.hierarchy-page .accreditation-bodies-head p {
+  max-width: 620px;
+  margin-top: 6px;
+  color: var(--dga-neutral-500);
+  line-height: 1.6;
+}
+
+.page-content.hierarchy-page .accreditation-body-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.page-content.hierarchy-page .accreditation-body-card {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 16px;
+  border: 1px solid rgba(210, 214, 219, 0.86);
+  border-radius: 8px;
+  background: linear-gradient(180deg, #fff 0%, #fbfcfd 100%);
+}
+
+.page-content.hierarchy-page .accreditation-body-main {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 12px;
+}
+
+.page-content.hierarchy-page .accreditation-body-main > i {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  background: #e9f6ee;
+  color: var(--dga-green);
+  font-size: 21px;
+}
+
+.page-content.hierarchy-page .accreditation-body-main span,
+.page-content.hierarchy-page .accreditation-status-field span,
+.page-content.hierarchy-page .accreditation-body-meta span {
+  color: var(--dga-neutral-500);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.page-content.hierarchy-page .accreditation-body-main h3 {
+  margin: 4px 0;
+  color: #0f172a;
+  font-size: 17px;
+  line-height: 1.3;
+}
+
+.page-content.hierarchy-page .accreditation-body-main p {
+  color: var(--dga-neutral-500);
+  font-size: 13px;
+}
+
+.page-content.hierarchy-page .accreditation-status-field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.page-content.hierarchy-page .accreditation-status-field select {
+  width: 100%;
+  height: 42px;
+  padding: 0 12px;
+  border: 1px solid var(--dga-neutral-200);
+  border-radius: 8px;
+  background: #fff;
+  color: #0f172a;
+  font: inherit;
+  font-weight: 800;
+  outline: 0;
+}
+
+.page-content.hierarchy-page .accreditation-status-field select:focus {
+  border-color: var(--dga-focus);
+  box-shadow: 0 0 0 3px rgba(27, 131, 84, 0.14);
+}
+
+.page-content.hierarchy-page .accreditation-body-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: #f6f8f9;
+}
+
+.page-content.hierarchy-page .accreditation-body-meta strong {
+  color: var(--dga-green-800);
 }
 
 .page-content.hierarchy-page .overview-grid {
@@ -918,6 +1046,7 @@ html[dir="rtl"] .floating-details-panel {
   .page-content.hierarchy-page .program-h-grid,
   .page-content.hierarchy-page .department-grid,
   .page-content.hierarchy-page .standards-grid,
+  .page-content.hierarchy-page .accreditation-body-grid,
   .page-content.hierarchy-page .hier-report-grid,
   .page-content.hierarchy-page .drill-card-grid,
   .page-content.hierarchy-page .org-branches,

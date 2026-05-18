@@ -10,18 +10,22 @@ import {
   ProgressRing,
   StatusChip,
   localName,
+  statusLabel,
 } from '../components/AcademicHierarchy';
 import {
   academicPrograms,
+  accreditationBodyStatusOptions,
   accreditationOperationalItems,
   colleges,
   departments,
+  getProgramAccreditationBodies,
   getProgramAccreditationItems,
 } from '../data/academicHierarchyData';
 import { useI18n } from '../i18n';
 
 const tabs = [
   'Overview',
+  'Accreditation Bodies',
   'Accreditation Requirements',
   'Self Study',
   'Standards & Criteria',
@@ -38,6 +42,10 @@ const tabs = [
   'Documents',
   'Activity Log',
 ];
+
+const tabLabels = {
+  'Accreditation Bodies': { en: 'Accreditation Bodies', ar: 'جهات الاعتماد' },
+};
 
 function DetailList({ items, type, onOpen, emptyLabel }) {
   if (!items.length) {
@@ -71,11 +79,15 @@ export default function ProgramAccreditationDetailsPage() {
   const { language } = useI18n();
   const [activeTab, setActiveTab] = useState('Overview');
   const [panelItem, setPanelItem] = useState(null);
+  const [bodyStatuses, setBodyStatuses] = useState({});
 
   const program = academicPrograms.find((item) => item.id === programId);
   const college = program ? colleges.find((item) => item.id === program.collegeId) : null;
   const department = program ? departments.find((item) => item.id === program.departmentId) : null;
   const items = program ? getProgramAccreditationItems(program.id) : null;
+  const accreditationBodies = program
+    ? getProgramAccreditationBodies(program).map((body) => ({ ...body, status: bodyStatuses[body.id] || body.status }))
+    : [];
 
   if (!program || !college || !department || !items) {
     return (
@@ -108,6 +120,52 @@ export default function ProgramAccreditationDetailsPage() {
     </div>
   );
 
+  const renderAccreditationBodies = () => (
+    <div className="accreditation-bodies-panel">
+      <div className="accreditation-bodies-head">
+        <div>
+          <span>{language === 'ar' ? 'جهات الاعتماد المخصصة' : 'Custom Accreditation Bodies'}</span>
+          <h2>{language === 'ar' ? 'حالة الاعتماد حسب كل جهة' : 'Accreditation Status by Body'}</h2>
+          <p>
+            {language === 'ar'
+              ? 'يمكن تحديث حالة الاعتماد لكل جهة اعتماد مرتبطة بهذا البرنامج بشكل مستقل.'
+              : 'Update each accreditation body status independently for this program.'}
+          </p>
+        </div>
+      </div>
+      <div className="accreditation-body-grid">
+        {accreditationBodies.map((body) => (
+          <article className="accreditation-body-card" key={body.id}>
+            <div className="accreditation-body-main">
+              <i className="ti ti-rosette-discount-check" />
+              <div>
+                <span>{language === 'ar' ? body.nameAr || body.name : body.name}</span>
+                <h3>{language === 'ar' ? body.scopeAr || body.scope : body.scope}</h3>
+                <p>{language === 'ar' ? 'المسؤول' : 'Owner'}: {body.owner}</p>
+              </div>
+              <StatusChip status={body.status} />
+            </div>
+            <label className="accreditation-status-field">
+              <span>{language === 'ar' ? 'حالة الاعتماد' : 'Accreditation Status'}</span>
+              <select
+                value={body.status}
+                onChange={(event) => setBodyStatuses((current) => ({ ...current, [body.id]: event.target.value }))}
+              >
+                {accreditationBodyStatusOptions.map((status) => (
+                  <option key={status} value={status}>{statusLabel(status, language)}</option>
+                ))}
+              </select>
+            </label>
+            <div className="accreditation-body-meta">
+              <span>{language === 'ar' ? 'المراجعة القادمة' : 'Next review'}</span>
+              <strong>{body.nextReview}</strong>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  );
+
   const renderTab = () => {
     const emptyLabel = language === 'ar' ? 'لا توجد عناصر مرتبطة بهذا البرنامج.' : 'No linked items for this program.';
 
@@ -132,6 +190,10 @@ export default function ProgramAccreditationDetailsPage() {
           </div>
         </>
       );
+    }
+
+    if (activeTab === 'Accreditation Bodies') {
+      return renderAccreditationBodies();
     }
 
     if (activeTab === 'Self Study') {
@@ -297,7 +359,7 @@ export default function ProgramAccreditationDetailsPage() {
               <div className="nested-tabs">
                 {tabs.map((tab) => (
                   <button key={tab} type="button" className={activeTab === tab ? 'active' : ''} onClick={() => setActiveTab(tab)}>
-                    {tab}
+                    {tabLabels[tab]?.[language] || tab}
                   </button>
                 ))}
               </div>

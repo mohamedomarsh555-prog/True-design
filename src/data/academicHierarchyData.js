@@ -332,6 +332,31 @@ export const academicPrograms = [
   },
 ];
 
+export const accreditationBodyStatusOptions = [
+  'Accredited',
+  'Conditional',
+  'Under Review',
+  'In Progress',
+  'Eligible',
+  'Not Started',
+  'Not Accredited',
+  'Expired',
+];
+
+export const programAccreditationBodies = [
+  { id: 'cs-ncaaa', programId: 'cs', name: 'NCAAA', nameAr: 'هيئة تقويم التعليم والتدريب', scope: 'National program accreditation', scopeAr: 'الاعتماد البرامجي الوطني', status: 'Accredited', owner: 'Quality Unit', nextReview: '2026-11-15' },
+  { id: 'cs-abet', programId: 'cs', name: 'ABET', nameAr: 'ABET', scope: 'Computing accreditation track', scopeAr: 'مسار اعتماد الحوسبة', status: 'Under Review', owner: 'Program Coordinator', nextReview: '2027-02-10' },
+  { id: 'se-ncaaa', programId: 'se', name: 'NCAAA', nameAr: 'هيئة تقويم التعليم والتدريب', scope: 'National program accreditation', scopeAr: 'الاعتماد البرامجي الوطني', status: 'In Progress', owner: 'Program Coordinator', nextReview: '2026-10-10' },
+  { id: 'se-abet', programId: 'se', name: 'ABET', nameAr: 'ABET', scope: 'Software engineering track', scopeAr: 'مسار هندسة البرمجيات', status: 'Not Started', owner: 'Department Head', nextReview: '2027-03-18' },
+  { id: 'ai-ncaaa', programId: 'ai', name: 'NCAAA', nameAr: 'هيئة تقويم التعليم والتدريب', scope: 'Eligibility and readiness review', scopeAr: 'مراجعة الأهلية والجاهزية', status: 'Under Review', owner: 'Quality Officer', nextReview: '2027-01-22' },
+  { id: 'it-ncaaa', programId: 'it', name: 'NCAAA', nameAr: 'هيئة تقويم التعليم والتدريب', scope: 'Conditional accreditation follow-up', scopeAr: 'متابعة الاعتماد المشروط', status: 'Conditional', owner: 'IT Department', nextReview: '2026-12-05' },
+  { id: 'is-ncaaa', programId: 'is', name: 'NCAAA', nameAr: 'هيئة تقويم التعليم والتدريب', scope: 'National program accreditation', scopeAr: 'الاعتماد البرامجي الوطني', status: 'Accredited', owner: 'Quality Unit', nextReview: '2027-02-12' },
+  { id: 'fin-aacsb', programId: 'fin', name: 'AACSB', nameAr: 'AACSB', scope: 'Business accreditation track', scopeAr: 'مسار اعتماد كليات الأعمال', status: 'In Progress', owner: 'College Quality Unit', nextReview: '2027-03-09' },
+  { id: 'civil-abet', programId: 'civil', name: 'ABET', nameAr: 'ABET', scope: 'Engineering accreditation', scopeAr: 'الاعتماد الهندسي', status: 'Accredited', owner: 'Engineering Accreditation Office', nextReview: '2027-04-20' },
+  { id: 'mech-abet', programId: 'mech', name: 'ABET', nameAr: 'ABET', scope: 'Engineering accreditation', scopeAr: 'الاعتماد الهندسي', status: 'Accredited', owner: 'Engineering Accreditation Office', nextReview: '2027-05-10' },
+  { id: 'ee-abet', programId: 'ee', name: 'ABET', nameAr: 'ABET', scope: 'Engineering accreditation', scopeAr: 'الاعتماد الهندسي', status: 'Accredited', owner: 'Engineering Accreditation Office', nextReview: '2027-05-25' },
+];
+
 export const accreditationRequirements = [
   { id: 'req-1', programId: 'cs', title: 'Approved program mission and goals', description: 'Mission alignment with university strategy.', status: 'Approved', owner: 'Program Coordinator', dueDate: '2026-06-15', progress: 100, evidence: 2, reviewerNotes: 'Ready for final submission.' },
   { id: 'req-2', programId: 'cs', title: 'PLO assessment cycle evidence', description: 'Annual direct and indirect PLO measurement cycle.', status: 'Under Review', owner: 'Assessment Lead', dueDate: '2026-06-30', progress: 82, evidence: 4, reviewerNotes: 'Add trend explanation.' },
@@ -451,6 +476,23 @@ export function getProgramAccreditationItems(programId) {
     improvementPlans: accreditationOperationalItems.improvementPlans.filter((item) => item.programId === programId),
     milestones: accreditationMilestones.filter((item) => item.programId === programId),
   };
+}
+
+export function getProgramAccreditationBodies(program) {
+  const linked = programAccreditationBodies.filter((item) => item.programId === program.id);
+  if (linked.length) return linked;
+
+  return [{
+    id: `${program.id}-${program.accreditationBody.toLowerCase()}`,
+    programId: program.id,
+    name: program.accreditationBody,
+    nameAr: program.accreditationBody,
+    scope: 'Program accreditation',
+    scopeAr: 'اعتماد البرنامج',
+    status: program.accreditationStatus,
+    owner: program.coordinator,
+    nextReview: program.nextVisit,
+  }];
 }
 
 export function getAccreditationSummary() {

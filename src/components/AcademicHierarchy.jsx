@@ -10,15 +10,19 @@ const statusLabels = {
   Conditional: { en: 'Conditional', ar: 'مشروط' },
   'Under Review': { en: 'Under Review', ar: 'تحت المراجعة' },
   'In Progress': { en: 'In Progress', ar: 'قيد التنفيذ' },
+  Eligible: { en: 'Eligible', ar: 'مؤهل' },
+  'Not Started': { en: 'Not Started', ar: 'لم يبدأ' },
+  'Not Accredited': { en: 'Not Accredited', ar: 'غير معتمد' },
   Expired: { en: 'Expired', ar: 'منتهي' },
 };
 
 export function statusTone(status = '') {
   const value = status.toLowerCase();
+  if (value.includes('not accredited') || value.includes('expired') || value.includes('critical') || value.includes('missing') || value.includes('delayed')) return 'red';
   if (value.includes('accredited') && !value.includes('conditional')) return 'green';
+  if (value.includes('eligible')) return 'green';
   if (value.includes('conditional') || value.includes('review')) return 'yellow';
   if (value.includes('progress') || value.includes('scheduled')) return 'orange';
-  if (value.includes('expired') || value.includes('critical') || value.includes('missing') || value.includes('delayed')) return 'red';
   return 'neutral';
 }
 
