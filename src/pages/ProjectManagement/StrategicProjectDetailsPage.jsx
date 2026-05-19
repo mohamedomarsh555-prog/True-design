@@ -14,11 +14,13 @@ import {
   strategicRisks,
   strategicResources,
   strategicTasks,
+  localizeStrategicField,
+  translateStrategicTerm,
 } from '../../data/strategicData';
 
 const t = (language, en, ar) => (language === 'ar' ? ar : en);
-const label = (item, key, language) => (language === 'ar' ? item?.[`${key}Ar`] || item?.[key] : item?.[key]);
-const money = (value) => `${Number(value || 0).toLocaleString()} SAR`;
+const label = (item, key, language) => localizeStrategicField(item, key, language);
+const money = (value, language = 'en') => `${Number(value || 0).toLocaleString()} ${t(language, 'SAR', 'ريال')}`;
 
 const tabs = [
   { id: 'overview', label: 'Overview', labelAr: 'نظرة عامة', icon: 'ti-info-circle' },
@@ -36,9 +38,10 @@ const tabs = [
 ];
 
 function StatusBadge({ status }) {
+  const { language } = useI18n();
   const value = String(status || '').toLowerCase();
-  const cls = value.includes('complete') || value.includes('track') ? 's-approved' : value.includes('risk') || value.includes('late') ? 's-rejected' : value.includes('progress') || value.includes('review') ? 's-pending' : 's-not-started';
-  return <span className={`status-pill ${cls}`}>{status}</span>;
+  const cls = value.includes('complete') || value.includes('track') || value.includes('مكتمل') || value.includes('المسار') ? 's-approved' : value.includes('risk') || value.includes('late') || value.includes('خطر') || value.includes('متأخر') ? 's-rejected' : value.includes('progress') || value.includes('review') || value.includes('تنفيذ') || value.includes('مراجعة') ? 's-pending' : 's-not-started';
+  return <span className={`status-pill ${cls}`}>{translateStrategicTerm(status, language)}</span>;
 }
 
 function Progress({ value }) {
@@ -70,7 +73,7 @@ function Overview({ project, objective, pillar, milestones, tasks, kpis, risks }
         <div className="sp-metric"><i className="ti ti-subtask" /><strong>{tasks.reduce((sum, task) => sum + (task.subtasks || []).length, 0)}</strong><span>{t(language, 'Subtasks', 'المهام الفرعية')}</span></div>
         <div className="sp-metric"><i className="ti ti-chart-infographic" /><strong>{kpis.length}</strong><span>{t(language, 'KPIs', 'المؤشرات')}</span></div>
         <div className="sp-metric"><i className="ti ti-alert-triangle" /><strong>{risks.length}</strong><span>{t(language, 'Risks', 'المخاطر')}</span></div>
-        <div className="sp-metric"><i className="ti ti-wallet" /><strong>{money(project.budget)}</strong><span>{t(language, 'Budget', 'الميزانية')}</span></div>
+        <div className="sp-metric"><i className="ti ti-wallet" /><strong>{money(project.budget, language)}</strong><span>{t(language, 'Budget', 'الميزانية')}</span></div>
       </div>
       <div className="sp-two-col">
         <section className="sp-panel">
@@ -79,7 +82,7 @@ function Overview({ project, objective, pillar, milestones, tasks, kpis, risks }
           <div className="sp-chip-list">
             <span>{t(language, 'Pillar', 'المحور')}: {label(pillar, 'name', language)}</span>
             <span>{t(language, 'Objective', 'الهدف')}: {label(objective, 'name', language)}</span>
-            <span>{t(language, 'Outputs', 'المخرجات')}: {project.outputs}</span>
+            <span>{t(language, 'Outputs', 'المخرجات')}: {label(project, 'outputs', language)}</span>
           </div>
         </section>
         <section className="sp-panel">
@@ -95,15 +98,15 @@ function Milestones({ milestones, tasks }) {
   const { language } = useI18n();
   return (
     <section className="sp-panel">
-      <div className="sp-panel-head"><h2>{t(language, 'Milestones', 'المراحل')}</h2><button className="btn-primary" type="button"><i className="ti ti-plus" /> Add</button></div>
+      <div className="sp-panel-head"><h2>{t(language, 'Milestones', 'المراحل')}</h2><button className="btn-primary" type="button"><i className="ti ti-plus" /> {t(language, 'Add', 'إضافة')}</button></div>
       <div className="sp-stack">
         {milestones.map((milestone) => (
           <article className="sp-milestone-card" key={milestone.id}>
-            <div className="sp-card-top"><h3>{label(milestone, 'name', language)}</h3><StatusBadge status={milestone.status} /></div>
-            <p>{milestone.description}</p>
+            <div className="sp-card-top"><h3>{label(milestone, 'name', language)}</h3><StatusBadge status={label(milestone, 'status', language)} /></div>
+            <p>{label(milestone, 'description', language)}</p>
             <Progress value={milestone.progress} />
-            <div className="sp-chip-list"><span>{milestone.startDate} → {milestone.endDate}</span><span>{milestone.owner}</span><span>Dependencies: {milestone.dependencies.join(', ') || '-'}</span></div>
-            <Table columns={[{ key: 'title', label: t(language, 'Task', 'المهمة') }, { key: 'assignee', label: t(language, 'Assignee', 'المسؤول') }, { key: 'due', label: t(language, 'Due', 'الاستحقاق') }, { key: 'status', label: 'Status' }, { key: 'progress', label: 'Progress' }]} rows={tasks.filter((task) => task.milestoneId === milestone.id).map((task) => ({ id: task.id, title: label(task, 'title', language), assignee: task.assignedTo, due: task.dueDate, status: <StatusBadge status={label(task, 'status', language)} />, progress: <Progress value={task.progress} /> }))} />
+            <div className="sp-chip-list"><span>{milestone.startDate} → {milestone.endDate}</span><span>{label(milestone, 'owner', language)}</span><span>{t(language, 'Dependencies', 'الاعتماديات')}: {milestone.dependencies.join(', ') || '-'}</span></div>
+            <Table columns={[{ key: 'title', label: t(language, 'Task', 'المهمة') }, { key: 'assignee', label: t(language, 'Assignee', 'المسؤول') }, { key: 'due', label: t(language, 'Due', 'الاستحقاق') }, { key: 'status', label: t(language, 'Status', 'الحالة') }, { key: 'progress', label: t(language, 'Progress', 'التقدم') }]} rows={tasks.filter((task) => task.milestoneId === milestone.id).map((task) => ({ id: task.id, title: label(task, 'title', language), assignee: label(task, 'assignedTo', language), due: task.dueDate, status: <StatusBadge status={label(task, 'status', language)} />, progress: <Progress value={task.progress} /> }))} />
           </article>
         ))}
       </div>
@@ -116,16 +119,16 @@ function Tasks({ tasks }) {
   const columns = ['New', 'In Progress', 'Under Review', 'Completed', 'Delayed', 'Cancelled'];
   return (
     <section className="sp-panel">
-      <div className="sp-panel-head"><h2>{t(language, 'Tasks Kanban Board', 'لوحة كانبان للمهام')}</h2><button className="btn-primary" type="button"><i className="ti ti-plus" /> Add Task</button></div>
+      <div className="sp-panel-head"><h2>{t(language, 'Tasks Kanban Board', 'لوحة كانبان للمهام')}</h2><button className="btn-primary" type="button"><i className="ti ti-plus" /> {t(language, 'Add Task', 'إضافة مهمة')}</button></div>
       <div className="sp-kanban">
         {columns.map((column) => (
           <div key={column}>
-            <h3>{column}<span>{tasks.filter((task) => task.status === column).length}</span></h3>
+            <h3>{translateStrategicTerm(column, language)}<span>{tasks.filter((task) => task.status === column).length}</span></h3>
             {tasks.filter((task) => task.status === column).map((task) => (
               <article key={task.id}>
                 <strong>{label(task, 'title', language)}</strong>
-                <span>{task.assignedTo} • {task.dueDate}</span>
-                <div className="sp-chip-list"><span>{task.priority}</span><span>{task.estimatedEffort}h / {task.actualEffort}h</span></div>
+                <span>{label(task, 'assignedTo', language)} • {task.dueDate}</span>
+                <div className="sp-chip-list"><span>{translateStrategicTerm(task.priority, language)}</span><span>{task.estimatedEffort}h / {task.actualEffort}h</span></div>
                 <Progress value={task.progress} />
               </article>
             ))}
@@ -133,9 +136,9 @@ function Tasks({ tasks }) {
         ))}
       </div>
       <div className="sp-view-placeholders">
-        <div><i className="ti ti-list" /> List View</div>
-        <div><i className="ti ti-calendar" /> Calendar View</div>
-        <div><i className="ti ti-timeline" /> Gantt View</div>
+        <div><i className="ti ti-list" /> {t(language, 'List View', 'عرض القائمة')}</div>
+        <div><i className="ti ti-calendar" /> {t(language, 'Calendar View', 'عرض التقويم')}</div>
+        <div><i className="ti ti-timeline" /> {t(language, 'Gantt View', 'عرض جانت')}</div>
       </div>
     </section>
   );
@@ -146,20 +149,20 @@ function Subtasks({ tasks }) {
   const rows = tasks.flatMap((task) => (task.subtasks || []).map((subtask) => ({
     id: subtask.id,
     parent: label(task, 'title', language),
-    title: subtask.title,
-    status: <StatusBadge status={subtask.status} />,
+    title: label(subtask, 'title', language),
+    status: <StatusBadge status={label(subtask, 'status', language)} />,
     progress: <Progress value={subtask.progress} />,
     actions: <ActionButtons />,
   })));
-  return <section className="sp-panel"><div className="sp-panel-head"><h2>{t(language, 'Subtasks', 'المهام الفرعية')}</h2><button className="btn-primary" type="button"><i className="ti ti-plus" /> Add Subtask</button></div><Table columns={[{ key: 'parent', label: t(language, 'Parent Task', 'المهمة الرئيسية') }, { key: 'title', label: t(language, 'Subtask', 'المهمة الفرعية') }, { key: 'status', label: 'Status' }, { key: 'progress', label: 'Progress' }, { key: 'actions', label: 'Actions' }]} rows={rows} /></section>;
+  return <section className="sp-panel"><div className="sp-panel-head"><h2>{t(language, 'Subtasks', 'المهام الفرعية')}</h2><button className="btn-primary" type="button"><i className="ti ti-plus" /> {t(language, 'Add Subtask', 'إضافة مهمة فرعية')}</button></div><Table columns={[{ key: 'parent', label: t(language, 'Parent Task', 'المهمة الرئيسية') }, { key: 'title', label: t(language, 'Subtask', 'المهمة الفرعية') }, { key: 'status', label: t(language, 'Status', 'الحالة') }, { key: 'progress', label: t(language, 'Progress', 'التقدم') }, { key: 'actions', label: t(language, 'Actions', 'الإجراءات') }]} rows={rows} /></section>;
 }
 
 function Gantt({ project, milestones, tasks }) {
   const { language } = useI18n();
   const items = [
-    { id: project.id, type: 'Project', title: label(project, 'name', language), progress: project.progress, offset: 6, width: 70 },
-    ...milestones.map((item, index) => ({ id: item.id, type: 'Milestone', title: label(item, 'name', language), progress: item.progress, offset: index * 20 + 10, width: 24 })),
-    ...tasks.map((item, index) => ({ id: item.id, type: 'Task', title: label(item, 'title', language), progress: item.progress, offset: index * 16 + 18, width: 18 })),
+    { id: project.id, type: translateStrategicTerm('Project', language), title: label(project, 'name', language), progress: project.progress, offset: 6, width: 70 },
+    ...milestones.map((item, index) => ({ id: item.id, type: translateStrategicTerm('Milestone', language), title: label(item, 'name', language), progress: item.progress, offset: index * 20 + 10, width: 24 })),
+    ...tasks.map((item, index) => ({ id: item.id, type: translateStrategicTerm('Task', language), title: label(item, 'title', language), progress: item.progress, offset: index * 16 + 18, width: 18 })),
   ];
   return (
     <section className="sp-panel">
@@ -173,10 +176,11 @@ function Gantt({ project, milestones, tasks }) {
 }
 
 function SimpleTab({ title, rows }) {
+  const { language } = useI18n();
   return (
     <section className="sp-panel">
-      <div className="sp-panel-head"><h2>{title}</h2><button className="btn-primary" type="button"><i className="ti ti-plus" /> Add</button></div>
-      <Table columns={[{ key: 'title', label: 'Title' }, { key: 'owner', label: 'Owner / Actor' }, { key: 'date', label: 'Date' }, { key: 'status', label: 'Status' }, { key: 'actions', label: 'Actions' }]} rows={rows.map((row) => ({ id: row.id, title: row.name || row.title || row.action || row.comment || row.code, owner: row.owner || row.uploadedBy || row.actor || row.user || row.assignee || row.fundingSource, date: row.uploadedAt || row.timestamp || row.createdAt || row.dueDate || row.period || row.status, status: row.status ? <StatusBadge status={row.status} /> : '-', actions: <ActionButtons /> }))} />
+      <div className="sp-panel-head"><h2>{title}</h2><button className="btn-primary" type="button"><i className="ti ti-plus" /> {t(language, 'Add', 'إضافة')}</button></div>
+      <Table columns={[{ key: 'title', label: t(language, 'Title', 'العنوان') }, { key: 'owner', label: t(language, 'Owner / Actor', 'المالك / المنفذ') }, { key: 'date', label: t(language, 'Date', 'التاريخ') }, { key: 'status', label: t(language, 'Status', 'الحالة') }, { key: 'actions', label: t(language, 'Actions', 'الإجراءات') }]} rows={rows.map((row) => ({ id: row.id, title: label(row, 'name', language) || label(row, 'title', language) || label(row, 'action', language) || label(row, 'comment', language) || row.code, owner: label(row, 'owner', language) || label(row, 'uploadedBy', language) || label(row, 'actor', language) || translateStrategicTerm(row.user || row.assignee || row.fundingSource, language), date: row.uploadedAt || row.timestamp || row.createdAt || row.dueDate || row.period || row.status, status: row.status ? <StatusBadge status={label(row, 'status', language)} /> : '-', actions: <ActionButtons /> }))} />
     </section>
   );
 }
@@ -186,7 +190,7 @@ export default function StrategicProjectDetailsPage() {
   const { language } = useI18n();
   const project = strategicInitiatives.find((item) => item.id === projectId);
 
-  if (!project) return <div className="page-content">Strategic project not found</div>;
+  if (!project) return <div className="page-content">{t(language, 'Strategic project not found', 'لم يتم العثور على المشروع الاستراتيجي')}</div>;
 
   const objective = strategicObjectives.find((item) => item.id === project.objectiveId);
   const pillar = strategicPillars.find((item) => item.id === project.pillarId);
@@ -210,7 +214,7 @@ export default function StrategicProjectDetailsPage() {
     if (activeTab.id === 'team') return <SimpleTab title={t(language, 'Team and Resources', 'الفريق والموارد')} rows={resources.concat(budget)} />;
     if (activeTab.id === 'documents') return <SimpleTab title={t(language, 'Documents', 'الوثائق')} rows={documents} />;
     if (activeTab.id === 'communication') return <SimpleTab title={t(language, 'Communication and Comments', 'التواصل والتعليقات')} rows={communication} />;
-    if (activeTab.id === 'challenges') return <section className="sp-panel"><h2>{t(language, 'Challenges', 'التحديات')}</h2><p>{project.challenges}</p><div className="sp-chip-list"><span>{project.outputs}</span><span>{project.resourcesRequired}</span></div></section>;
+    if (activeTab.id === 'challenges') return <section className="sp-panel"><h2>{t(language, 'Challenges', 'التحديات')}</h2><p>{label(project, 'challenges', language)}</p><div className="sp-chip-list"><span>{label(project, 'outputs', language)}</span><span>{label(project, 'resourcesRequired', language)}</span></div></section>;
     if (activeTab.id === 'risks') return <SimpleTab title={t(language, 'Project Risks', 'مخاطر المشروع')} rows={risks} />;
     if (activeTab.id === 'kpis') return <SimpleTab title={t(language, 'Project KPIs', 'مؤشرات المشروع')} rows={kpis} />;
     if (activeTab.id === 'activity') return <SimpleTab title={t(language, 'Activity Log', 'سجل الأنشطة')} rows={activity} />;
@@ -228,7 +232,7 @@ export default function StrategicProjectDetailsPage() {
               <StatusBadge status={label(project, 'status', language)} />
               <span className="priority-badge">{project.priority}</span>
             </div>
-            <p className="project-type-subtitle">{label(project, 'type', language)} • {project.startDate} - {project.endDate} • {project.manager} • {money(project.budget)}</p>
+            <p className="project-type-subtitle">{label(project, 'type', language)} • {project.startDate} - {project.endDate} • {label(project, 'manager', language)} • {money(project.budget, language)}</p>
           </div>
           <div className="project-header-actions">
             <button className="btn-primary" type="button"><i className="ti ti-plus" /> {t(language, 'Add Task', 'إضافة مهمة')}</button>

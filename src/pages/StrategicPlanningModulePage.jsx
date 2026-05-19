@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { Children, useMemo, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Topbar from '../components/Topbar';
 import { useI18n } from '../i18n';
@@ -26,14 +26,17 @@ import {
   strategicRisks,
   strategicTasks,
   strategicObjectives,
+  localizeStrategicField,
+  translateStrategicTerm,
 } from '../data/strategicData';
 
 const t = (language, en, ar) => (language === 'ar' ? ar : en);
-const localName = (item, key, language) => (language === 'ar' ? item?.[`${key}Ar`] || item?.[key] : item?.[key]);
+const localName = (item, key, language) => localizeStrategicField(item, key, language);
 
 const strategicSections = [
   { path: 'dashboard', label: 'Dashboard', labelAr: 'لوحة التحكم', icon: 'ti-layout-dashboard' },
   { path: 'plans', label: 'Strategic Plans', labelAr: 'الخطط الاستراتيجية', icon: 'ti-files' },
+  { path: 'hierarchy', label: 'Planning Hierarchy', labelAr: 'التسلسل الهرمي', icon: 'ti-sitemap' },
   { path: 'analysis', label: 'Analysis', labelAr: 'التحليل', icon: 'ti-adjustments-search' },
   { path: 'objectives', label: 'Pillars & Objectives', labelAr: 'المحاور والأهداف', icon: 'ti-hierarchy' },
   { path: 'alignment', label: 'Alignment', labelAr: 'المواءمة', icon: 'ti-route' },
@@ -51,13 +54,13 @@ const strategicSections = [
 
 const statusClass = (status = '') => {
   const value = status.toLowerCase();
-  if (['approved', 'active', 'completed', 'published', 'on track'].some((key) => value.includes(key))) return 's-approved';
-  if (['risk', 'critical', 'returned', 'rejected', 'delayed'].some((key) => value.includes(key))) return 's-rejected';
-  if (['review', 'submitted', 'progress', 'mitigating'].some((key) => value.includes(key))) return 's-pending';
+  if (['approved', 'active', 'completed', 'published', 'on track', 'معتمد', 'نشط', 'مكتمل', 'منشور', 'المسار'].some((key) => value.includes(key))) return 's-approved';
+  if (['risk', 'critical', 'returned', 'rejected', 'delayed', 'خطر', 'حرج', 'معرض', 'معادة', 'مرفوض', 'متأخر'].some((key) => value.includes(key))) return 's-rejected';
+  if (['review', 'submitted', 'progress', 'mitigating', 'مراجعة', 'مرسل', 'تنفيذ', 'تخفيف'].some((key) => value.includes(key))) return 's-pending';
   return 's-not-started';
 };
 
-const formatMoney = (value) => `${Number(value || 0).toLocaleString()} SAR`;
+const formatMoney = (value, language = 'en') => `${Number(value || 0).toLocaleString()} ${t(language, 'SAR', 'ريال')}`;
 
 function ProgressLine({ value }) {
   return (
@@ -69,17 +72,19 @@ function ProgressLine({ value }) {
 }
 
 function StatusBadge({ status }) {
-  return <span className={`status-pill ${statusClass(status)}`}>{status}</span>;
+  const { language } = useI18n();
+  return <span className={`status-pill ${statusClass(status)}`}>{translateStrategicTerm(status, language)}</span>;
 }
 
 function ActionBar({ compact = false }) {
+  const { language } = useI18n();
   const actions = compact
     ? [['ti-eye', 'View'], ['ti-edit', 'Edit'], ['ti-copy', 'Duplicate']]
     : [['ti-eye', 'View'], ['ti-edit', 'Edit'], ['ti-trash', 'Delete'], ['ti-copy', 'Duplicate'], ['ti-archive', 'Archive'], ['ti-send', 'Submit'], ['ti-check', 'Approve'], ['ti-file-export', 'Export']];
   return (
     <div className="sp-row-actions">
       {actions.map(([icon, label]) => (
-        <button key={label} type="button" title={label} aria-label={label}>
+        <button key={label} type="button" title={translateStrategicTerm(label, language)} aria-label={translateStrategicTerm(label, language)}>
           <i className={`ti ${icon}`} />
         </button>
       ))}
@@ -102,6 +107,7 @@ function MetricGrid({ metrics }) {
 }
 
 function SmartTable({ columns, rows, emptyText }) {
+  const { language } = useI18n();
   const [query, setQuery] = useState('');
   const visibleRows = useMemo(() => {
     const normalized = query.trim().toLowerCase();
@@ -114,7 +120,7 @@ function SmartTable({ columns, rows, emptyText }) {
       <div className="sp-table-tools">
         <label className="sp-search">
           <i className="ti ti-search" />
-          <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search" />
+          <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder={t(language, 'Search', 'بحث')} />
         </label>
         <button type="button" className="btn-outline"><i className="ti ti-file-export" /> PDF</button>
         <button type="button" className="btn-outline"><i className="ti ti-table-export" /> Excel</button>
@@ -132,7 +138,7 @@ function SmartTable({ columns, rows, emptyText }) {
             ))}
           </tbody>
         </table>
-        {visibleRows.length === 0 && <div className="sp-empty">{emptyText}</div>}
+        {visibleRows.length === 0 && <div className="sp-empty">{translateStrategicTerm(emptyText, language)}</div>}
       </div>
     </div>
   );
@@ -210,14 +216,14 @@ function PlanFormModal({ plan, onClose, onSave }) {
             <label>{t(language, 'Plan Name', 'اسم الخطة')}<input value={form.name} onChange={(event) => set('name', event.target.value)} /></label>
             <label>{t(language, 'Arabic Name', 'اسم الخطة بالعربية')}<input value={form.nameAr} onChange={(event) => set('nameAr', event.target.value)} /></label>
             <label>{t(language, 'Plan Code', 'كود الخطة')}<input value={form.code} onChange={(event) => set('code', event.target.value)} /></label>
-            <label>{t(language, 'Plan Type', 'نوع الخطة')}<select value={form.type} onChange={(event) => set('type', event.target.value)}>{planTypes.map((type) => <option key={type}>{type}</option>)}</select></label>
+            <label>{t(language, 'Plan Type', 'نوع الخطة')}<select value={form.type} onChange={(event) => set('type', event.target.value)}>{planTypes.map((type) => <option key={type} value={type}>{translateStrategicTerm(type, language)}</option>)}</select></label>
             <label>{t(language, 'Owner', 'المالك')}<input value={form.owner} onChange={(event) => set('owner', event.target.value)} /></label>
             <label>{t(language, 'Owning Entity', 'الجهة المالكة')}<input value={form.owningEntity} onChange={(event) => set('owningEntity', event.target.value)} /></label>
             <label>{t(language, 'Start Date', 'تاريخ البداية')}<input type="date" value={form.startDate} onChange={(event) => set('startDate', event.target.value)} /></label>
             <label>{t(language, 'End Date', 'تاريخ النهاية')}<input type="date" value={form.endDate} onChange={(event) => set('endDate', event.target.value)} /></label>
-            <label>{t(language, 'Status', 'الحالة')}<select value={form.status} onChange={(event) => set('status', event.target.value)}>{planStatuses.map((status) => <option key={status}>{status}</option>)}</select></label>
-            <label>{t(language, 'Confidentiality', 'مستوى السرية')}<select value={form.confidentiality} onChange={(event) => set('confidentiality', event.target.value)}><option>Public</option><option>Internal</option><option>Restricted</option></select></label>
-            <label>{t(language, 'Priority', 'الأولوية')}<select value={form.priority} onChange={(event) => set('priority', event.target.value)}><option>High</option><option>Medium</option><option>Low</option></select></label>
+            <label>{t(language, 'Status', 'الحالة')}<select value={form.status} onChange={(event) => set('status', event.target.value)}>{planStatuses.map((status) => <option key={status} value={status}>{translateStrategicTerm(status, language)}</option>)}</select></label>
+            <label>{t(language, 'Confidentiality', 'مستوى السرية')}<select value={form.confidentiality} onChange={(event) => set('confidentiality', event.target.value)}>{['Public', 'Internal', 'Restricted'].map((item) => <option key={item} value={item}>{translateStrategicTerm(item, language)}</option>)}</select></label>
+            <label>{t(language, 'Priority', 'الأولوية')}<select value={form.priority} onChange={(event) => set('priority', event.target.value)}>{['High', 'Medium', 'Low'].map((item) => <option key={item} value={item}>{translateStrategicTerm(item, language)}</option>)}</select></label>
             <label className="wide">{t(language, 'Description', 'وصف الخطة')}<textarea value={form.description} onChange={(event) => set('description', event.target.value)} /></label>
           </section>
           <section>
@@ -306,6 +312,7 @@ function StrategicDashboard() {
 }
 
 function DonutLike({ items }) {
+  const { language } = useI18n();
   const total = items.reduce((sum, item) => sum + item[1], 0) || 1;
   return (
     <div className="sp-donut-list">
@@ -313,7 +320,7 @@ function DonutLike({ items }) {
         <div key={label}>
           <span><i className={`tone-${index}`} style={{ width: `${(value / total) * 100}%` }} /></span>
           <strong>{value}</strong>
-          <em>{label}</em>
+          <em>{translateStrategicTerm(label, language)}</em>
         </div>
       ))}
     </div>
@@ -374,10 +381,10 @@ function PlansPage() {
 
         <div className="sp-filters">
           <label><i className="ti ti-search" /><input value={filters.query} onChange={(event) => setFilters((current) => ({ ...current, query: event.target.value }))} placeholder={t(language, 'Search plans', 'بحث في الخطط')} /></label>
-          <select value={filters.type} onChange={(event) => setFilters((current) => ({ ...current, type: event.target.value }))}><option>All</option>{planTypes.map((type) => <option key={type}>{type}</option>)}</select>
-          <select value={filters.status} onChange={(event) => setFilters((current) => ({ ...current, status: event.target.value }))}><option>All</option>{planStatuses.map((status) => <option key={status}>{status}</option>)}</select>
-          <select value={filters.owner} onChange={(event) => setFilters((current) => ({ ...current, owner: event.target.value }))}>{owners.map((owner) => <option key={owner}>{owner}</option>)}</select>
-          <select value={filters.period} onChange={(event) => setFilters((current) => ({ ...current, period: event.target.value }))}><option>All</option><option>2025</option><option>2026</option><option>2030</option></select>
+          <select value={filters.type} onChange={(event) => setFilters((current) => ({ ...current, type: event.target.value }))}><option value="All">{translateStrategicTerm('All', language)}</option>{planTypes.map((type) => <option key={type} value={type}>{translateStrategicTerm(type, language)}</option>)}</select>
+          <select value={filters.status} onChange={(event) => setFilters((current) => ({ ...current, status: event.target.value }))}><option value="All">{translateStrategicTerm('All', language)}</option>{planStatuses.map((status) => <option key={status} value={status}>{translateStrategicTerm(status, language)}</option>)}</select>
+          <select value={filters.owner} onChange={(event) => setFilters((current) => ({ ...current, owner: event.target.value }))}>{owners.map((owner) => <option key={owner} value={owner}>{translateStrategicTerm(owner, language)}</option>)}</select>
+          <select value={filters.period} onChange={(event) => setFilters((current) => ({ ...current, period: event.target.value }))}><option value="All">{translateStrategicTerm('All', language)}</option><option>2025</option><option>2026</option><option>2030</option></select>
         </div>
 
         <SmartTable
@@ -407,11 +414,11 @@ function PlansPage() {
             lastUpdate: plan.lastUpdate,
             actions: (
               <div className="sp-row-actions">
-                <Link to={`/strategic-planning/plans/${plan.id}`} title="View"><i className="ti ti-eye" /></Link>
-                <button type="button" title="Edit" onClick={() => { setEditingPlan(plan); setFormOpen(true); }}><i className="ti ti-edit" /></button>
-                <button type="button" title="Delete" onClick={() => setPlans((current) => current.filter((item) => item.id !== plan.id))}><i className="ti ti-trash" /></button>
-                <button type="button" title="Duplicate" onClick={() => setPlans((current) => [{ ...plan, id: `${plan.id}-COPY`, code: `${plan.code}-COPY`, name: `${plan.name} Copy`, status: 'Draft' }, ...current])}><i className="ti ti-copy" /></button>
-                <button type="button" title="Submit" onClick={() => setPlans((current) => current.map((item) => item.id === plan.id ? { ...item, status: 'Submitted' } : item))}><i className="ti ti-send" /></button>
+                <Link to={`/strategic-planning/plans/${plan.id}`} title={translateStrategicTerm('View', language)}><i className="ti ti-eye" /></Link>
+                <button type="button" title={translateStrategicTerm('Edit', language)} onClick={() => { setEditingPlan(plan); setFormOpen(true); }}><i className="ti ti-edit" /></button>
+                <button type="button" title={translateStrategicTerm('Delete', language)} onClick={() => setPlans((current) => current.filter((item) => item.id !== plan.id))}><i className="ti ti-trash" /></button>
+                <button type="button" title={translateStrategicTerm('Duplicate', language)} onClick={() => setPlans((current) => [{ ...plan, id: `${plan.id}-COPY`, code: `${plan.code}-COPY`, name: `${plan.name} Copy`, status: 'Draft' }, ...current])}><i className="ti ti-copy" /></button>
+                <button type="button" title={translateStrategicTerm('Submit', language)} onClick={() => setPlans((current) => current.map((item) => item.id === plan.id ? { ...item, status: 'Submitted' } : item))}><i className="ti ti-send" /></button>
               </div>
             ),
           }))}
@@ -434,12 +441,12 @@ function AnalysisPage() {
         <div className="sp-swot-grid">
           {swotCategories.map((category) => (
             <div key={category} className="sp-analysis-col">
-              <h3>{category}</h3>
+              <h3>{translateStrategicTerm(category, language)}</h3>
               {strategicAnalysisItems.filter((item) => item.analysisType === 'SWOT' && item.category === category).map((item) => (
                 <article key={item.id}>
-                  <strong>{item.title}</strong>
-                  <p>{item.description}</p>
-                  <div><StatusBadge status={item.priority} /><span>{item.linkedEntityType}: {item.linkedEntityId}</span></div>
+                  <strong>{localName(item, 'title', language)}</strong>
+                  <p>{localName(item, 'description', language)}</p>
+                  <div><StatusBadge status={localName(item, 'priority', language)} /><span>{translateStrategicTerm(item.linkedEntityType, language)}: {translateStrategicTerm(item.linkedEntityId, language)}</span></div>
                   <ActionBar compact />
                 </article>
               ))}
@@ -454,9 +461,9 @@ function AnalysisPage() {
             const factor = strategicAnalysisItems.find((item) => item.analysisType === 'PESTEL' && item.category === category);
             return (
               <article key={category} className="sp-factor-card">
-                <span>{category}</span>
-                <h3>{factor?.title || t(language, 'Ready for input', 'جاهز للإدخال')}</h3>
-                <p>{factor?.description || t(language, 'Add factor title, impact, likelihood, priority, recommendation, and link it to a plan component.', 'أضف العامل والتأثير والاحتمالية والأولوية والتوصية واربطه بمكون من الخطة.')}</p>
+                <span>{translateStrategicTerm(category, language)}</span>
+                <h3>{factor ? localName(factor, 'title', language) : t(language, 'Ready for input', 'جاهز للإدخال')}</h3>
+                <p>{factor ? localName(factor, 'description', language) : t(language, 'Add factor title, impact, likelihood, priority, recommendation, and link it to a plan component.', 'أضف العامل والتأثير والاحتمالية والأولوية والتوصية واربطه بمكون من الخطة.')}</p>
                 <div className="sp-factor-score">
                   <span>{t(language, 'Impact', 'التأثير')}: {factor?.impactDegree || '-'}</span>
                   <span>{t(language, 'Likelihood', 'الاحتمالية')}: {factor?.likelihoodDegree || '-'}</span>
@@ -513,6 +520,313 @@ function ObjectivesPage() {
         </div>
       )}
     </section>
+  );
+}
+
+function HierarchyPage() {
+  const { language } = useI18n();
+  const allSubtasks = strategicTasks.flatMap((task) => task.subtasks || []);
+
+  return (
+    <div className="sp-stack">
+      <MetricGrid metrics={[
+        { icon: 'ti-files', value: strategicPlans.length, label: t(language, 'Plans', 'الخطط') },
+        { icon: 'ti-layout-grid', value: strategicPillars.length, label: t(language, 'Pillars', 'المحاور') },
+        { icon: 'ti-target', value: strategicObjectives.length, label: t(language, 'Objectives', 'الأهداف') },
+        { icon: 'ti-briefcase', value: strategicInitiatives.length, label: t(language, 'Projects', 'المشاريع') },
+        { icon: 'ti-flag-3', value: strategicMilestones.length, label: t(language, 'Milestones', 'المراحل') },
+        { icon: 'ti-list-check', value: strategicTasks.length + allSubtasks.length, label: t(language, 'Tasks and Subtasks', 'المهام والمهام الفرعية') },
+      ]} />
+
+      <section className="sp-panel sp-hierarchy-panel">
+        <div className="sp-panel-head">
+          <div>
+            <h2>{t(language, 'Strategic Planning Full Hierarchy', 'الهيكل الهرمي الكامل للتخطيط الاستراتيجي')}</h2>
+            <p>{t(
+              language,
+              'Navigate from the strategic plan down to pillars, objectives, initiatives, milestones, tasks, subtasks, KPIs, risks, and budget items.',
+              'تنقل من الخطة الاستراتيجية إلى المحاور والأهداف والمبادرات والمراحل والمهام والمهام الفرعية والمؤشرات والمخاطر وبنود الميزانية.'
+            )}</p>
+          </div>
+          <div className="sp-hierarchy-legend">
+            {[
+              ['ti-files', t(language, 'Plan', 'خطة')],
+              ['ti-layout-grid', t(language, 'Pillar', 'محور')],
+              ['ti-target', t(language, 'Objective', 'هدف')],
+              ['ti-briefcase', t(language, 'Project', 'مشروع')],
+              ['ti-list-check', t(language, 'Task', 'مهمة')],
+            ].map(([icon, label]) => <span key={label}><i className={`ti ${icon}`} /> {label}</span>)}
+          </div>
+        </div>
+
+        <div className="sp-hierarchy">
+          {strategicPlans.map((plan) => (
+            <HierarchyNode
+              key={plan.id}
+              level="plan"
+              icon="ti-files"
+              code={plan.code}
+              title={localName(plan, 'name', language)}
+              description={localName(plan, 'description', language)}
+              to={`/strategic-planning/plans/${plan.id}`}
+              status={localName(plan, 'status', language)}
+              progress={plan.progress}
+              meta={[
+                [t(language, 'Owner', 'المالك'), localName(plan, 'owner', language)],
+                [t(language, 'Duration', 'المدة'), translateStrategicTerm(plan.duration, language)],
+                [t(language, 'Scope', 'النطاق'), localName(plan, 'scope', language)],
+              ]}
+            >
+              {strategicPillars.filter((pillar) => pillar.planId === plan.id).map((pillar) => (
+                <HierarchyPillar key={pillar.id} pillar={pillar} plan={plan} />
+              ))}
+              <HierarchyLinkedItems
+                title={t(language, 'Plan-level KPIs, Risks, and Reports', 'مؤشرات ومخاطر وتقارير على مستوى الخطة')}
+                items={[
+                  ...strategicKPIs.filter((kpi) => kpi.planId === plan.id && !kpi.projectId).map((kpi) => ({ id: kpi.id, icon: 'ti-chart-infographic', label: localName(kpi, 'name', language), value: `${kpi.actual}${kpi.unit}`, status: localName(kpi, 'status', language) })),
+                  ...strategicRisks.filter((risk) => risk.planId === plan.id && !risk.projectId).map((risk) => ({ id: risk.id, icon: 'ti-alert-triangle', label: localName(risk, 'title', language), value: risk.code, status: localName(risk, 'level', language) })),
+                  ...strategicReports.slice(0, 3).map((report) => ({ id: report.id, icon: 'ti-report-analytics', label: localName(report, 'report', language), value: report.date, status: localName(report, 'status', language) })),
+                ]}
+              />
+            </HierarchyNode>
+          ))}
+        </div>
+      </section>
+    </div>
+  );
+}
+
+function HierarchyPillar({ pillar, plan }) {
+  const { language } = useI18n();
+  const mainObjectives = strategicObjectives.filter((objective) => objective.planId === plan.id && objective.pillarId === pillar.id && !objective.parentObjectiveId);
+
+  return (
+    <HierarchyNode
+      level="pillar"
+      icon="ti-layout-grid"
+      code={pillar.code}
+      title={localName(pillar, 'name', language)}
+      description={localName(pillar, 'description', language)}
+      status={localName(pillar, 'status', language)}
+      progress={pillar.progress}
+      meta={[
+        [t(language, 'Weight', 'الوزن'), `${pillar.weight}%`],
+        [t(language, 'Owner', 'المالك'), localName(pillar, 'owner', language)],
+      ]}
+    >
+      {mainObjectives.map((objective) => <HierarchyObjective key={objective.id} objective={objective} />)}
+    </HierarchyNode>
+  );
+}
+
+function HierarchyObjective({ objective }) {
+  const { language } = useI18n();
+  const childObjectives = strategicObjectives.filter((item) => item.parentObjectiveId === objective.id);
+  const projects = strategicInitiatives.filter((project) => project.objectiveId === objective.id);
+  const kpis = strategicKPIs.filter((kpi) => kpi.objectiveId === objective.id && !kpi.projectId);
+
+  return (
+    <HierarchyNode
+      level={objective.parentObjectiveId ? 'subobjective' : 'objective'}
+      icon={objective.parentObjectiveId ? 'ti-subtask' : 'ti-target'}
+      code={objective.code}
+      title={localName(objective, 'name', language)}
+      description={localName(objective, 'description', language)}
+      to={`/strategic-planning/objectives/${objective.id}`}
+      status={localName(objective, 'status', language)}
+      progress={objective.progress}
+      meta={[
+        [t(language, 'Weight', 'الوزن'), `${objective.weight}%`],
+        [t(language, 'Owner', 'المالك'), localName(objective, 'owner', language)],
+      ]}
+    >
+      {childObjectives.map((child) => <HierarchyObjective key={child.id} objective={child} />)}
+      {projects.map((project) => <HierarchyProject key={project.id} project={project} />)}
+      <HierarchyLinkedItems
+        title={t(language, 'Objective KPIs', 'مؤشرات الهدف')}
+        items={kpis.map((kpi) => ({ id: kpi.id, icon: 'ti-chart-infographic', label: localName(kpi, 'name', language), value: `${kpi.actual}${kpi.unit} / ${kpi.target}${kpi.unit}`, status: localName(kpi, 'status', language) }))}
+      />
+    </HierarchyNode>
+  );
+}
+
+function HierarchyProject({ project }) {
+  const { language } = useI18n();
+  const milestones = strategicMilestones.filter((milestone) => milestone.projectId === project.id);
+  const kpis = strategicKPIs.filter((kpi) => kpi.projectId === project.id);
+  const risks = strategicRisks.filter((risk) => risk.projectId === project.id);
+  const budgets = strategicBudgets.filter((budget) => budget.projectId === project.id);
+  const resources = strategicResources.filter((resource) => resource.projectId === project.id);
+
+  return (
+    <HierarchyNode
+      level="project"
+      icon="ti-briefcase"
+      code={project.code}
+      title={localName(project, 'name', language)}
+      description={localName(project, 'description', language)}
+      to={`/strategic-planning/projects/${project.id}`}
+      status={localName(project, 'status', language)}
+      progress={project.progress}
+      meta={[
+        [t(language, 'Manager', 'مدير المشروع'), localName(project, 'manager', language)],
+        [t(language, 'Budget', 'الميزانية'), formatMoney(project.budget, language)],
+        [t(language, 'Priority', 'الأولوية'), translateStrategicTerm(project.priority, language)],
+      ]}
+    >
+      {milestones.map((milestone) => <HierarchyMilestone key={milestone.id} milestone={milestone} />)}
+      <HierarchyLinkedItems
+        title={t(language, 'Project KPIs, Risks, Budget, and Resources', 'مؤشرات ومخاطر وميزانية وموارد المشروع')}
+        items={[
+          ...kpis.map((kpi) => ({ id: kpi.id, icon: 'ti-chart-infographic', label: localName(kpi, 'name', language), value: `${kpi.actual}${kpi.unit}`, status: localName(kpi, 'status', language) })),
+          ...risks.map((risk) => ({ id: risk.id, icon: 'ti-alert-triangle', label: localName(risk, 'title', language), value: risk.code, status: localName(risk, 'level', language) })),
+          ...budgets.map((budget) => ({ id: budget.id, icon: 'ti-wallet', label: localName(budget, 'fundingSource', language), value: formatMoney(budget.approvedAmount, language), status: localName(budget, 'status', language) })),
+          ...resources.map((resource) => ({ id: resource.id, icon: 'ti-users', label: localName(resource, 'name', language), value: resource.allocation, status: localName(resource, 'type', language) })),
+        ]}
+      />
+    </HierarchyNode>
+  );
+}
+
+function HierarchyMilestone({ milestone }) {
+  const { language } = useI18n();
+  const tasks = strategicTasks.filter((task) => task.milestoneId === milestone.id);
+
+  return (
+    <HierarchyNode
+      level="milestone"
+      icon="ti-flag-3"
+      code={milestone.id}
+      title={localName(milestone, 'name', language)}
+      description={localName(milestone, 'description', language)}
+      status={localName(milestone, 'status', language)}
+      progress={milestone.progress}
+      meta={[
+        [t(language, 'Owner', 'المالك'), localName(milestone, 'owner', language)],
+        [t(language, 'Dates', 'التواريخ'), `${milestone.startDate} - ${milestone.endDate}`],
+      ]}
+    >
+      {tasks.map((task) => <HierarchyTask key={task.id} task={task} />)}
+    </HierarchyNode>
+  );
+}
+
+function HierarchyTask({ task }) {
+  const { language } = useI18n();
+  const subtasks = task.subtasks || [];
+
+  return (
+    <HierarchyNode
+      level="task"
+      icon="ti-list-check"
+      code={task.id}
+      title={localName(task, 'title', language)}
+      description={localName(task, 'description', language)}
+      status={localName(task, 'status', language)}
+      progress={task.progress}
+      meta={[
+        [t(language, 'Assignee', 'المسؤول'), localName(task, 'assignedTo', language)],
+        [t(language, 'Due Date', 'تاريخ الاستحقاق'), task.dueDate],
+        [t(language, 'Priority', 'الأولوية'), translateStrategicTerm(task.priority, language)],
+      ]}
+    >
+      {subtasks.map((subtask) => (
+        <HierarchyNode
+          key={subtask.id}
+          level="subtask"
+          icon="ti-checkbox"
+          code={subtask.id}
+          title={localName(subtask, 'title', language)}
+          status={localName(subtask, 'status', language)}
+          progress={subtask.progress}
+          meta={[[t(language, 'Parent Task', 'المهمة الرئيسية'), localName(task, 'title', language)]]}
+        />
+      ))}
+    </HierarchyNode>
+  );
+}
+
+function getHierarchyTypeLabel(level, language) {
+  const labels = {
+    plan: t(language, 'Strategic Plan', 'خطة استراتيجية'),
+    pillar: t(language, 'Strategic Pillar', 'محور استراتيجي'),
+    objective: t(language, 'Main Objective', 'هدف رئيسي'),
+    subobjective: t(language, 'Sub Objective', 'هدف فرعي'),
+    project: t(language, 'Initiative / Project', 'مبادرة / مشروع'),
+    milestone: t(language, 'Milestone', 'مرحلة'),
+    task: t(language, 'Task', 'مهمة'),
+    subtask: t(language, 'Subtask', 'مهمة فرعية'),
+  };
+  return labels[level] || translateStrategicTerm(level, language);
+}
+
+function HierarchyNode({ level, icon, code, title, description, to, status, progress, meta = [], children }) {
+  const { language } = useI18n();
+  const [expanded, setExpanded] = useState(true);
+  const childItems = Children.toArray(children).filter(Boolean);
+  const hasChildren = childItems.length > 0;
+  const typeLabel = getHierarchyTypeLabel(level, language);
+
+  return (
+    <article className={`sp-hierarchy-node level-${level} ${!expanded ? 'is-collapsed' : ''}`}>
+      <div className="sp-hierarchy-node-main">
+        <i className={`ti ${icon}`} />
+        <div className="sp-hierarchy-node-copy">
+          <div className="sp-hierarchy-node-kicker">
+            <span className="sp-hierarchy-type">{typeLabel}</span>
+            <span className="sp-hierarchy-code">{code}</span>
+          </div>
+          <h3>{to ? <Link to={to}>{title}</Link> : title}</h3>
+          {description && <p>{description}</p>}
+          {meta.length > 0 && (
+            <dl>
+              {meta.filter((item) => item[1]).map(([label, value]) => (
+                <div key={`${code}-${label}`}>
+                  <dt>{label}</dt>
+                  <dd>{value}</dd>
+                </div>
+              ))}
+            </dl>
+          )}
+        </div>
+        <div className="sp-hierarchy-node-state">
+          {hasChildren && (
+            <button
+              type="button"
+              className="sp-collapse-btn"
+              onClick={() => setExpanded((value) => !value)}
+              aria-expanded={expanded}
+              title={expanded ? t(language, 'Collapse', 'طي') : t(language, 'Expand', 'فتح')}
+            >
+              <i className={`ti ${expanded ? 'ti-chevron-up' : 'ti-chevron-down'}`} />
+              <span>{expanded ? t(language, 'Collapse', 'طي') : t(language, 'Expand', 'فتح')}</span>
+            </button>
+          )}
+          {status && <StatusBadge status={status} />}
+          {Number.isFinite(progress) && <ProgressLine value={progress} />}
+        </div>
+      </div>
+      {hasChildren && expanded && <div className="sp-hierarchy-children">{childItems}</div>}
+    </article>
+  );
+}
+
+function HierarchyLinkedItems({ title, items }) {
+  if (!items.length) return null;
+  return (
+    <div className="sp-hierarchy-linked">
+      <strong>{title}</strong>
+      <div>
+        {items.map((item) => (
+          <span key={item.id}>
+            <i className={`ti ${item.icon}`} />
+            <b>{item.label}</b>
+            <em>{item.value}</em>
+            {item.status && <StatusBadge status={item.status} />}
+          </span>
+        ))}
+      </div>
+    </div>
   );
 }
 
@@ -585,7 +899,7 @@ function AlignmentPage() {
       <section className="sp-panel">
         <div className="sp-panel-head"><h2>{t(language, 'Relationship Map', 'خريطة العلاقات')}</h2><span>{t(language, 'Plan → Pillar → Objective → Initiative → KPI / Risk', 'الخطة → المحور → الهدف → المبادرة → المؤشر / الخطر')}</span></div>
         <div className="sp-relationship-map">
-          {alignmentLinks.map((link) => <div key={link.id}><span>{link.sourceType}</span><i className="ti ti-arrow-left-right" /><strong>{link.targetType}</strong><em>{link.label}</em></div>)}
+          {alignmentLinks.map((link) => <div key={link.id}><span>{translateStrategicTerm(link.sourceType, language)}</span><i className="ti ti-arrow-left-right" /><strong>{translateStrategicTerm(link.targetType, language)}</strong><em>{localName(link, 'label', language)}</em></div>)}
         </div>
       </section>
       <LinkedItemsPanel />
@@ -623,8 +937,8 @@ function ProjectCard({ project }) {
       <p>{localName(project, 'description', language)}</p>
       <dl>
         <div><dt>{t(language, 'Objective', 'الهدف')}</dt><dd>{localName(objective, 'name', language)}</dd></div>
-        <div><dt>{t(language, 'Manager', 'مدير المشروع')}</dt><dd>{project.manager}</dd></div>
-        <div><dt>{t(language, 'Budget', 'الميزانية')}</dt><dd>{formatMoney(project.budget)}</dd></div>
+        <div><dt>{t(language, 'Manager', 'مدير المشروع')}</dt><dd>{localName(project, 'manager', language)}</dd></div>
+        <div><dt>{t(language, 'Budget', 'الميزانية')}</dt><dd>{formatMoney(project.budget, language)}</dd></div>
       </dl>
       <ProgressLine value={project.progress} />
       <ActionBar />
@@ -635,12 +949,12 @@ function ProjectCard({ project }) {
 function TimelinePage() {
   const { language } = useI18n();
   const items = [
-    ...strategicPlans.map((item) => ({ id: item.id, type: 'Plan', title: localName(item, 'name', language), progress: item.progress, start: item.startDate, end: item.endDate, offset: 0, width: 92 })),
-    ...strategicPillars.map((item, index) => ({ id: item.id, type: 'Pillar', title: localName(item, 'name', language), progress: item.progress, start: '2025-01-01', end: '2030-12-31', offset: index * 4 + 2, width: 78 })),
-    ...strategicObjectives.map((item, index) => ({ id: item.id, type: 'Objective', title: localName(item, 'name', language), progress: item.progress, start: item.startDate, end: item.endDate, offset: index * 5 + 8, width: 54 })),
-    ...strategicInitiatives.map((item, index) => ({ id: item.id, type: 'Project', title: localName(item, 'name', language), progress: item.progress, start: item.startDate, end: item.endDate, offset: index * 10 + 12, width: 30 })),
-    ...strategicMilestones.map((item, index) => ({ id: item.id, type: 'Milestone', title: localName(item, 'name', language), progress: item.progress, start: item.startDate, end: item.endDate, offset: index * 8 + 16, width: 22 })),
-    ...strategicTasks.map((item, index) => ({ id: item.id, type: 'Task', title: localName(item, 'title', language), progress: item.progress, start: item.startDate, end: item.dueDate, offset: index * 7 + 20, width: 16 })),
+    ...strategicPlans.map((item) => ({ id: item.id, type: translateStrategicTerm('Plan', language), title: localName(item, 'name', language), progress: item.progress, start: item.startDate, end: item.endDate, offset: 0, width: 92 })),
+    ...strategicPillars.map((item, index) => ({ id: item.id, type: translateStrategicTerm('Pillar', language), title: localName(item, 'name', language), progress: item.progress, start: '2025-01-01', end: '2030-12-31', offset: index * 4 + 2, width: 78 })),
+    ...strategicObjectives.map((item, index) => ({ id: item.id, type: translateStrategicTerm('Objective', language), title: localName(item, 'name', language), progress: item.progress, start: item.startDate, end: item.endDate, offset: index * 5 + 8, width: 54 })),
+    ...strategicInitiatives.map((item, index) => ({ id: item.id, type: translateStrategicTerm('Project', language), title: localName(item, 'name', language), progress: item.progress, start: item.startDate, end: item.endDate, offset: index * 10 + 12, width: 30 })),
+    ...strategicMilestones.map((item, index) => ({ id: item.id, type: translateStrategicTerm('Milestone', language), title: localName(item, 'name', language), progress: item.progress, start: item.startDate, end: item.endDate, offset: index * 8 + 16, width: 22 })),
+    ...strategicTasks.map((item, index) => ({ id: item.id, type: translateStrategicTerm('Task', language), title: localName(item, 'title', language), progress: item.progress, start: item.startDate, end: item.dueDate, offset: index * 7 + 20, width: 16 })),
   ];
   return (
     <section className="sp-panel">
@@ -685,13 +999,13 @@ function KpiCard({ kpi }) {
   const achievement = Math.round((kpi.actual / kpi.target) * 100);
   return (
     <article className="sp-kpi-card">
-      <div className="sp-card-top"><span>{kpi.code}</span><StatusBadge status={kpi.status} /></div>
+      <div className="sp-card-top"><span>{kpi.code}</span><StatusBadge status={localName(kpi, 'status', language)} /></div>
       <h3>{localName(kpi, 'name', language)}</h3>
-      <p>{kpi.description}</p>
+      <p>{localName(kpi, 'description', language)}</p>
       <div className="sp-kpi-values">
-        <div><span>Baseline</span><strong>{kpi.baseline}{kpi.unit}</strong></div>
-        <div><span>Target</span><strong>{kpi.target}{kpi.unit}</strong></div>
-        <div><span>Actual</span><strong>{kpi.actual}{kpi.unit}</strong></div>
+        <div><span>{t(language, 'Baseline', 'خط الأساس')}</span><strong>{kpi.baseline}{kpi.unit}</strong></div>
+        <div><span>{t(language, 'Target', 'المستهدف')}</span><strong>{kpi.target}{kpi.unit}</strong></div>
+        <div><span>{t(language, 'Actual', 'الفعلي')}</span><strong>{kpi.actual}{kpi.unit}</strong></div>
       </div>
       <ProgressLine value={Math.min(100, achievement)} />
       <div className="sp-mini-chart">{kpi.measurements.map((point) => <i key={point.period} style={{ height: `${Math.max(12, point.actual)}%` }} title={`${point.period}: ${point.actual}`} />)}</div>
@@ -719,8 +1033,8 @@ function RisksPage() {
         <SmartTable emptyText="No risks" columns={[
           { key: 'code', label: t(language, 'Code', 'الكود') },
           { key: 'title', label: t(language, 'Risk', 'الخطر') },
-          { key: 'probability', label: 'Probability' },
-          { key: 'impact', label: 'Impact' },
+          { key: 'probability', label: t(language, 'Probability', 'الاحتمالية') },
+          { key: 'impact', label: t(language, 'Impact', 'التأثير') },
           { key: 'score', label: t(language, 'Score', 'الدرجة') },
           { key: 'level', label: t(language, 'Level', 'المستوى') },
           { key: 'owner', label: t(language, 'Owner', 'المالك') },
@@ -733,9 +1047,9 @@ function RisksPage() {
           probability: risk.probability,
           impact: risk.impact,
           score: <strong>{risk.probability * risk.impact}</strong>,
-          level: <StatusBadge status={risk.level} />,
-          owner: risk.owner,
-          status: <StatusBadge status={risk.status} />,
+          level: <StatusBadge status={localName(risk, 'level', language)} />,
+          owner: localName(risk, 'owner', language),
+          status: <StatusBadge status={localName(risk, 'status', language)} />,
           actions: <ActionBar />,
         }))} />
       </section>
@@ -758,9 +1072,10 @@ function RiskMatrix() {
 }
 
 function MitigationList() {
+  const { language } = useI18n();
   return (
     <div className="sp-action-list">
-      {strategicRisks.flatMap((risk) => risk.mitigationActions.map((action) => ({ risk, action }))).map((item) => (
+      {strategicRisks.flatMap((risk) => (language === 'ar' && risk.mitigationActionsAr ? risk.mitigationActionsAr : risk.mitigationActions).map((action) => ({ risk, action }))).map((item) => (
         <div key={`${item.risk.id}-${item.action}`}>
           <i className="ti ti-shield-half" />
           <span>{item.action}</span>
@@ -776,9 +1091,9 @@ function BudgetsPage() {
   return (
     <div className="sp-stack">
       <MetricGrid metrics={[
-        { icon: 'ti-wallet', value: formatMoney(strategicBudgets.reduce((sum, item) => sum + item.approvedAmount, 0)), label: t(language, 'Approved Budget', 'الميزانية المعتمدة') },
-        { icon: 'ti-cash', value: formatMoney(strategicBudgets.reduce((sum, item) => sum + item.actualAmount, 0)), label: t(language, 'Actual Spend', 'المصروف الفعلي') },
-        { icon: 'ti-pig-money', value: formatMoney(strategicBudgets.reduce((sum, item) => sum + item.remainingAmount, 0)), label: t(language, 'Remaining', 'المتبقي') },
+        { icon: 'ti-wallet', value: formatMoney(strategicBudgets.reduce((sum, item) => sum + item.approvedAmount, 0), language), label: t(language, 'Approved Budget', 'الميزانية المعتمدة') },
+        { icon: 'ti-cash', value: formatMoney(strategicBudgets.reduce((sum, item) => sum + item.actualAmount, 0), language), label: t(language, 'Actual Spend', 'المصروف الفعلي') },
+        { icon: 'ti-pig-money', value: formatMoney(strategicBudgets.reduce((sum, item) => sum + item.remainingAmount, 0), language), label: t(language, 'Remaining', 'المتبقي') },
         { icon: 'ti-users', value: strategicResources.length, label: t(language, 'Resources', 'الموارد') },
       ]} />
       <section className="sp-panel">
@@ -792,7 +1107,7 @@ function BudgetsPage() {
           { key: 'period', label: t(language, 'Period', 'الفترة') },
           { key: 'cost', label: t(language, 'Estimated Cost', 'التكلفة التقديرية') },
           { key: 'actions', label: t(language, 'Actions', 'الإجراءات') },
-        ]} rows={strategicResources.map((resource) => ({ ...resource, cost: formatMoney(resource.estimatedCost), actions: <ActionBar compact /> }))} />
+        ]} rows={strategicResources.map((resource) => ({ ...resource, type: localName(resource, 'type', language), name: localName(resource, 'name', language), entity: localName(resource, 'entity', language), role: localName(resource, 'role', language), period: translateStrategicTerm(resource.period, language), cost: formatMoney(resource.estimatedCost, language), actions: <ActionBar compact /> }))} />
       </section>
       <section className="sp-panel">
         <div className="sp-panel-head"><h2>{t(language, 'Budgets Planned vs Actual', 'الميزانيات المخططة مقابل الفعلية')}</h2><button className="btn-outline" type="button"><i className="ti ti-rosette-discount-check" /> {t(language, 'Review / Approve', 'مراجعة / اعتماد')}</button></div>
@@ -807,12 +1122,12 @@ function BudgetsPage() {
           { key: 'actions', label: t(language, 'Actions', 'الإجراءات') },
         ]} rows={strategicBudgets.map((budget) => ({
           id: budget.id,
-          planned: formatMoney(budget.plannedAmount),
-          approved: formatMoney(budget.approvedAmount),
-          actual: formatMoney(budget.actualAmount),
-          remaining: formatMoney(budget.remainingAmount),
-          source: budget.fundingSource,
-          status: <StatusBadge status={budget.status} />,
+          planned: formatMoney(budget.plannedAmount, language),
+          approved: formatMoney(budget.approvedAmount, language),
+          actual: formatMoney(budget.actualAmount, language),
+          remaining: formatMoney(budget.remainingAmount, language),
+          source: localName(budget, 'fundingSource', language),
+          status: <StatusBadge status={localName(budget, 'status', language)} />,
           actions: <ActionBar />,
         }))} />
       </section>
@@ -831,12 +1146,12 @@ function GovernancePage() {
           { key: 'scope', label: t(language, 'Scope', 'النطاق') },
           { key: 'permissions', label: t(language, 'Permissions', 'الصلاحيات') },
           { key: 'actions', label: t(language, 'Actions', 'الإجراءات') },
-        ]} rows={strategicPermissions.map((role) => ({ ...role, permissions: role.permissions.join(', '), actions: <ActionBar compact /> }))} />
+        ]} rows={strategicPermissions.map((role) => ({ ...role, role: localName(role, 'role', language), scope: localName(role, 'scope', language), permissions: translateStrategicTerm(role.permissions, language), actions: <ActionBar compact /> }))} />
       </section>
       <section className="sp-panel">
         <div className="sp-panel-head"><h2>{t(language, 'Progress Calculation Settings', 'إعدادات حساب التقدم')}</h2><span>{t(language, 'Shown in plan settings and applied across task, milestone, project, objective, pillar, and plan levels.', 'تظهر في إعدادات الخطة وتطبق على مستوى المهمة والمرحلة والمشروع والهدف والمحور والخطة.')}</span></div>
         <div className="sp-method-grid">
-          {progressCalculationMethods.map((method) => <article key={method.id}><strong>{method.name}</strong><p>{method.formula}</p></article>)}
+          {progressCalculationMethods.map((method) => <article key={method.id}><strong>{localName(method, 'name', language)}</strong><p>{localName(method, 'formula', language)}</p></article>)}
         </div>
       </section>
     </div>
@@ -854,16 +1169,16 @@ function SimpleRegisterPage({ type }) {
   const current = maps[type];
   const rows = current.rows.map((row) => ({
     id: row.id,
-    title: row.report || localName(row, 'title', language) || row.type || row.entityType,
-    type: row.type || row.entityType || row.priority,
-    owner: row.owner || row.submittedBy || row.status,
+    title: localName(row, 'report', language) || localName(row, 'title', language) || translateStrategicTerm(row.type || row.entityType, language),
+    type: localName(row, 'type', language) || translateStrategicTerm(row.entityType || row.priority, language),
+    owner: localName(row, 'owner', language) || translateStrategicTerm(row.submittedBy || row.status, language),
     date: row.date || row.createdAt || row.publishDate || row.dueDate,
-    status: <StatusBadge status={row.status} />,
+    status: <StatusBadge status={localName(row, 'status', language)} />,
     actions: <ActionBar />,
   }));
   return (
     <section className="sp-panel">
-      <div className="sp-panel-head"><h2><i className={`ti ${current.icon}`} /> {current.title}</h2><button className="btn-primary" type="button"><i className="ti ti-plus" /> Add</button></div>
+      <div className="sp-panel-head"><h2><i className={`ti ${current.icon}`} /> {current.title}</h2><button className="btn-primary" type="button"><i className="ti ti-plus" /> {t(language, 'Add', 'إضافة')}</button></div>
       {type === 'approvals' && <ApprovalWorkflow />}
       <SmartTable emptyText="No records" columns={[
         { key: 'id', label: 'ID' },
@@ -879,10 +1194,11 @@ function SimpleRegisterPage({ type }) {
 }
 
 function ApprovalWorkflow() {
+  const { language } = useI18n();
   return (
     <div className="sp-workflow">
       {['Draft', 'Submitted', 'Under Review', 'Returned for Updates', 'Approved', 'Rejected', 'Archived'].map((step, index) => (
-        <div key={step} className={index < 5 ? 'done' : ''}><i className="ti ti-circle-check" /><span>{step}</span></div>
+        <div key={step} className={index < 5 ? 'done' : ''}><i className="ti ti-circle-check" /><span>{translateStrategicTerm(step, language)}</span></div>
       ))}
     </div>
   );
@@ -895,7 +1211,7 @@ function LinkedItemsPanel() {
       <div className="sp-panel-head"><h2>{t(language, 'Linked Items Panel', 'لوحة العناصر المرتبطة')}</h2><span>{t(language, 'Analysis Result → Pillar / Objective / Initiative / Risk', 'نتيجة التحليل → محور / هدف / مبادرة / خطر')}</span></div>
       <div className="sp-linked-panel">
         {alignmentLinks.concat(strategicAnalysisItems.slice(0, 4).map((item) => ({ id: item.id, sourceType: 'Analysis Result', sourceId: item.id, targetType: item.linkedEntityType, targetId: item.linkedEntityId, label: item.title }))).map((item) => (
-          <div key={item.id}><span>{item.sourceType}</span><strong>{item.sourceId}</strong><i className="ti ti-link" /><span>{item.targetType}</span><strong>{item.targetId}</strong><em>{item.label}</em></div>
+          <div key={item.id}><span>{translateStrategicTerm(item.sourceType, language)}</span><strong>{item.sourceId}</strong><i className="ti ti-link" /><span>{translateStrategicTerm(item.targetType, language)}</span><strong>{translateStrategicTerm(item.targetId, language)}</strong><em>{localName(item, 'label', language)}</em></div>
         ))}
       </div>
     </section>
@@ -903,14 +1219,15 @@ function LinkedItemsPanel() {
 }
 
 function KanbanPreview({ tasks }) {
+  const { language } = useI18n();
   const columns = ['New', 'In Progress', 'Under Review', 'Completed', 'Delayed', 'Cancelled'];
   return (
     <div className="sp-kanban">
       {columns.map((column) => (
         <div key={column}>
-          <h3>{column}<span>{tasks.filter((task) => task.status === column).length}</span></h3>
+          <h3>{translateStrategicTerm(column, language)}<span>{tasks.filter((task) => task.status === column).length}</span></h3>
           {tasks.filter((task) => task.status === column).map((task) => (
-            <article key={task.id}><strong>{task.title}</strong><span>{task.assignedTo}</span><ProgressLine value={task.progress} /></article>
+            <article key={task.id}><strong>{localName(task, 'title', language)}</strong><span>{localName(task, 'assignedTo', language)}</span><ProgressLine value={task.progress} /></article>
           ))}
         </div>
       ))}
@@ -944,6 +1261,7 @@ export default function StrategicPlanningModulePage() {
   const renderSection = () => {
     if (activeSection.path === 'dashboard') return <StrategicDashboard />;
     if (activeSection.path === 'plans') return <PlansPage />;
+    if (activeSection.path === 'hierarchy') return <HierarchyPage />;
     if (activeSection.path === 'analysis') return <AnalysisPage />;
     if (activeSection.path === 'objectives') return <ObjectivesPage />;
     if (activeSection.path === 'alignment') return <AlignmentPage />;
@@ -968,8 +1286,14 @@ export default function StrategicPlanningModulePage() {
             <p>{t(language, 'Connected planning from plan creation to analysis, objectives, initiatives, tasks, KPIs, risks, budgets, approvals, follow-up, and reports.', 'تخطيط مترابط من إنشاء الخطة إلى التحليل والأهداف والمبادرات والمهام والمؤشرات والمخاطر والميزانيات والموافقات والمتابعة والتقارير.')}</p>
           </div>
           <div className="sp-hero-actions">
-            <button type="button" className="btn-primary" onClick={() => navigate('/strategic-planning/plans')}><i className="ti ti-plus" /> {t(language, 'Create Plan', 'إنشاء خطة')}</button>
-            <button type="button" className="btn-outline"><i className="ti ti-file-export" /> {t(language, 'Executive Export', 'تصدير تنفيذي')}</button>
+            <button type="button" className="sp-create-plan-btn" onClick={() => navigate('/strategic-planning/plans')}>
+              <i className="ti ti-plus" />
+              <span>{t(language, 'Create Plan', 'إنشاء خطة')}</span>
+            </button>
+            <button type="button" className="sp-export-btn">
+              <i className="ti ti-file-export" />
+              <span>{t(language, 'Executive Export', 'تصدير تنفيذي')}</span>
+            </button>
           </div>
         </header>
 

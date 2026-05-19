@@ -3,7 +3,7 @@ import { useState, useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import Topbar from '../../components/Topbar';
 import { useI18n } from '../../i18n';
-import { strategicPlans, strategicObjectives, strategicInitiatives, strategicKPIs } from '../../data/strategicData';
+import { strategicPlans, strategicObjectives, strategicInitiatives, strategicKPIs, localizeStrategicField } from '../../data/strategicData';
 
 const tabs = [
   { id: 'overview', label: 'Overview', labelAr: 'نظرة عامة', icon: 'ti-info-circle' },
@@ -23,9 +23,9 @@ export default function StrategicObjectiveDetailsPage() {
   const initiatives = useMemo(() => strategicInitiatives.filter(i => i.objectiveId === objectiveId), [objectiveId]);
   const kpis = useMemo(() => strategicKPIs.filter(k => k.objectiveId === objectiveId), [objectiveId]);
 
-  if (!objective) return <div className="page-content">Strategic Objective not found</div>;
+  if (!objective) return <div className="page-content">{language === 'ar' ? 'لم يتم العثور على الهدف الاستراتيجي' : 'Strategic Objective not found'}</div>;
 
-  const getLabel = (item, key) => (language === 'ar' ? item[`${key}Ar`] || item[key] : item[key]);
+  const getLabel = (item, key) => localizeStrategicField(item, key, language);
 
   return (
     <div className="project-details-layout">
@@ -107,8 +107,8 @@ export default function StrategicObjectiveDetailsPage() {
                     <div key={init.id} className="ms-track-item">
                       <div className="ms-dot" data-status={init.status === 'Completed' ? 'Completed' : 'In Progress'}></div>
                       <div className="ms-info">
-                        <h4>{language === 'ar' ? init.nameAr : init.name}</h4>
-                        <span>{init.progress}% • {language === 'ar' ? init.statusAr || init.status : init.status}</span>
+                        <h4>{getLabel(init, 'name')}</h4>
+                        <span>{init.progress}% • {getLabel(init, 'status')}</span>
                       </div>
                     </div>
                   ))}
@@ -146,9 +146,9 @@ export default function StrategicObjectiveDetailsPage() {
                {initiatives.map(init => (
                  <tr key={init.id}>
                    <td>{init.code}</td>
-                   <td><Link className="project-link" to={`/quality-projects/projects/${init.id}`}>{language === 'ar' ? init.nameAr : init.name}</Link></td>
-                   <td>{language === 'ar' ? init.ownerAr || init.owner : init.owner}</td>
-                   <td><span className="task-status-pill" data-status={init.status}>{language === 'ar' ? init.statusAr || init.status : init.status}</span></td>
+                   <td><Link className="project-link" to={`/strategic-planning/projects/${init.id}`}>{getLabel(init, 'name')}</Link></td>
+                   <td>{getLabel(init, 'owner')}</td>
+                   <td><span className="task-status-pill" data-status={init.status}>{getLabel(init, 'status')}</span></td>
                    <td>{init.progress}%</td>
                    <td>{init.endDate}</td>
                  </tr>

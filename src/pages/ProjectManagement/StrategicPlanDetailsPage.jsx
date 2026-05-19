@@ -20,11 +20,13 @@ import {
   strategicRisks,
   strategicTasks,
   strategicObjectives,
+  localizeStrategicField,
+  translateStrategicTerm,
 } from '../../data/strategicData';
 
 const t = (language, en, ar) => (language === 'ar' ? ar : en);
-const text = (item, key, language) => (language === 'ar' ? item?.[`${key}Ar`] || item?.[key] : item?.[key]);
-const money = (value) => `${Number(value || 0).toLocaleString()} SAR`;
+const text = (item, key, language) => localizeStrategicField(item, key, language);
+const money = (value, language = 'en') => `${Number(value || 0).toLocaleString()} ${t(language, 'SAR', 'ريال')}`;
 
 const tabs = [
   { id: 'overview', label: 'Overview', labelAr: 'نظرة عامة', icon: 'ti-info-circle' },
@@ -43,14 +45,15 @@ const tabs = [
 
 const statusClass = (status = '') => {
   const value = status.toLowerCase();
-  if (['approved', 'active', 'completed', 'published', 'on track'].some((key) => value.includes(key))) return 's-approved';
-  if (['risk', 'critical', 'returned', 'rejected', 'delayed'].some((key) => value.includes(key))) return 's-rejected';
-  if (['review', 'submitted', 'progress', 'mitigating'].some((key) => value.includes(key))) return 's-pending';
+  if (['approved', 'active', 'completed', 'published', 'on track', 'معتمد', 'نشط', 'مكتمل', 'منشور', 'المسار'].some((key) => value.includes(key))) return 's-approved';
+  if (['risk', 'critical', 'returned', 'rejected', 'delayed', 'خطر', 'حرج', 'معرض', 'معادة', 'مرفوض', 'متأخر'].some((key) => value.includes(key))) return 's-rejected';
+  if (['review', 'submitted', 'progress', 'mitigating', 'مراجعة', 'مرسل', 'تنفيذ', 'تخفيف'].some((key) => value.includes(key))) return 's-pending';
   return 's-not-started';
 };
 
 function Badge({ status }) {
-  return <span className={`status-pill ${statusClass(status)}`}>{status}</span>;
+  const { language } = useI18n();
+  return <span className={`status-pill ${statusClass(status)}`}>{translateStrategicTerm(status, language)}</span>;
 }
 
 function Progress({ value }) {
@@ -147,11 +150,11 @@ function PlanOverview({ plan, pillars, objectives, projects, kpis, risks }) {
       </div>
 
       <div className="sp-three-col">
-        <section className="sp-panel"><h2>Progress by Pillar</h2><Bars items={pillars} language={language} /></section>
-        <section className="sp-panel"><h2>Objectives Completion</h2><Bars items={objectives} language={language} /></section>
-        <section className="sp-panel"><h2>Projects Status</h2><Bars items={projectStatusItems} language={language} /></section>
-        <section className="sp-panel"><h2>KPI Status</h2><Bars items={kpiStatusItems} language={language} /></section>
-        <section className="sp-panel"><h2>Risk Level Summary</h2><RiskMatrix risks={risks} /></section>
+        <section className="sp-panel"><h2>{t(language, 'Progress by Pillar', 'التقدم حسب المحور')}</h2><Bars items={pillars} language={language} /></section>
+        <section className="sp-panel"><h2>{t(language, 'Objectives Completion', 'اكتمال الأهداف')}</h2><Bars items={objectives} language={language} /></section>
+        <section className="sp-panel"><h2>{t(language, 'Projects Status', 'حالة المشاريع')}</h2><Bars items={projectStatusItems} language={language} /></section>
+        <section className="sp-panel"><h2>{t(language, 'KPI Status', 'حالة المؤشرات')}</h2><Bars items={kpiStatusItems} language={language} /></section>
+        <section className="sp-panel"><h2>{t(language, 'Risk Level Summary', 'ملخص مستويات المخاطر')}</h2><RiskMatrix risks={risks} /></section>
       </div>
     </div>
   );
@@ -165,16 +168,16 @@ function AnalysisTab({ planId }) {
   return (
     <div className="sp-stack">
       <section className="sp-panel">
-        <div className="sp-panel-head"><h2>{t(language, 'SWOT Analysis', 'تحليل SWOT')}</h2><button className="btn-primary" type="button"><i className="ti ti-plus" /> Add</button></div>
+        <div className="sp-panel-head"><h2>{t(language, 'SWOT Analysis', 'تحليل SWOT')}</h2><button className="btn-primary" type="button"><i className="ti ti-plus" /> {t(language, 'Add', 'إضافة')}</button></div>
         <div className="sp-swot-grid">
           {swot.map((category) => (
             <div className="sp-analysis-col" key={category}>
-              <h3>{category}</h3>
+              <h3>{translateStrategicTerm(category, language)}</h3>
               {items.filter((item) => item.analysisType === 'SWOT' && item.category === category).map((item) => (
                 <article key={item.id}>
-                  <strong>{item.title}</strong>
-                  <p>{item.description}</p>
-                  <div><Badge status={item.priority} /><span>{item.linkedEntityType}: {item.linkedEntityId}</span></div>
+                  <strong>{text(item, 'title', language)}</strong>
+                  <p>{text(item, 'description', language)}</p>
+                  <div><Badge status={text(item, 'priority', language)} /><span>{translateStrategicTerm(item.linkedEntityType, language)}: {translateStrategicTerm(item.linkedEntityId, language)}</span></div>
                   <ActionButtons />
                 </article>
               ))}
@@ -187,7 +190,7 @@ function AnalysisTab({ planId }) {
         <div className="sp-pestel-grid">
           {pestel.map((category) => {
             const factor = items.find((item) => item.analysisType === 'PESTEL' && item.category === category);
-            return <article key={category} className="sp-factor-card"><span>{category}</span><h3>{factor?.title || '-'}</h3><p>{factor?.recommendation || t(language, 'Ready to add recommendation and links.', 'جاهز لإضافة التوصية والروابط.')}</p><div className="sp-factor-score"><span>Impact: {factor?.impactDegree || '-'}</span><span>Likelihood: {factor?.likelihoodDegree || '-'}</span></div></article>;
+            return <article key={category} className="sp-factor-card"><span>{translateStrategicTerm(category, language)}</span><h3>{factor ? text(factor, 'title', language) : '-'}</h3><p>{factor ? text(factor, 'recommendation', language) : t(language, 'Ready to add recommendation and links.', 'جاهز لإضافة التوصية والروابط.')}</p><div className="sp-factor-score"><span>{t(language, 'Impact', 'التأثير')}: {factor?.impactDegree || '-'}</span><span>{t(language, 'Likelihood', 'الاحتمالية')}: {factor?.likelihoodDegree || '-'}</span></div></article>;
           })}
         </div>
       </section>
@@ -224,7 +227,7 @@ function ProjectsTab({ projects, objectives }) {
   const { language } = useI18n();
   return (
     <section className="sp-panel">
-      <div className="sp-panel-head"><h2>{t(language, 'Initiatives and Projects', 'المبادرات والمشاريع')}</h2><button className="btn-primary" type="button"><i className="ti ti-plus" /> Add</button></div>
+      <div className="sp-panel-head"><h2>{t(language, 'Initiatives and Projects', 'المبادرات والمشاريع')}</h2><button className="btn-primary" type="button"><i className="ti ti-plus" /> {t(language, 'Add', 'إضافة')}</button></div>
       <div className="sp-card-grid">
         {projects.map((project) => {
           const objective = objectives.find((item) => item.id === project.objectiveId);
@@ -235,8 +238,8 @@ function ProjectsTab({ projects, objectives }) {
               <p>{text(project, 'description', language)}</p>
               <dl>
                 <div><dt>{t(language, 'Objective', 'الهدف')}</dt><dd>{text(objective, 'name', language)}</dd></div>
-                <div><dt>{t(language, 'Manager', 'مدير المشروع')}</dt><dd>{project.manager}</dd></div>
-                <div><dt>{t(language, 'Budget', 'الميزانية')}</dt><dd>{money(project.budget)}</dd></div>
+                <div><dt>{t(language, 'Manager', 'مدير المشروع')}</dt><dd>{text(project, 'manager', language)}</dd></div>
+                <div><dt>{t(language, 'Budget', 'الميزانية')}</dt><dd>{money(project.budget, language)}</dd></div>
               </dl>
               <Progress value={project.progress} />
               <ActionButtons />
@@ -252,13 +255,13 @@ function KpisTab({ kpis }) {
   const { language } = useI18n();
   return (
     <section className="sp-panel">
-      <div className="sp-panel-head"><h2>{t(language, 'KPI Dashboard', 'لوحة المؤشرات')}</h2><button className="btn-primary" type="button"><i className="ti ti-plus" /> Add KPI</button></div>
+      <div className="sp-panel-head"><h2>{t(language, 'KPI Dashboard', 'لوحة المؤشرات')}</h2><button className="btn-primary" type="button"><i className="ti ti-plus" /> {t(language, 'Add KPI', 'إضافة مؤشر')}</button></div>
       <div className="sp-card-grid">
         {kpis.map((kpi) => {
           const achievement = Math.round((kpi.actual / kpi.target) * 100);
           return (
             <article className="sp-kpi-card" key={kpi.id}>
-              <div className="sp-card-top"><span>{kpi.code}</span><Badge status={kpi.status} /></div>
+              <div className="sp-card-top"><span>{kpi.code}</span><Badge status={text(kpi, 'status', language)} /></div>
               <h3>{text(kpi, 'name', language)}</h3>
               <p>{kpi.measurement}</p>
               <div className="sp-kpi-values"><div><span>Baseline</span><strong>{kpi.baseline}</strong></div><div><span>Target</span><strong>{kpi.target}</strong></div><div><span>Actual</span><strong>{kpi.actual}</strong></div></div>
@@ -279,20 +282,20 @@ function RisksTab({ risks }) {
     <div className="sp-stack">
       <div className="sp-two-col">
         <section className="sp-panel"><h2>{t(language, 'Risk Matrix', 'مصفوفة المخاطر')}</h2><RiskMatrix risks={risks} /></section>
-        <section className="sp-panel"><h2>{t(language, 'Mitigation Action List', 'قائمة إجراءات التخفيف')}</h2><div className="sp-action-list">{risks.flatMap((risk) => risk.mitigationActions.map((action) => <div key={`${risk.id}-${action}`}><i className="ti ti-shield-half" /><span>{action}</span><strong>{risk.dueDate}</strong></div>))}</div></section>
+        <section className="sp-panel"><h2>{t(language, 'Mitigation Action List', 'قائمة إجراءات التخفيف')}</h2><div className="sp-action-list">{risks.flatMap((risk) => (language === 'ar' && risk.mitigationActionsAr ? risk.mitigationActionsAr : risk.mitigationActions).map((action) => <div key={`${risk.id}-${action}`}><i className="ti ti-shield-half" /><span>{action}</span><strong>{risk.dueDate}</strong></div>))}</div></section>
       </div>
       <section className="sp-panel">
-        <div className="sp-panel-head"><h2>{t(language, 'Risk Register', 'سجل المخاطر')}</h2><button className="btn-primary" type="button"><i className="ti ti-plus" /> Add Risk</button></div>
+        <div className="sp-panel-head"><h2>{t(language, 'Risk Register', 'سجل المخاطر')}</h2><button className="btn-primary" type="button"><i className="ti ti-plus" /> {t(language, 'Add Risk', 'إضافة خطر')}</button></div>
         <MiniTable columns={[
-          { key: 'code', label: 'Code' },
+          { key: 'code', label: t(language, 'Code', 'الكود') },
           { key: 'title', label: t(language, 'Risk', 'الخطر') },
-          { key: 'probability', label: 'Probability' },
-          { key: 'impact', label: 'Impact' },
-          { key: 'score', label: 'Score = P x I' },
-          { key: 'level', label: 'Level' },
-          { key: 'status', label: 'Status' },
-          { key: 'actions', label: 'Actions' },
-        ]} rows={risks.map((risk) => ({ id: risk.id, code: risk.code, title: text(risk, 'title', language), probability: risk.probability, impact: risk.impact, score: risk.probability * risk.impact, level: <Badge status={risk.level} />, status: <Badge status={risk.status} />, actions: <ActionButtons /> }))} />
+          { key: 'probability', label: t(language, 'Probability', 'الاحتمالية') },
+          { key: 'impact', label: t(language, 'Impact', 'التأثير') },
+          { key: 'score', label: t(language, 'Score = P x I', 'الدرجة = الاحتمالية × التأثير') },
+          { key: 'level', label: t(language, 'Level', 'المستوى') },
+          { key: 'status', label: t(language, 'Status', 'الحالة') },
+          { key: 'actions', label: t(language, 'Actions', 'الإجراءات') },
+        ]} rows={risks.map((risk) => ({ id: risk.id, code: risk.code, title: text(risk, 'title', language), probability: risk.probability, impact: risk.impact, score: risk.probability * risk.impact, level: <Badge status={text(risk, 'level', language)} />, status: <Badge status={text(risk, 'status', language)} />, actions: <ActionButtons /> }))} />
       </section>
     </div>
   );
@@ -313,13 +316,13 @@ function BudgetsTab({ budgets, resources }) {
   return (
     <div className="sp-stack">
       <MetricGrid metrics={[
-        { icon: 'ti-wallet', value: money(budgets.reduce((sum, item) => sum + item.approvedAmount, 0)), label: t(language, 'Approved', 'المعتمد') },
-        { icon: 'ti-cash', value: money(budgets.reduce((sum, item) => sum + item.actualAmount, 0)), label: t(language, 'Actual', 'الفعلي') },
-        { icon: 'ti-pig-money', value: money(budgets.reduce((sum, item) => sum + item.remainingAmount, 0)), label: t(language, 'Remaining', 'المتبقي') },
+        { icon: 'ti-wallet', value: money(budgets.reduce((sum, item) => sum + item.approvedAmount, 0), language), label: t(language, 'Approved', 'المعتمد') },
+        { icon: 'ti-cash', value: money(budgets.reduce((sum, item) => sum + item.actualAmount, 0), language), label: t(language, 'Actual', 'الفعلي') },
+        { icon: 'ti-pig-money', value: money(budgets.reduce((sum, item) => sum + item.remainingAmount, 0), language), label: t(language, 'Remaining', 'المتبقي') },
         { icon: 'ti-users', value: resources.length, label: t(language, 'Resources', 'الموارد') },
       ]} />
-      <section className="sp-panel"><h2>{t(language, 'Resources', 'الموارد')}</h2><MiniTable columns={[{ key: 'type', label: 'Type' }, { key: 'name', label: 'Name' }, { key: 'entity', label: 'Entity' }, { key: 'role', label: 'Role' }, { key: 'allocation', label: 'Allocation' }, { key: 'cost', label: 'Cost' }, { key: 'actions', label: 'Actions' }]} rows={resources.map((item) => ({ ...item, cost: money(item.estimatedCost), actions: <ActionButtons /> }))} /></section>
-      <section className="sp-panel"><h2>{t(language, 'Budgets', 'الميزانيات')}</h2><MiniTable columns={[{ key: 'id', label: 'ID' }, { key: 'planned', label: 'Planned' }, { key: 'approved', label: 'Approved' }, { key: 'actual', label: 'Actual' }, { key: 'remaining', label: 'Remaining' }, { key: 'status', label: 'Status' }, { key: 'actions', label: 'Actions' }]} rows={budgets.map((item) => ({ id: item.id, planned: money(item.plannedAmount), approved: money(item.approvedAmount), actual: money(item.actualAmount), remaining: money(item.remainingAmount), status: <Badge status={item.status} />, actions: <ActionButtons /> }))} /></section>
+      <section className="sp-panel"><h2>{t(language, 'Resources', 'الموارد')}</h2><MiniTable columns={[{ key: 'type', label: t(language, 'Type', 'النوع') }, { key: 'name', label: t(language, 'Name', 'الاسم') }, { key: 'entity', label: t(language, 'Entity', 'الجهة') }, { key: 'role', label: t(language, 'Role', 'الدور') }, { key: 'allocation', label: t(language, 'Allocation', 'النسبة المخصصة') }, { key: 'cost', label: t(language, 'Cost', 'التكلفة') }, { key: 'actions', label: t(language, 'Actions', 'الإجراءات') }]} rows={resources.map((item) => ({ ...item, type: text(item, 'type', language), name: text(item, 'name', language), entity: text(item, 'entity', language), role: text(item, 'role', language), cost: money(item.estimatedCost, language), actions: <ActionButtons /> }))} /></section>
+      <section className="sp-panel"><h2>{t(language, 'Budgets', 'الميزانيات')}</h2><MiniTable columns={[{ key: 'id', label: 'ID' }, { key: 'planned', label: t(language, 'Planned', 'المخطط') }, { key: 'approved', label: t(language, 'Approved', 'المعتمد') }, { key: 'actual', label: t(language, 'Actual', 'الفعلي') }, { key: 'remaining', label: t(language, 'Remaining', 'المتبقي') }, { key: 'status', label: t(language, 'Status', 'الحالة') }, { key: 'actions', label: t(language, 'Actions', 'الإجراءات') }]} rows={budgets.map((item) => ({ id: item.id, planned: money(item.plannedAmount, language), approved: money(item.approvedAmount, language), actual: money(item.actualAmount, language), remaining: money(item.remainingAmount, language), status: <Badge status={text(item, 'status', language)} />, actions: <ActionButtons /> }))} /></section>
     </div>
   );
 }
@@ -327,12 +330,12 @@ function BudgetsTab({ budgets, resources }) {
 function TimelineTab({ plan, pillars, objectives, projects, milestones, tasks }) {
   const { language } = useI18n();
   const items = [
-    { id: plan.id, type: 'Plan', title: text(plan, 'name', language), progress: plan.progress, offset: 0, width: 92 },
-    ...pillars.map((item, index) => ({ id: item.id, type: 'Pillar', title: text(item, 'name', language), progress: item.progress, offset: index * 4 + 2, width: 78 })),
-    ...objectives.map((item, index) => ({ id: item.id, type: 'Objective', title: text(item, 'name', language), progress: item.progress, offset: index * 5 + 8, width: 54 })),
-    ...projects.map((item, index) => ({ id: item.id, type: 'Project', title: text(item, 'name', language), progress: item.progress, offset: index * 10 + 12, width: 30 })),
-    ...milestones.map((item, index) => ({ id: item.id, type: 'Milestone', title: text(item, 'name', language), progress: item.progress, offset: index * 8 + 16, width: 22 })),
-    ...tasks.map((item, index) => ({ id: item.id, type: 'Task', title: text(item, 'title', language), progress: item.progress, offset: index * 7 + 20, width: 16 })),
+    { id: plan.id, type: translateStrategicTerm('Plan', language), title: text(plan, 'name', language), progress: plan.progress, offset: 0, width: 92 },
+    ...pillars.map((item, index) => ({ id: item.id, type: translateStrategicTerm('Pillar', language), title: text(item, 'name', language), progress: item.progress, offset: index * 4 + 2, width: 78 })),
+    ...objectives.map((item, index) => ({ id: item.id, type: translateStrategicTerm('Objective', language), title: text(item, 'name', language), progress: item.progress, offset: index * 5 + 8, width: 54 })),
+    ...projects.map((item, index) => ({ id: item.id, type: translateStrategicTerm('Project', language), title: text(item, 'name', language), progress: item.progress, offset: index * 10 + 12, width: 30 })),
+    ...milestones.map((item, index) => ({ id: item.id, type: translateStrategicTerm('Milestone', language), title: text(item, 'name', language), progress: item.progress, offset: index * 8 + 16, width: 22 })),
+    ...tasks.map((item, index) => ({ id: item.id, type: translateStrategicTerm('Task', language), title: text(item, 'title', language), progress: item.progress, offset: index * 7 + 20, width: 16 })),
   ];
   return (
     <section className="sp-panel">
@@ -355,19 +358,20 @@ function SimpleTab({ type, rows }) {
   };
   return (
     <section className="sp-panel">
-      <div className="sp-panel-head"><h2>{titleMap[type]}</h2><button className="btn-primary" type="button"><i className="ti ti-plus" /> Add</button></div>
-      {type === 'approvals' && <div className="sp-workflow">{['Draft', 'Submitted', 'Under Review', 'Returned for Updates', 'Approved', 'Rejected', 'Archived'].map((step, index) => <div key={step} className={index < 5 ? 'done' : ''}><i className="ti ti-circle-check" /><span>{step}</span></div>)}</div>}
-      <MiniTable columns={[{ key: 'id', label: 'ID' }, { key: 'title', label: t(language, 'Title', 'العنوان') }, { key: 'type', label: t(language, 'Type', 'النوع') }, { key: 'owner', label: t(language, 'Owner / Actor', 'المالك / المنفذ') }, { key: 'date', label: t(language, 'Date', 'التاريخ') }, { key: 'status', label: 'Status' }, { key: 'actions', label: 'Actions' }]} rows={rows.map((row) => ({ id: row.id, title: row.name || row.report || row.action || row.comment || row.comments, type: row.fileType || row.type || row.entityType, owner: row.uploadedBy || row.owner || row.actor || row.submittedBy || row.user, date: row.uploadedAt || row.date || row.timestamp || row.createdAt, status: row.status ? <Badge status={row.status} /> : '-', actions: <ActionButtons /> }))} />
+      <div className="sp-panel-head"><h2>{titleMap[type]}</h2><button className="btn-primary" type="button"><i className="ti ti-plus" /> {t(language, 'Add', 'إضافة')}</button></div>
+      {type === 'approvals' && <div className="sp-workflow">{['Draft', 'Submitted', 'Under Review', 'Returned for Updates', 'Approved', 'Rejected', 'Archived'].map((step, index) => <div key={step} className={index < 5 ? 'done' : ''}><i className="ti ti-circle-check" /><span>{translateStrategicTerm(step, language)}</span></div>)}</div>}
+      <MiniTable columns={[{ key: 'id', label: 'ID' }, { key: 'title', label: t(language, 'Title', 'العنوان') }, { key: 'type', label: t(language, 'Type', 'النوع') }, { key: 'owner', label: t(language, 'Owner / Actor', 'المالك / المنفذ') }, { key: 'date', label: t(language, 'Date', 'التاريخ') }, { key: 'status', label: t(language, 'Status', 'الحالة') }, { key: 'actions', label: t(language, 'Actions', 'الإجراءات') }]} rows={rows.map((row) => ({ id: row.id, title: text(row, 'name', language) || text(row, 'report', language) || text(row, 'action', language) || text(row, 'comment', language) || row.comments, type: translateStrategicTerm(row.fileType || row.type || row.entityType, language), owner: text(row, 'uploadedBy', language) || text(row, 'owner', language) || text(row, 'actor', language) || translateStrategicTerm(row.submittedBy || row.user, language), date: row.uploadedAt || row.date || row.timestamp || row.createdAt, status: row.status ? <Badge status={text(row, 'status', language)} /> : '-', actions: <ActionButtons /> }))} />
     </section>
   );
 }
 
 function LinkedPanel() {
+  const { language } = useI18n();
   return (
     <section className="sp-panel">
-      <div className="sp-panel-head"><h2>Linked Items Panel</h2><span>Analysis Result → Pillar / Objective / Initiative / Risk</span></div>
+      <div className="sp-panel-head"><h2>{t(language, 'Linked Items Panel', 'لوحة العناصر المرتبطة')}</h2><span>{t(language, 'Analysis Result → Pillar / Objective / Initiative / Risk', 'نتيجة التحليل → محور / هدف / مبادرة / خطر')}</span></div>
       <div className="sp-linked-panel">
-        {alignmentLinks.concat(strategicAnalysisItems.slice(0, 4).map((item) => ({ id: item.id, sourceType: 'Analysis Result', sourceId: item.id, targetType: item.linkedEntityType, targetId: item.linkedEntityId, label: item.title }))).map((item) => <div key={item.id}><span>{item.sourceType}</span><strong>{item.sourceId}</strong><i className="ti ti-link" /><span>{item.targetType}</span><strong>{item.targetId}</strong><em>{item.label}</em></div>)}
+        {alignmentLinks.concat(strategicAnalysisItems.slice(0, 4).map((item) => ({ id: item.id, sourceType: 'Analysis Result', sourceId: item.id, targetType: item.linkedEntityType, targetId: item.linkedEntityId, label: text(item, 'title', language) }))).map((item) => <div key={item.id}><span>{translateStrategicTerm(item.sourceType, language)}</span><strong>{item.sourceId}</strong><i className="ti ti-link" /><span>{translateStrategicTerm(item.targetType, language)}</span><strong>{translateStrategicTerm(item.targetId, language)}</strong><em>{text(item, 'label', language)}</em></div>)}
       </div>
     </section>
   );

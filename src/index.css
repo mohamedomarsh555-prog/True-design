@@ -895,6 +895,56 @@ html[dir="rtl"] .rc-badge-abs {
   margin-top: 3px;
 }
 
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 9px 16px;
+  border: 1px solid rgba(0, 108, 53, 0.95);
+  border-radius: 8px;
+  background: var(--dga-green);
+  color: #fff;
+  cursor: pointer;
+  font-family: 'Inter', 'Tahoma', sans-serif;
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1;
+  white-space: nowrap;
+  box-shadow: 0 10px 18px rgba(0, 108, 53, 0.18);
+  transition: transform 0.16s ease, box-shadow 0.16s ease, background 0.16s ease, border-color 0.16s ease;
+}
+
+.btn-primary i {
+  font-size: 16px;
+  line-height: 1;
+}
+
+.btn-primary:hover {
+  background: #005a2c;
+  border-color: #005a2c;
+  box-shadow: 0 14px 24px rgba(0, 108, 53, 0.24);
+  transform: translateY(-1px);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+  box-shadow: 0 7px 14px rgba(0, 108, 53, 0.18);
+}
+
+.btn-primary:focus-visible {
+  outline: 3px solid rgba(0, 108, 53, 0.22);
+  outline-offset: 2px;
+}
+
+.btn-primary:disabled {
+  cursor: not-allowed;
+  opacity: 0.58;
+  transform: none;
+  box-shadow: none;
+}
+
 .btn-outline {
   display: flex;
   align-items: center;
@@ -4117,6 +4167,324 @@ html[dir="rtl"] .quality-table td {
   margin-inline-start: 28px;
 }
 
+.sp-hierarchy-panel {
+  padding: clamp(16px, 2vw, 24px);
+}
+
+.sp-hierarchy-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.sp-hierarchy-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 32px;
+  padding: 6px 10px;
+  border: 1px solid rgba(0, 108, 53, 0.16);
+  border-radius: 999px;
+  background: rgba(0, 108, 53, 0.06);
+  color: var(--dga-green);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.sp-hierarchy {
+  display: grid;
+  gap: 16px;
+}
+
+.sp-hierarchy-node {
+  position: relative;
+  display: grid;
+  gap: 10px;
+}
+
+.sp-hierarchy-node-main {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr) minmax(190px, 0.34fr);
+  gap: 12px;
+  align-items: start;
+  padding: 14px;
+  border: 1px solid var(--dga-neutral-200);
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.045);
+}
+
+.sp-hierarchy-node-main > i {
+  display: inline-flex;
+  width: 38px;
+  height: 38px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: var(--dga-green-soft);
+  color: var(--dga-green);
+  font-size: 20px;
+}
+
+.sp-hierarchy-node-copy {
+  min-width: 0;
+}
+
+.sp-hierarchy-node-kicker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.sp-hierarchy-type,
+.sp-hierarchy-code {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.sp-hierarchy-type {
+  border: 1px solid rgba(0, 108, 53, 0.16);
+  background: rgba(0, 108, 53, 0.08);
+  color: var(--dga-green);
+}
+
+.sp-hierarchy-code {
+  border: 1px solid var(--dga-neutral-200);
+  background: #fff;
+  color: var(--dga-neutral-600);
+}
+
+.sp-hierarchy-node-copy h3 {
+  margin: 0;
+  color: var(--dga-neutral-900);
+  font-size: 16px;
+  line-height: 1.45;
+}
+
+.sp-hierarchy-node-copy h3 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.sp-hierarchy-node-copy h3 a:hover {
+  color: var(--dga-green);
+}
+
+.sp-hierarchy-node-copy p {
+  margin: 5px 0 0;
+  color: var(--dga-neutral-600);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.sp-hierarchy-node-copy dl {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin: 10px 0 0;
+}
+
+.sp-hierarchy-node-copy dl div {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 28px;
+  padding: 5px 8px;
+  border: 1px solid var(--dga-neutral-200);
+  border-radius: 999px;
+  background: var(--dga-neutral-50);
+}
+
+.sp-hierarchy-node-copy dt {
+  color: var(--dga-neutral-500);
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.sp-hierarchy-node-copy dd {
+  margin: 0;
+  color: var(--dga-neutral-800);
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.sp-hierarchy-node-state {
+  display: grid;
+  justify-items: end;
+  gap: 10px;
+}
+
+.sp-collapse-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 32px;
+  padding: 6px 10px;
+  border: 1px solid rgba(0, 108, 53, 0.18);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--dga-green);
+  cursor: pointer;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 900;
+  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.045);
+  transition: background 0.16s ease, border-color 0.16s ease, transform 0.16s ease;
+}
+
+.sp-collapse-btn:hover {
+  border-color: rgba(0, 108, 53, 0.35);
+  background: rgba(0, 108, 53, 0.06);
+  transform: translateY(-1px);
+}
+
+.sp-collapse-btn i {
+  font-size: 15px;
+}
+
+.sp-hierarchy-node-state .sp-progress {
+  width: 100%;
+}
+
+.sp-hierarchy-children {
+  position: relative;
+  display: grid;
+  gap: 10px;
+  margin-inline-start: 28px;
+  padding-inline-start: 18px;
+  border-inline-start: 2px solid rgba(0, 108, 53, 0.15);
+}
+
+.sp-hierarchy-children > .sp-hierarchy-node::before,
+.sp-hierarchy-children > .sp-hierarchy-linked::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: -18px;
+  top: 24px;
+  width: 18px;
+  border-top: 2px solid rgba(0, 108, 53, 0.15);
+}
+
+.sp-hierarchy-node.level-plan > .sp-hierarchy-node-main {
+  border-color: rgba(0, 108, 53, 0.3);
+  background: linear-gradient(135deg, rgba(0, 108, 53, 0.1), #fff 62%);
+}
+
+.sp-hierarchy-node.level-pillar > .sp-hierarchy-node-main {
+  background: rgba(0, 108, 53, 0.045);
+}
+
+.sp-hierarchy-node.level-project > .sp-hierarchy-node-main {
+  border-color: rgba(14, 116, 144, 0.24);
+}
+
+.sp-hierarchy-node.level-project > .sp-hierarchy-node-main > i {
+  background: rgba(14, 116, 144, 0.1);
+  color: #0e7490;
+}
+
+.sp-hierarchy-node.level-plan .sp-hierarchy-type {
+  background: rgba(0, 108, 53, 0.12);
+}
+
+.sp-hierarchy-node.level-pillar .sp-hierarchy-type {
+  background: rgba(34, 197, 94, 0.12);
+}
+
+.sp-hierarchy-node.level-objective .sp-hierarchy-type,
+.sp-hierarchy-node.level-subobjective .sp-hierarchy-type {
+  background: rgba(20, 184, 166, 0.12);
+  border-color: rgba(20, 184, 166, 0.2);
+  color: #0f766e;
+}
+
+.sp-hierarchy-node.level-project .sp-hierarchy-type {
+  background: rgba(14, 116, 144, 0.12);
+  border-color: rgba(14, 116, 144, 0.2);
+  color: #0e7490;
+}
+
+.sp-hierarchy-node.level-milestone .sp-hierarchy-type {
+  background: rgba(180, 83, 9, 0.1);
+  border-color: rgba(180, 83, 9, 0.18);
+  color: #92400e;
+}
+
+.sp-hierarchy-node.level-task .sp-hierarchy-type,
+.sp-hierarchy-node.level-subtask .sp-hierarchy-type {
+  background: rgba(71, 85, 105, 0.08);
+  border-color: rgba(71, 85, 105, 0.14);
+  color: var(--dga-neutral-700);
+}
+
+.sp-hierarchy-node.level-task > .sp-hierarchy-node-main,
+.sp-hierarchy-node.level-subtask > .sp-hierarchy-node-main {
+  box-shadow: none;
+}
+
+.sp-hierarchy-node.is-collapsed > .sp-hierarchy-node-main {
+  border-style: dashed;
+}
+
+.sp-hierarchy-linked {
+  position: relative;
+  display: grid;
+  gap: 8px;
+  padding: 12px;
+  border: 1px dashed rgba(0, 108, 53, 0.22);
+  border-radius: 10px;
+  background: rgba(248, 250, 252, 0.78);
+}
+
+.sp-hierarchy-linked > strong {
+  color: var(--dga-neutral-800);
+  font-size: 12px;
+}
+
+.sp-hierarchy-linked > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.sp-hierarchy-linked > div > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  max-width: 100%;
+  padding: 7px 9px;
+  border: 1px solid var(--dga-neutral-200);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.sp-hierarchy-linked > div > span i {
+  color: var(--dga-green);
+  font-size: 16px;
+}
+
+.sp-hierarchy-linked > div > span b {
+  color: var(--dga-neutral-800);
+  font-size: 12px;
+}
+
+.sp-hierarchy-linked > div > span em {
+  color: var(--dga-neutral-500);
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 800;
+}
+
 .sp-chip-list {
   display: flex;
   flex-wrap: wrap;
@@ -6466,7 +6834,110 @@ html[dir="rtl"] .floating-details-panel {
 .main-content .sp-hero-actions {
   flex: 0 0 auto;
   flex-wrap: wrap;
+  gap: 24px;
+  column-gap: 24px;
   justify-content: flex-end;
+}
+
+.main-content .sp-hero-actions > * + * {
+  margin-inline-start: 12px;
+}
+
+.main-content .sp-hero-actions .btn-primary,
+.main-content .sp-hero-actions .btn-outline {
+  min-height: 48px;
+  padding-inline: 18px;
+  border-radius: 10px;
+  font-size: 14px;
+}
+
+.main-content .sp-hero-actions .btn-primary {
+  background: linear-gradient(135deg, #007a3d, #005f31);
+  border-color: rgba(0, 108, 53, 0.95);
+  box-shadow: 0 16px 28px rgba(0, 108, 53, 0.22);
+}
+
+.main-content .sp-hero-actions .btn-primary:hover {
+  background: linear-gradient(135deg, #008545, #00572c);
+}
+
+.main-content .sp-hero-actions .btn-outline {
+  color: var(--dga-neutral-700);
+  background: rgba(255, 255, 255, 0.92);
+  border-color: rgba(148, 163, 184, 0.45);
+  box-shadow: 0 12px 22px rgba(15, 23, 42, 0.07);
+}
+
+.sp-create-plan-btn,
+.sp-export-btn {
+  display: inline-flex;
+  align-items: center;
+  border: 0;
+  cursor: pointer;
+  font: inherit;
+  text-align: start;
+  transition: transform 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
+}
+
+.sp-create-plan-btn {
+  gap: 8px;
+  min-width: auto;
+  min-height: 42px;
+  padding: 0 14px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #007a3d, #005b2e);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 900;
+  box-shadow: 0 10px 18px rgba(0, 108, 53, 0.18);
+}
+
+.sp-create-plan-btn:hover {
+  background: linear-gradient(135deg, #008746, #00572c);
+  box-shadow: 0 14px 24px rgba(0, 108, 53, 0.23);
+  transform: translateY(-1px);
+}
+
+.sp-create-plan-btn i {
+  font-size: 17px;
+  line-height: 1;
+}
+
+.sp-create-plan-btn span {
+  color: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: 1;
+}
+
+.sp-export-btn {
+  gap: 8px;
+  min-height: 42px;
+  padding: 0 13px;
+  border: 1px solid rgba(148, 163, 184, 0.45);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--dga-neutral-700);
+  font-size: 13px;
+  font-weight: 900;
+  box-shadow: 0 12px 22px rgba(15, 23, 42, 0.07);
+}
+
+.sp-export-btn:hover {
+  background: #fff;
+  color: var(--dga-green);
+  transform: translateY(-1px);
+}
+
+.sp-export-btn i {
+  color: var(--dga-green);
+  font-size: 17px;
+}
+
+.sp-export-btn span {
+  color: inherit;
+  font-size: inherit;
+  font-weight: inherit;
 }
 
 html[dir="rtl"] .main-content .sp-hero {
@@ -6564,9 +7035,35 @@ html[dir="rtl"] .main-content .sp-hero-actions {
   }
 
   .main-content .sp-hero-actions .btn-primary,
-  .main-content .sp-hero-actions .btn-outline {
+  .main-content .sp-hero-actions .btn-outline,
+  .main-content .sp-hero-actions .sp-create-plan-btn,
+  .main-content .sp-hero-actions .sp-export-btn {
     width: 100%;
     justify-content: center;
+  }
+
+  .sp-hierarchy-node-main {
+    grid-template-columns: 38px minmax(0, 1fr);
+  }
+
+  .sp-hierarchy-node-state {
+    grid-column: 1 / -1;
+    justify-items: stretch;
+  }
+
+  .sp-collapse-btn {
+    width: 100%;
+  }
+
+  .sp-hierarchy-children {
+    margin-inline-start: 12px;
+    padding-inline-start: 12px;
+  }
+
+  .sp-hierarchy-children > .sp-hierarchy-node::before,
+  .sp-hierarchy-children > .sp-hierarchy-linked::before {
+    inset-inline-start: -12px;
+    width: 12px;
   }
 }
 
